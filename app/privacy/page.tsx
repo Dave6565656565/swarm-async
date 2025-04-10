@@ -21,12 +21,12 @@ export default function PrivacyPage() {
           <div>
             <h2 className="text-xl font-bold mb-2">2. Information We Collect</h2>
             <p className="text-muted-foreground">
-              We collect information that you provide directly to us, such as your email address, wallet address, and
-              any other information you choose to provide when using our platform or communicating with us.
+              We collect minimal information that you provide directly to us, such as your wallet address and any other
+              information you choose to provide when using our platform or communicating with us.
             </p>
             <p className="text-muted-foreground mt-2">
-              We also automatically collect certain information when you use our platform, including your IP address,
-              browser type, operating system, and information about your usage patterns.
+              We also automatically collect certain technical information when you use our platform, including your IP
+              address, browser type, and operating system for security and service improvement purposes only.
             </p>
           </div>
 
@@ -35,47 +35,48 @@ export default function PrivacyPage() {
             <p className="text-muted-foreground">We use the information we collect to:</p>
             <ul className="list-disc pl-6 text-muted-foreground space-y-1 mt-2">
               <li>Provide, maintain, and improve our platform</li>
-              <li>Process transactions and send related information</li>
-              <li>Send technical notices, updates, security alerts, and support messages</li>
+              <li>Process transactions</li>
+              <li>Send technical notices and security alerts</li>
               <li>Respond to your comments, questions, and customer service requests</li>
-              <li>Monitor and analyze trends, usage, and activities in connection with our platform</li>
               <li>Detect, investigate, and prevent fraudulent transactions and other illegal activities</li>
               <li>Personalize and improve your experience on our platform</li>
             </ul>
           </div>
 
           <div>
-            <h2 className="text-xl font-bold mb-2">4. Sharing of Information</h2>
-            <p className="text-muted-foreground">We may share your information with:</p>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1 mt-2">
-              <li>Service providers who perform services on our behalf</li>
-              <li>Professional advisors, such as lawyers, auditors, and insurers</li>
-              <li>Government authorities if required by law or in response to legal process</li>
-              <li>Third parties in connection with a merger, sale, or acquisition</li>
-            </ul>
+            <h2 className="text-xl font-bold mb-2">4. Data Protection and Privacy</h2>
+            <p className="text-muted-foreground">
+              <strong>We do not share any customer data with third parties.</strong> Your information is kept strictly
+              confidential and is only used internally to provide and improve our services.
+            </p>
+            <p className="text-muted-foreground mt-2">
+              We do not sell, rent, or lease your personal information to any third party. We do not share your
+              information with advertisers or marketing companies.
+            </p>
           </div>
 
           <div>
             <h2 className="text-xl font-bold mb-2">5. Security</h2>
             <p className="text-muted-foreground">
               We implement appropriate technical and organizational measures to protect your personal information
-              against unauthorized access, disclosure, alteration, and destruction.
+              against unauthorized access, disclosure, alteration, and destruction. All data is stored securely and
+              accessed only by authorized personnel.
             </p>
           </div>
 
           <div>
             <h2 className="text-xl font-bold mb-2">6. Your Rights</h2>
             <p className="text-muted-foreground">
-              Depending on your location, you may have certain rights regarding your personal information, including the
-              right to access, correct, delete, or restrict processing of your personal information.
+              You have the right to access, correct, delete, or restrict processing of your personal information. You
+              can request a copy of your data or ask us to delete your information at any time.
             </p>
           </div>
 
           <div>
             <h2 className="text-xl font-bold mb-2">7. Cookies</h2>
             <p className="text-muted-foreground">
-              We use cookies and similar technologies to collect information about your browsing activities and to
-              distinguish you from other users of our platform.
+              We use minimal cookies that are necessary for the functioning of our platform. These cookies do not track
+              your browsing activity on other websites.
             </p>
           </div>
 
@@ -95,7 +96,7 @@ export default function PrivacyPage() {
           </div>
 
           <div className="pt-4 border-t border-muted">
-            <p className="text-sm text-muted-foreground">Last updated: April 7, 2023</p>
+            <p className="text-sm text-muted-foreground">Last updated: April 11, 2023</p>
           </div>
         </CardContent>
       </Card>

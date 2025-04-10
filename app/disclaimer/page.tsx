@@ -22,9 +22,10 @@ export default function DisclaimerPage() {
           <div>
             <h2 className="text-xl font-bold mb-2">2. Risk Disclosure</h2>
             <p className="text-muted-foreground">
-              Cryptocurrency staking involves significant risks, including but not limited to market volatility,
-              technical vulnerabilities, regulatory changes, and potential loss of principal. The value of
-              cryptocurrencies can fluctuate significantly in a short period of time.
+              Cryptocurrency staking and investing involve significant risks, including but not limited to market
+              volatility, technical vulnerabilities, regulatory changes, and potential loss of principal. The value of
+              cryptocurrencies can fluctuate significantly in a short period of time, and you may lose all of your
+              investment.
             </p>
             <p className="text-muted-foreground mt-2">
               You should carefully consider your financial situation, risk tolerance, and investment objectives before
@@ -33,11 +34,12 @@ export default function DisclaimerPage() {
           </div>
 
           <div>
-            <h2 className="text-xl font-bold mb-2">3. No Guarantees</h2>
+            <h2 className="text-xl font-bold mb-2">3. Expected Returns</h2>
             <p className="text-muted-foreground">
-              StakeETH Portal does not guarantee any specific returns, APY rates, or outcomes from using our platform.
-              All projected returns and APY rates are estimates based on current market conditions and are subject to
-              change without notice.
+              Any displayed APY rates, rewards, or potential returns are estimates based on current market conditions
+              and historical data. These figures are subject to change with notice and are influenced by many factors
+              beyond our control. All staking rewards depend on network parameters, validator performance, and other
+              variables.
             </p>
           </div>
 
@@ -46,7 +48,7 @@ export default function DisclaimerPage() {
             <p className="text-muted-foreground">
               Blockchain technology and smart contracts are relatively new and untested technologies. There are inherent
               risks associated with using these technologies, including but not limited to software bugs, technical
-              vulnerabilities, and network failures.
+              vulnerabilities, network failures, and security breaches.
             </p>
           </div>
 
@@ -63,7 +65,8 @@ export default function DisclaimerPage() {
             <h2 className="text-xl font-bold mb-2">6. Independent Research</h2>
             <p className="text-muted-foreground">
               Users are encouraged to conduct their own research and consult with financial, legal, and tax
-              professionals before making any investment decisions.
+              professionals before making any investment decisions. You are solely responsible for your investment
+              decisions.
             </p>
           </div>
 
@@ -89,11 +92,12 @@ export default function DisclaimerPage() {
             <p className="text-muted-foreground">
               We reserve the right to modify this disclaimer at any time. We will provide notice of significant changes
               by updating the date at the top of this disclaimer and by maintaining a current version on our website.
+              All changes will be made with proper notice to users.
             </p>
           </div>
 
           <div className="pt-4 border-t border-muted">
-            <p className="text-sm text-muted-foreground">Last updated: April 7, 2023</p>
+            <p className="text-sm text-muted-foreground">Last updated: April 11, 2023</p>
           </div>
         </CardContent>
       </Card>

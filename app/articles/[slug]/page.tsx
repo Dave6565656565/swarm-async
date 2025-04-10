@@ -57,7 +57,7 @@ const articles = {
     readTime: "7 min read",
     content: `
       <h2>Introduction</h2>
-      <p>In the world of cryptocurrencies, two primary methods are used to validate transactions and secure networks: mining and staking. Both approaches serve the same fundamental purpose but operate in vastly different ways.</p>
+      <p>In the world of cryptocurrencies, 2 primary methods are used to validate transactions and secure networks: mining and staking. Both approaches serve the same fundamental purpose but operate in vastly different ways.</p>
       
       <h2>What is Mining?</h2>
       <p>Mining is the process used in Proof of Work (PoW) blockchains like Bitcoin. Miners use computational power to solve complex mathematical puzzles, competing to validate blocks of transactions. The first miner to solve the puzzle gets to add the block to the blockchain and receives a reward.</p>

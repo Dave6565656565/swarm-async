@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://stakeethportal.com/sitemap.xml
+# Sitemaps
+Sitemap: https://www.ethereumstakingplatform.com/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/

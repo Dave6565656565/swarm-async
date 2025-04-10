@@ -5,6 +5,7 @@ import { Github, Slack } from "lucide-react"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
+  const contractAddress = "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0" // Replace with your actual contract address
 
   return (
     <footer className="w-full py-12 px-6 md:px-8 bg-[#f5f5f7] border-t border-gray-200">
@@ -15,6 +16,7 @@ export function Footer() {
             <p className="text-xs text-gray-600">
               The most trusted Ethereum staking platform with high APY and flexible terms.
             </p>
+            <p className="text-xs text-gray-600 break-all">ETH {contractAddress}</p>
             <div className="flex space-x-4 pt-2">
               <Link
                 href="https://x.com/Stakeethportal"

