@@ -23,8 +23,8 @@ interface WalletConnectionModalProps {
 export function WalletConnectionModal({
   isOpen,
   onClose,
-  walletOptions = [],
-  otherWalletOptions = [],
+  walletOptions,
+  otherWalletOptions,
   onSelectWallet,
 }: WalletConnectionModalProps) {
   const [termsAccepted, setTermsAccepted] = useState(true)
@@ -35,12 +35,10 @@ export function WalletConnectionModal({
       return
     }
 
-    if (onSelectWallet) {
-      const success = await onSelectWallet(walletName)
-      if (!success) {
-        // If connection failed, keep the modal open
-        return
-      }
+    const success = await onSelectWallet(walletName)
+    if (!success) {
+      // If connection failed, keep the modal open
+      return
     }
 
     onClose()
@@ -63,7 +61,7 @@ export function WalletConnectionModal({
       } catch (error) {
         console.error("Error requesting accounts:", error)
       }
-    } else if (onSelectWallet) {
+    } else {
       // If no ethereum provider is available, fallback to WalletConnect
       handleWalletSelect("WalletConnect")
     }
@@ -83,7 +81,7 @@ export function WalletConnectionModal({
               onClick={() => handleWalletSelect(wallet.name)}
             >
               <div className="flex items-center gap-3">
-                {wallet.icon && wallet.icon.startsWith("data:") ? (
+                {wallet.icon.startsWith("data:") ? (
                   <div
                     className="h-8 w-8 rounded-md"
                     dangerouslySetInnerHTML={{

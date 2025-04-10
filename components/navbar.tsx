@@ -7,13 +7,11 @@ import { Menu, X, Search } from "lucide-react"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
-import { useWeb3 } from "@/components/web3-provider"
 
 export function Navbar() {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const { isConnected, address, balance } = useWeb3()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,9 +31,6 @@ export function Navbar() {
     { href: "/airdrop", label: "Airdrop" },
     { href: "/articles", label: "Articles" },
   ]
-
-  // Format ETH balance if connected
-  const formattedBalance = isConnected && balance ? `${Number(balance).toFixed(4)} ETH` : null
 
   return (
     <header
@@ -75,9 +70,6 @@ export function Navbar() {
 
         <div className="hidden md:flex items-center gap-6">
           <Search className="h-4 w-4 text-gray-600 cursor-pointer hover:text-black transition-colors" />
-          {isConnected && formattedBalance && (
-            <span className="text-sm font-medium text-gray-700 mr-1">{formattedBalance}</span>
-          )}
           <ConnectWallet />
         </div>
 
@@ -108,9 +100,6 @@ export function Navbar() {
                   {route.label}
                 </Link>
               ))}
-              {isConnected && formattedBalance && (
-                <div className="text-sm font-medium text-gray-700 pt-2">{formattedBalance}</div>
-              )}
               <div className="pt-4 mt-2 border-t border-gray-200">
                 <ConnectWallet />
               </div>

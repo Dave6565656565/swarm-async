@@ -79,11 +79,6 @@ export default function RootLayout({
         {/* Web App Manifest - Google uses this for search results */}
         <link rel="manifest" href="/manifest.json" />
 
-        <meta name="google-site-verification" content="your-verification-code" />
-        <meta name="norton-safeweb-site-verification" content="your-norton-verification-code" />
-        <meta name="wot-verification" content="your-wot-verification-code" />
-        <meta name="msvalidate.01" content="your-bing-verification-code" />
-
         <StructuredData />
       </head>
       <body className="bg-white min-h-screen flex flex-col">
