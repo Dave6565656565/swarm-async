@@ -29,6 +29,7 @@ export function WalletConnectionModal({
 }: WalletConnectionModalProps) {
   const [termsAccepted, setTermsAccepted] = useState(true)
 
+  // Update the handleWalletSelect function to better handle wallet selection
   const handleWalletSelect = async (walletName: string) => {
     if (!termsAccepted) {
       alert("Please accept the terms and conditions to continue")
@@ -36,14 +37,17 @@ export function WalletConnectionModal({
     }
 
     if (onSelectWallet) {
-      const success = await onSelectWallet(walletName)
-      if (!success) {
-        // If connection failed, keep the modal open
-        return
+      try {
+        const success = await onSelectWallet(walletName)
+        if (success) {
+          // Only close the modal if connection was successful
+          onClose()
+        }
+      } catch (error) {
+        console.error("Error selecting wallet:", error)
+        // Keep the modal open if there was an error
       }
     }
-
-    onClose()
   }
 
   const handleMoreOptions = async () => {

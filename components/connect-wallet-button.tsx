@@ -16,7 +16,7 @@ export function ConnectWalletButton({ className = "", size = "default" }: Connec
   const [isHovering, setIsHovering] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  // Replace the handleClick function with this improved version
+  // Update the handleClick function to better handle connection states
   const handleClick = async () => {
     if (isLoading) return
 
@@ -41,8 +41,9 @@ export function ConnectWalletButton({ className = "", size = "default" }: Connec
       const connected = await connect()
       console.log("Connection result:", connected)
 
-      if (connected) {
-        // After connecting, go to dashboard
+      // Even if connection is in progress, update UI to show loading state
+      if (connected === true) {
+        // After successful connection, go to dashboard
         router.push("/dashboard")
       }
     } catch (error) {

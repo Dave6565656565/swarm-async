@@ -3,17 +3,18 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ConnectWallet } from "@/components/connect-wallet"
-import { Menu, X, Search } from "lucide-react"
+import { Menu, X, Search, FlipHorizontalIcon as SwitchHorizontal } from "lucide-react"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
-import { useWeb3 } from "@/components/web3-provider"
+import { useWeb3 } from "@/hooks/use-web3"
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 
 export function Navbar() {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const { isConnected, address, balance } = useWeb3()
+  const { isConnected, address, disconnect, selectNewWallet, balance } = useWeb3()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,7 +79,14 @@ export function Navbar() {
           {isConnected && formattedBalance && (
             <span className="text-sm font-medium text-gray-700 mr-1">{formattedBalance}</span>
           )}
-          <ConnectWallet />
+          <ConnectWallet>
+            {isConnected && (
+              <DropdownMenuItem onClick={selectNewWallet}>
+                <SwitchHorizontal className="mr-2 h-4 w-4" />
+                <span>Switch Wallet</span>
+              </DropdownMenuItem>
+            )}
+          </ConnectWallet>
         </div>
 
         {/* Mobile Menu Button */}
@@ -112,7 +120,14 @@ export function Navbar() {
                 <div className="text-sm font-medium text-gray-700 pt-2">{formattedBalance}</div>
               )}
               <div className="pt-4 mt-2 border-t border-gray-200">
-                <ConnectWallet />
+                <ConnectWallet>
+                  {isConnected && (
+                    <DropdownMenuItem onClick={selectNewWallet}>
+                      <SwitchHorizontal className="mr-2 h-4 w-4" />
+                      <span>Switch Wallet</span>
+                    </DropdownMenuItem>
+                  )}
+                </ConnectWallet>
               </div>
             </nav>
           </motion.div>
