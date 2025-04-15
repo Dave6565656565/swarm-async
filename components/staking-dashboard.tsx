@@ -508,11 +508,10 @@ export function StakingDashboard() {
       return
     }
 
-    // Check if the 30-day lock period has passed (this is a simplified check)
-    // In a real implementation, you would get the actual staking time from the contract
+    // Check if funds can be withdrawn (keeping functionality but removing mention of lock period)
     setTransactionStatus({
       type: "error",
-      message: "Your funds are still locked. The 30-day lock period has not passed yet.",
+      message: "Your funds are not available for withdrawal at this time.",
     })
     return
 
@@ -770,14 +769,10 @@ export function StakingDashboard() {
               </div>
 
               <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4">
                   <div className="p-4 rounded-lg glassmorphism">
                     <div className="text-sm text-muted-foreground">APY</div>
                     <div className="text-xl font-bold text-green-500">15.0%</div>
-                  </div>
-                  <div className="p-4 rounded-lg glassmorphism">
-                    <div className="text-sm text-muted-foreground">Lock Period</div>
-                    <div className="text-xl font-bold">30 days</div>
                   </div>
                 </div>
 
@@ -942,10 +937,6 @@ export function StakingDashboard() {
                         <div>
                           <div className="text-xs text-muted-foreground">Rewards Earned</div>
                           <div className="text-lg font-medium text-green-500">{userRewards} ETH</div>
-                        </div>
-                        <div>
-                          <div className="text-xs text-muted-foreground">Staking Period</div>
-                          <div className="text-lg font-medium">30 days (required)</div>
                         </div>
                         <div>
                           <div className="text-xs text-muted-foreground">Status</div>

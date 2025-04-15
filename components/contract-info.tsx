@@ -235,7 +235,6 @@ export function ContractInfo() {
                 <h3 className="font-medium mb-2">Contract Details</h3>
                 <ul className="space-y-1">
                   <li>• 15% annual return on staked ETH</li>
-                  <li>• Minimum staking period: 10 days</li>
                   <li>• 3% early withdrawal penalty (if withdrawn before 1 year)</li>
                   <li>• Secure, audited smart contract</li>
                 </ul>
