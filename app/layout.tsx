@@ -28,7 +28,7 @@ export const metadata = {
     siteName: "StakeETH",
     images: [
       {
-        url: "/images/favcoin.png",
+        url: "/images/favcoin1.png",
         width: 512,
         height: 512,
         alt: "StakeETH Logo",
@@ -41,16 +41,16 @@ export const metadata = {
     description:
       "Stake your ETH and earn rewards with our secure staking platform. The most trusted Ethereum staking service with flexible terms and low fees.",
     creator: "@stakeeth",
-    images: ["/images/favcoin.png"],
+    images: ["/images/favcoin1.png"],
   },
   icons: {
     icon: [
       { url: "/favicon.ico" },
       { url: "/favicon-192x192.png", sizes: "192x192", type: "image/png" },
       { url: "/favicon-512x512.png", sizes: "512x512", type: "image/png" },
-      { url: "/images/favcoin.png" },
+      { url: "/images/favcoin1.png" },
     ],
-    apple: { url: "/images/favcoin.png" },
+    apple: { url: "/images/favcoin1.png" },
     shortcut: { url: "/favicon.ico" },
   },
   metadataBase: new URL("https://stakeeth.com"),
@@ -67,14 +67,14 @@ export default function RootLayout({
       <head>
         {/* Standard favicon */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/images/favcoin.png" type="image/png" />
+        <link rel="icon" href="/images/favcoin1.png" type="image/png" />
 
         {/* Google-specific favicons */}
-        <link rel="icon" href="/favicon-192x192.png" sizes="192x192" type="image/png" />
-        <link rel="icon" href="/favicon-512x512.png" sizes="512x512" type="image/png" />
+        <link rel="icon" href="/images/favcoin1.png" sizes="192x192" type="image/png" />
+        <link rel="icon" href="/images/favcoin1.png" sizes="512x512" type="image/png" />
 
         {/* Apple Touch Icon */}
-        <link rel="apple-touch-icon" href="/images/favcoin.png" />
+        <link rel="apple-touch-icon" href="/images/favcoin1.png" />
 
         {/* Web App Manifest - Google uses this for search results */}
         <link rel="manifest" href="/manifest.json" />

@@ -3,17 +3,17 @@
   "short_name": "StakeETH",
   "icons": [
     {
-      "src": "/images/favcoin.png",
+      "src": "/images/favcoin1.png",
       "sizes": "64x64",
       "type": "image/png"
     },
     {
-      "src": "/images/favcoin.png",
+      "src": "/images/favcoin1.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/images/favcoin.png",
+      "src": "/images/favcoin1.png",
       "sizes": "512x512",
       "type": "image/png"
     }
