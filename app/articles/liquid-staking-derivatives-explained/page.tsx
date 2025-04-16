@@ -15,6 +15,7 @@ import {
   Check,
   ExternalLink,
   ChevronRight,
+  Share2,
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -54,10 +55,10 @@ const LSDCalculator = () => {
 
   return (
     <div className="w-full rounded-xl overflow-hidden bg-white shadow-md border border-gray-200">
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         <h3 className="text-xl font-medium mb-6 text-gray-800">LSD Staking Calculator</h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-medium mb-2 text-gray-700">Select Protocol</label>
@@ -113,7 +114,7 @@ const LSDCalculator = () => {
           </div>
 
           <div className="flex flex-col">
-            <div className="bg-gray-50 rounded-lg p-6 flex-grow">
+            <div className="bg-gray-50 rounded-lg p-4 sm:p-6 flex-grow">
               <h4 className="text-lg font-medium mb-4 text-gray-800">Estimated Returns</h4>
 
               <div className="space-y-4">
@@ -176,26 +177,46 @@ const ProtocolComparison = () => {
         <div className="grid grid-cols-5 gap-4">
           <div className="p-4"></div>
           <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
-            <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-              <Image src="/lido-abstract-logo.png" alt="Lido" width={24} height={24} />
+            <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
+              <Image
+                src="https://s2.coinmarketcap.com/static/img/coins/200x200/8085.png"
+                alt="Lido"
+                width={24}
+                height={24}
+              />
             </div>
             <span className="text-gray-800">Lido</span>
           </div>
           <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
-            <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-              <span className="text-xl text-gray-800">R</span>
+            <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
+              <Image
+                src="https://raw.githubusercontent.com/rocket-pool/rocketpool/master/images/logo.png?raw=true"
+                alt="Rocket Pool"
+                width={24}
+                height={24}
+              />
             </div>
             <span className="text-gray-800">Rocket Pool</span>
           </div>
           <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
-            <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-              <span className="text-xl text-gray-800">C</span>
+            <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
+              <Image
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6hcTTU1A8Ymi2VldXqCsPkBu_ltAhIKiRg&s"
+                alt="Coinbase"
+                width={24}
+                height={24}
+              />
             </div>
             <span className="text-gray-800">Coinbase</span>
           </div>
           <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
-            <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-              <span className="text-xl text-gray-800">F</span>
+            <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
+              <Image
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ75b9jMdiuMz-QCpDyQa2Q5jWEfN8jSYJtsQ&s"
+                alt="Frax"
+                width={24}
+                height={24}
+              />
             </div>
             <span className="text-gray-800">Frax</span>
           </div>
@@ -279,7 +300,7 @@ const ProtocolComparison = () => {
 // Animated diagram component
 const AnimatedDiagram = () => {
   return (
-    <div className="w-full rounded-xl overflow-hidden bg-white shadow-md border border-gray-200 p-6">
+    <div className="w-full rounded-xl overflow-hidden bg-white shadow-md border border-gray-200 p-4 sm:p-6">
       <h3 className="text-xl font-medium mb-6 text-gray-800">How Liquid Staking Works</h3>
 
       <div className="relative h-[300px] md:h-[400px]">
@@ -440,7 +461,7 @@ const TokenTypeComparison = () => {
   const [activeTab, setActiveTab] = useState("rebasing")
 
   return (
-    <div className="w-full rounded-xl overflow-hidden bg-white shadow-md border border-gray-200 p-6">
+    <div className="w-full rounded-xl overflow-hidden bg-white shadow-md border border-gray-200 p-4 sm:p-6">
       <h3 className="text-xl font-medium mb-6 text-gray-800">LSD Token Types Compared</h3>
 
       <Tabs defaultValue="rebasing" className="w-full" onValueChange={setActiveTab}>
@@ -503,8 +524,13 @@ const TokenTypeComparison = () => {
               <div className="p-4 rounded-lg bg-gray-50">
                 <h4 className="font-medium mb-2 text-gray-800">Examples</h4>
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-                    <Image src="/lido-abstract-logo.png" alt="Lido" width={16} height={16} />
+                  <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="https://s2.coinmarketcap.com/static/img/coins/200x200/8085.png"
+                      alt="Lido"
+                      width={16}
+                      height={16}
+                    />
                   </div>
                   <div className="text-gray-800">Lido's stETH</div>
                 </div>
@@ -565,11 +591,25 @@ const TokenTypeComparison = () => {
                 <h4 className="font-medium mb-2 text-gray-800">Examples</h4>
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">R</div>
+                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                      <Image
+                        src="https://raw.githubusercontent.com/rocket-pool/rocketpool/master/images/logo.png?raw=true"
+                        alt="Rocket Pool"
+                        width={16}
+                        height={16}
+                      />
+                    </div>
                     <div className="text-gray-800">Rocket Pool's rETH</div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">C</div>
+                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                      <Image
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6hcTTU1A8Ymi2VldXqCsPkBu_ltAhIKiRg&s"
+                        alt="Coinbase"
+                        width={16}
+                        height={16}
+                      />
+                    </div>
                     <div className="text-gray-800">Coinbase's cbETH</div>
                   </div>
                 </div>
@@ -703,11 +743,145 @@ const StickyTableOfContents = () => {
   )
 }
 
+// Share functionality
+const ShareButtons = () => {
+  const handleShare = async (platform: string) => {
+    const url = window.location.href
+    const title = "Liquid Staking Derivatives Explained"
+    const text = "Learn about Liquid Staking Derivatives and how they're revolutionizing Ethereum staking."
+
+    switch (platform) {
+      case "twitter":
+        window.open(
+          `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
+          "_blank",
+        )
+        break
+      case "linkedin":
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, "_blank")
+        break
+      case "pdf":
+        // In a real implementation, this would generate a PDF
+        alert("PDF download functionality would be implemented here")
+        break
+      default:
+        if (navigator.share) {
+          try {
+            await navigator.share({ title, text, url })
+          } catch (err) {
+            console.error("Error sharing:", err)
+          }
+        } else {
+          await navigator.clipboard.writeText(url)
+          alert("Link copied to clipboard!")
+        }
+    }
+  }
+
+  return (
+    <div className="flex gap-2">
+      <Button
+        size="sm"
+        variant="outline"
+        className="border-gray-300 bg-white hover:bg-gray-50"
+        onClick={() => handleShare("pdf")}
+      >
+        <Download className="mr-2 h-4 w-4" />
+        PDF
+      </Button>
+      <Button
+        size="sm"
+        variant="outline"
+        className="border-gray-300 bg-white hover:bg-gray-50"
+        onClick={() => handleShare("twitter")}
+      >
+        <Twitter className="h-4 w-4" />
+      </Button>
+      <Button
+        size="sm"
+        variant="outline"
+        className="border-gray-300 bg-white hover:bg-gray-50"
+        onClick={() => handleShare("linkedin")}
+      >
+        <Linkedin className="h-4 w-4" />
+      </Button>
+      <Button
+        size="sm"
+        variant="outline"
+        className="border-gray-300 bg-white hover:bg-gray-50"
+        onClick={() => handleShare("general")}
+      >
+        <Share2 className="h-4 w-4" />
+      </Button>
+    </div>
+  )
+}
+
+// Related Articles component
+const RelatedArticles = () => {
+  return (
+    <div className="mb-8">
+      <h3 className="text-xl font-bold mb-4 text-gray-800">Related Articles</h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden flex flex-col">
+          <div className="h-40 relative">
+            <Image src="/ethereum-staking-network.png" alt="Ethereum Staking" fill className="object-cover" />
+          </div>
+          <div className="p-4 flex flex-col flex-grow">
+            <h4 className="font-semibold mb-2 text-gray-800">Ethereum Staking for Beginners</h4>
+            <p className="text-sm text-gray-600 mb-4 flex-grow">A complete guide to getting started with ETH staking</p>
+            <Link
+              href="/articles/ethereum-staking-for-beginners"
+              className="text-gray-600 text-sm hover:text-gray-900 flex items-center"
+            >
+              Read More <ExternalLink size={14} className="ml-1" />
+            </Link>
+          </div>
+        </div>
+        <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden flex flex-col">
+          <div className="h-40 relative">
+            <Image src="/defi-yield-comparison.png" alt="DeFi Yield Comparison" fill className="object-cover" />
+          </div>
+          <div className="p-4 flex flex-col flex-grow">
+            <h4 className="font-semibold mb-2 text-gray-800">Staking vs DeFi Yields</h4>
+            <p className="text-sm text-gray-600 mb-4 flex-grow">
+              Comparing returns across different Ethereum yield strategies
+            </p>
+            <Link
+              href="/articles/staking-vs-defi-yields"
+              className="text-gray-600 text-sm hover:text-gray-900 flex items-center"
+            >
+              Read More <ExternalLink size={14} className="ml-1" />
+            </Link>
+          </div>
+        </div>
+        <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden flex flex-col">
+          <div className="h-40 relative">
+            <Image src="/ethereum-staking-evolution.png" alt="Future of Ethereum Staking" fill className="object-cover" />
+          </div>
+          <div className="p-4 flex flex-col flex-grow">
+            <h4 className="font-semibold mb-2 text-gray-800">Future of Ethereum Staking</h4>
+            <p className="text-sm text-gray-600 mb-4 flex-grow">
+              Upcoming developments in the Ethereum staking ecosystem
+            </p>
+            <Link
+              href="/articles/future-of-ethereum-staking"
+              className="text-gray-600 text-sm hover:text-gray-900 flex items-center"
+            >
+              Read More <ExternalLink size={14} className="ml-1" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function LiquidStakingDerivativesArticle() {
   return (
     <div className="min-h-screen relative bg-gray-50">
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex justify-between items-center mb-8">
+      <div className="container mx-auto px-4 py-8 sm:py-12">
+        <div className="flex justify-between items-center mb-6">
           <Button variant="outline" asChild className="border-gray-300 bg-white hover:bg-gray-50">
             <Link href="/articles">
               <ArrowLeft className="mr-2 h-4 w-4" />
@@ -715,24 +889,24 @@ export default function LiquidStakingDerivativesArticle() {
             </Link>
           </Button>
 
-          <div className="flex gap-2">
-            <Button size="sm" variant="outline" className="border-gray-300 bg-white hover:bg-gray-50">
-              <Download className="mr-2 h-4 w-4" />
-              PDF
-            </Button>
-            <Button size="sm" variant="outline" className="border-gray-300 bg-white hover:bg-gray-50">
-              <Twitter className="h-4 w-4" />
-            </Button>
-            <Button size="sm" variant="outline" className="border-gray-300 bg-white hover:bg-gray-50">
-              <Linkedin className="h-4 w-4" />
-            </Button>
-          </div>
+          <ShareButtons />
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="lg:w-3/4">
+            {/* Hero Image */}
+            <div className="w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden mb-6 relative">
+              <Image
+                src="/ethereal-ethereum-flow.png"
+                alt="Liquid Staking Derivatives"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+
             <motion.h1
-              className="text-4xl md:text-6xl font-bold mb-4 text-gray-900"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-gray-900"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -741,7 +915,7 @@ export default function LiquidStakingDerivativesArticle() {
             </motion.h1>
 
             <motion.div
-              className="text-xl md:text-2xl text-gray-600 mb-6"
+              className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
@@ -750,13 +924,15 @@ export default function LiquidStakingDerivativesArticle() {
             </motion.div>
 
             <div className="flex items-center text-sm text-gray-500 mb-8">
-              <span>April 18, 2024</span>
+              <span>By Dave Baghi</span>
+              <span className="mx-2">•</span>
+              <span>April 16, 2025</span>
               <span className="mx-2">•</span>
               <span>11 min read</span>
             </div>
 
             {/* Mobile Table of Contents */}
-            <div className="lg:hidden bg-white shadow-md border border-gray-200 rounded-lg p-6 mb-10">
+            <div className="lg:hidden bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
               <h2 className="text-xl font-bold mb-4 text-gray-800">Table of Contents</h2>
               <ul className="space-y-2">
                 <li>
@@ -823,7 +999,7 @@ export default function LiquidStakingDerivativesArticle() {
             </div>
 
             {/* Introduction */}
-            <section id="introduction" className="mb-16">
+            <section id="introduction" className="mb-12 sm:mb-16">
               <motion.h2
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
@@ -833,24 +1009,6 @@ export default function LiquidStakingDerivativesArticle() {
               >
                 Introduction to Liquid Staking Derivatives
               </motion.h2>
-
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden mb-8">
-                <div className="aspect-video relative">
-                  <div className="w-full h-full bg-gradient-to-r from-gray-100 to-gray-50 flex items-center justify-center">
-                    <Image
-                      src="/liquid-staking-flow.png"
-                      alt="Liquid Staking Flow Diagram"
-                      width={600}
-                      height={300}
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-                <div className="p-4 text-gray-600 text-sm">
-                  Liquid Staking Derivatives unlock the full potential of staked ETH, enabling both network security and
-                  DeFi participation
-                </div>
-              </div>
 
               <p className="text-lg mb-4 text-gray-800">
                 Ethereum's transition to Proof of Stake (PoS) created new opportunities for ETH holders to earn rewards
@@ -865,7 +1023,7 @@ export default function LiquidStakingDerivativesArticle() {
                 users to participate in network validation and earn staking rewards.
               </p>
 
-              <p className="text-lg mb-4 text-gray-800">
+              <p className="text-lg mb-6 text-gray-800">
                 In this comprehensive guide, we'll explore what LSDs are, how they work, their benefits and risks, and
                 their profound impact on the broader Ethereum ecosystem.
               </p>
@@ -874,7 +1032,7 @@ export default function LiquidStakingDerivativesArticle() {
             </section>
 
             {/* What Are LSDs */}
-            <section id="what-are-lsds" className="mb-16">
+            <section id="what-are-lsds" className="mb-12 sm:mb-16">
               <motion.h2
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
@@ -891,11 +1049,38 @@ export default function LiquidStakingDerivativesArticle() {
                     <div className="w-full h-full bg-gradient-to-r from-gray-100 to-gray-50 flex items-center justify-center">
                       <div className="flex space-x-4">
                         <div className="bg-gray-200 rounded-lg p-4 flex items-center gap-2">
-                          <Image src="/lido-abstract-logo.png" alt="Lido" width={20} height={20} />
+                          <div className="w-6 h-6 overflow-hidden rounded-full">
+                            <Image
+                              src="https://s2.coinmarketcap.com/static/img/coins/200x200/8085.png"
+                              alt="Lido"
+                              width={24}
+                              height={24}
+                            />
+                          </div>
                           <span className="text-gray-800">stETH</span>
                         </div>
-                        <div className="bg-gray-200 rounded-lg p-4 text-gray-800">rETH</div>
-                        <div className="bg-gray-200 rounded-lg p-4 text-gray-800">cbETH</div>
+                        <div className="bg-gray-200 rounded-lg p-4 flex items-center gap-2">
+                          <div className="w-6 h-6 overflow-hidden rounded-full">
+                            <Image
+                              src="https://raw.githubusercontent.com/rocket-pool/rocketpool/master/images/logo.png?raw=true"
+                              alt="Rocket Pool"
+                              width={24}
+                              height={24}
+                            />
+                          </div>
+                          <span className="text-gray-800">rETH</span>
+                        </div>
+                        <div className="bg-gray-200 rounded-lg p-4 flex items-center gap-2">
+                          <div className="w-6 h-6 overflow-hidden rounded-full">
+                            <Image
+                              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6hcTTU1A8Ymi2VldXqCsPkBu_ltAhIKiRg&s"
+                              alt="Coinbase"
+                              width={24}
+                              height={24}
+                            />
+                          </div>
+                          <span className="text-gray-800">cbETH</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -949,7 +1134,7 @@ export default function LiquidStakingDerivativesArticle() {
             </section>
 
             {/* How They Work */}
-            <section id="how-they-work" className="mb-16">
+            <section id="how-they-work" className="mb-12 sm:mb-16">
               <motion.h2
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
@@ -965,7 +1150,7 @@ export default function LiquidStakingDerivativesArticle() {
               </p>
 
               <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden mb-8">
-                <div className="p-6">
+                <div className="p-4 sm:p-6">
                   <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="flex flex-col items-center text-center">
                       <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-2 text-2xl text-gray-800">
@@ -1074,7 +1259,7 @@ export default function LiquidStakingDerivativesArticle() {
             </section>
 
             {/* Major Protocols */}
-            <section id="major-protocols" className="mb-16">
+            <section id="major-protocols" className="mb-12 sm:mb-16">
               <motion.h2
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
@@ -1093,8 +1278,13 @@ export default function LiquidStakingDerivativesArticle() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg flex flex-col">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center">
-                      <Image src="/lido-abstract-logo.png" alt="Lido" width={32} height={32} />
+                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
+                      <Image
+                        src="https://s2.coinmarketcap.com/static/img/coins/200x200/8085.png"
+                        alt="Lido"
+                        width={32}
+                        height={32}
+                      />
                     </div>
                     <h3 className="text-2xl font-bold text-gray-800">Lido Finance</h3>
                   </div>
@@ -1131,8 +1321,13 @@ export default function LiquidStakingDerivativesArticle() {
 
                 <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg flex flex-col">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center text-2xl font-bold text-gray-800">
-                      RP
+                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
+                      <Image
+                        src="https://raw.githubusercontent.com/rocket-pool/rocketpool/master/images/logo.png?raw=true"
+                        alt="Rocket Pool"
+                        width={32}
+                        height={32}
+                      />
                     </div>
                     <h3 className="text-2xl font-bold text-gray-800">Rocket Pool</h3>
                   </div>
@@ -1170,8 +1365,13 @@ export default function LiquidStakingDerivativesArticle() {
 
                 <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg flex flex-col">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center text-2xl font-bold text-gray-800">
-                      CB
+                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
+                      <Image
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6hcTTU1A8Ymi2VldXqCsPkBu_ltAhIKiRg&s"
+                        alt="Coinbase"
+                        width={32}
+                        height={32}
+                      />
                     </div>
                     <h3 className="text-2xl font-bold text-gray-800">Coinbase</h3>
                   </div>
@@ -1208,8 +1408,13 @@ export default function LiquidStakingDerivativesArticle() {
 
                 <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg flex flex-col">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center text-2xl font-bold text-gray-800">
-                      FX
+                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
+                      <Image
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ75b9jMdiuMz-QCpDyQa2Q5jWEfN8jSYJtsQ&s"
+                        alt="Frax"
+                        width={32}
+                        height={32}
+                      />
                     </div>
                     <h3 className="text-2xl font-bold text-gray-800">Frax Finance</h3>
                   </div>
@@ -1247,7 +1452,7 @@ export default function LiquidStakingDerivativesArticle() {
             </section>
 
             {/* Benefits */}
-            <section id="benefits" className="mb-16">
+            <section id="benefits" className="mb-12 sm:mb-16">
               <motion.h2
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
@@ -1258,7 +1463,7 @@ export default function LiquidStakingDerivativesArticle() {
                 Benefits of Liquid Staking Derivatives
               </motion.h2>
 
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-6 mb-8">
+              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="bg-gray-50 p-4 rounded-lg text-center">
                     <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
@@ -1394,7 +1599,7 @@ export default function LiquidStakingDerivativesArticle() {
             </section>
 
             {/* Risks */}
-            <section id="risks" className="mb-16">
+            <section id="risks" className="mb-12 sm:mb-16">
               <motion.h2
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
@@ -1405,7 +1610,7 @@ export default function LiquidStakingDerivativesArticle() {
                 Risks and Challenges of Liquid Staking Derivatives
               </motion.h2>
 
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-6 mb-8">
+              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-gray-50 p-4 rounded-lg text-center">
                     <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
@@ -1520,7 +1725,7 @@ export default function LiquidStakingDerivativesArticle() {
             </section>
 
             {/* Impact */}
-            <section id="impact" className="mb-16">
+            <section id="impact" className="mb-12 sm:mb-16">
               <motion.h2
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
@@ -1535,7 +1740,7 @@ export default function LiquidStakingDerivativesArticle() {
                 Liquid staking derivatives have had a profound impact on Ethereum's financial ecosystem:
               </p>
 
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-6 mb-8">
+              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
                 <div className="text-center mb-4">
                   <h3 className="text-xl font-bold text-gray-800">Ecosystem Integration</h3>
                 </div>
@@ -1660,7 +1865,7 @@ export default function LiquidStakingDerivativesArticle() {
             </section>
 
             {/* Choosing */}
-            <section id="choosing" className="mb-16">
+            <section id="choosing" className="mb-12 sm:mb-16">
               <motion.h2
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
@@ -1781,7 +1986,7 @@ export default function LiquidStakingDerivativesArticle() {
             </section>
 
             {/* Future */}
-            <section id="future" className="mb-16">
+            <section id="future" className="mb-12 sm:mb-16">
               <motion.h2
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
@@ -1792,7 +1997,7 @@ export default function LiquidStakingDerivativesArticle() {
                 The Future of Liquid Staking Derivatives
               </motion.h2>
 
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-6 mb-8">
+              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
                 <div className="text-center mb-6">
                   <h3 className="text-xl font-bold text-gray-800">Emerging Trends</h3>
                 </div>
@@ -1910,7 +2115,7 @@ export default function LiquidStakingDerivativesArticle() {
             </section>
 
             {/* Conclusion */}
-            <section id="conclusion" className="mb-16">
+            <section id="conclusion" className="mb-12 sm:mb-16">
               <motion.h2
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
@@ -1921,7 +2126,7 @@ export default function LiquidStakingDerivativesArticle() {
                 Conclusion: The Transformative Power of Liquid Staking
               </motion.h2>
 
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-6 mb-8">
+              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
                 <div className="text-center">
                   <h3 className="text-xl font-bold mb-4 text-gray-800">Unlocking Capital Efficiency</h3>
                   <p className="text-gray-600 mb-4">
@@ -1954,7 +2159,7 @@ export default function LiquidStakingDerivativesArticle() {
                 of its economic infrastructure.
               </p>
 
-              <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg mb-8">
+              <div className="bg-white shadow-md border border-gray-200 p-4 sm:p-6 rounded-lg mb-8">
                 <p className="text-lg font-semibold mb-2 text-gray-800">Key Takeaways:</p>
                 <ul className="space-y-2 text-gray-600">
                   <li className="flex items-start gap-2">
@@ -1983,7 +2188,7 @@ export default function LiquidStakingDerivativesArticle() {
                 </ul>
               </div>
 
-              <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg mb-8">
+              <div className="bg-white shadow-md border border-gray-200 p-4 sm:p-6 rounded-lg mb-8">
                 <p className="text-gray-800">
                   <strong>Disclaimer:</strong> This article is for informational purposes only and should not be
                   construed as financial advice. Always do your own research before making investment decisions.
@@ -1992,18 +2197,39 @@ export default function LiquidStakingDerivativesArticle() {
             </section>
 
             {/* Download and Share */}
-            <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg mb-8">
+            <div className="bg-white shadow-md border border-gray-200 p-4 sm:p-6 rounded-lg mb-8">
               <h3 className="text-xl font-bold mb-4 text-gray-800">Share This Article</h3>
               <div className="flex flex-wrap gap-4">
-                <Button className="bg-gray-800 hover:bg-gray-700">
+                <Button
+                  className="bg-gray-800 hover:bg-gray-700"
+                  onClick={() => {
+                    alert("PDF download functionality would be implemented here")
+                  }}
+                >
                   <Download className="mr-2 h-4 w-4" />
                   Download PDF
                 </Button>
-                <Button className="bg-gray-800 hover:bg-gray-700">
+                <Button
+                  className="bg-gray-800 hover:bg-gray-700"
+                  onClick={() => {
+                    window.open(
+                      `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent("Learn about Liquid Staking Derivatives and how they're revolutionizing Ethereum staking.")}`,
+                      "_blank",
+                    )
+                  }}
+                >
                   <Twitter className="mr-2 h-4 w-4" />
                   Share on Twitter
                 </Button>
-                <Button className="bg-gray-800 hover:bg-gray-700">
+                <Button
+                  className="bg-gray-800 hover:bg-gray-700"
+                  onClick={() => {
+                    window.open(
+                      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`,
+                      "_blank",
+                    )
+                  }}
+                >
                   <Linkedin className="mr-2 h-4 w-4" />
                   Share on LinkedIn
                 </Button>
@@ -2011,78 +2237,7 @@ export default function LiquidStakingDerivativesArticle() {
             </div>
 
             {/* Related Articles */}
-            <div className="mb-8">
-              <h3 className="text-xl font-bold mb-4 text-gray-800">Related Articles</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="h-32 bg-gradient-to-r from-gray-100 to-gray-50 flex items-center justify-center">
-                    <Image
-                      src="/ethereum-nodes.png"
-                      alt="Ethereum Staking"
-                      width={384}
-                      height={128}
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h4 className="font-semibold mb-2 text-gray-800">Ethereum Staking for Beginners</h4>
-                    <p className="text-sm text-gray-600 mb-4">A complete guide to getting started with ETH staking</p>
-                    <Link
-                      href="/articles/ethereum-staking-for-beginners"
-                      className="text-gray-600 text-sm hover:text-gray-900 flex items-center"
-                    >
-                      Read More <ExternalLink size={14} className="ml-1" />
-                    </Link>
-                  </div>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="h-32 bg-gradient-to-r from-gray-100 to-gray-50 flex items-center justify-center">
-                    <Image
-                      src="/defi-yield-landscape.png"
-                      alt="DeFi Yield Comparison"
-                      width={384}
-                      height={128}
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h4 className="font-semibold mb-2 text-gray-800">Staking vs DeFi Yields</h4>
-                    <p className="text-sm text-gray-600 mb-4">
-                      Comparing returns across different Ethereum yield strategies
-                    </p>
-                    <Link
-                      href="/articles/staking-vs-defi-yields"
-                      className="text-gray-600 text-sm hover:text-gray-900 flex items-center"
-                    >
-                      Read More <ExternalLink size={14} className="ml-1" />
-                    </Link>
-                  </div>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="h-32 bg-gradient-to-r from-gray-100 to-gray-50 flex items-center justify-center">
-                    <Image
-                      src="/ethereum-staking-evolution.png"
-                      alt="Future of Ethereum Staking"
-                      width={384}
-                      height={128}
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h4 className="font-semibold mb-2 text-gray-800">Future of Ethereum Staking</h4>
-                    <p className="text-sm text-gray-600 mb-4">
-                      Upcoming developments in the Ethereum staking ecosystem
-                    </p>
-                    <Link
-                      href="/articles/future-of-ethereum-staking"
-                      className="text-gray-600 text-sm hover:text-gray-900 flex items-center"
-                    >
-                      Read More <ExternalLink size={14} className="ml-1" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <RelatedArticles />
           </div>
 
           {/* Sticky Table of Contents - Desktop Only */}
