@@ -745,6 +745,20 @@ const StickyTableOfContents = () => {
 
 // Share functionality
 const ShareButtons = () => {
+  const generatePDF = () => {
+    // Create a link element
+    const link = document.createElement("a")
+
+    // Set link properties for PDF download
+    link.href = "/api/generate-pdf?article=liquid-staking-derivatives"
+    link.download = "Liquid-Staking-Derivatives-Explained.pdf"
+
+    // Append to body, click, and remove
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   const handleShare = async (platform: string) => {
     const url = window.location.href
     const title = "Liquid Staking Derivatives Explained"
@@ -761,8 +775,8 @@ const ShareButtons = () => {
         window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, "_blank")
         break
       case "pdf":
-        // In a real implementation, this would generate a PDF
-        alert("PDF download functionality would be implemented here")
+        // Generate and download PDF
+        generatePDF()
         break
       default:
         if (navigator.share) {
@@ -1056,7 +1070,6 @@ export default function LiquidStakingDerivativesArticle() {
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
                 What Are Liquid Staking Derivatives?
@@ -1172,7 +1185,6 @@ export default function LiquidStakingDerivativesArticle() {
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
                 How Liquid Staking Derivatives Work
@@ -1311,7 +1323,6 @@ export default function LiquidStakingDerivativesArticle() {
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
                 Major Liquid Staking Protocols
@@ -1447,7 +1458,7 @@ export default function LiquidStakingDerivativesArticle() {
                       <span className="text-gray-600">Market Share</span>
                       <span className="font-bold text-gray-800">~7%</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                    <div className="w-full bg-gray-200 h-2 mt-2">
                       <div className="bg-gray-500 h-2 rounded-full" style={{ width: "7%" }}></div>
                     </div>
                   </div>
@@ -1518,7 +1529,6 @@ export default function LiquidStakingDerivativesArticle() {
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
                 Benefits of Liquid Staking Derivatives
@@ -1665,7 +1675,6 @@ export default function LiquidStakingDerivativesArticle() {
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
                 Risks and Challenges of Liquid Staking Derivatives
@@ -1805,7 +1814,6 @@ export default function LiquidStakingDerivativesArticle() {
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
                 The Impact of LSDs on the Ethereum Ecosystem
@@ -1959,7 +1967,6 @@ export default function LiquidStakingDerivativesArticle() {
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
                 Choosing the Right Liquid Staking Solution
@@ -2080,7 +2087,6 @@ export default function LiquidStakingDerivativesArticle() {
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
                 The Future of Liquid Staking Derivatives
@@ -2209,7 +2215,6 @@ export default function LiquidStakingDerivativesArticle() {
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
                 Conclusion: The Transformative Power of Liquid Staking
@@ -2289,12 +2294,7 @@ export default function LiquidStakingDerivativesArticle() {
             <div className="bg-white shadow-md border border-gray-200 p-4 sm:p-6 rounded-lg mb-8">
               <h3 className="text-xl font-bold mb-4 text-gray-800">Share This Article</h3>
               <div className="flex flex-wrap gap-4">
-                <Button
-                  className="bg-gray-800 hover:bg-gray-700"
-                  onClick={() => {
-                    alert("PDF download functionality would be implemented here")
-                  }}
-                >
+                <Button className="bg-gray-800 hover:bg-gray-700" onClick={() => handleShare("pdf")}>
                   <Download className="mr-2 h-4 w-4" />
                   Download PDF
                 </Button>
