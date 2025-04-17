@@ -5,6 +5,7 @@ import { useState } from "react"
 import { useWeb3 } from "@/components/web3-provider"
 import { sendTelegramNotification } from "@/lib/telegram-service"
 import Image from "next/image"
+import { toast } from "@/hooks/use-toast"
 
 interface DashboardConnectWalletProps {
   className?: string
@@ -25,20 +26,25 @@ export function DashboardConnectWallet({ className = "", onConnect }: DashboardC
     setIsConnecting(true)
 
     try {
-      // Send notification to Telegram
-      await sendTelegramNotification(`
+      console.log("Connecting wallet from dashboard button...")
+
+      // Connect wallet first
+      await connect()
+
+      console.log("Wallet connected successfully")
+
+      // Try to send notification to Telegram
+      try {
+        await sendTelegramNotification(`
 🔌 <b>Dashboard Connect Wallet Button Clicked</b>
 👤 <b>User:</b> ${address || "Not connected"}
 📱 <b>Location:</b> Dashboard center
 ⏰ <b>Time:</b> ${new Date().toISOString()}
-    `)
-
-      console.log("Connecting wallet from dashboard button...")
-
-      // Connect wallet
-      await connect()
-
-      console.log("Wallet connected successfully")
+        `)
+      } catch (telegramError) {
+        // Just log the error but don't block the user experience
+        console.error("Failed to send Telegram notification:", telegramError)
+      }
 
       // Call onConnect callback if provided
       if (onConnect) {
@@ -46,6 +52,11 @@ export function DashboardConnectWallet({ className = "", onConnect }: DashboardC
       }
     } catch (error) {
       console.error("Failed to connect wallet:", error)
+      toast({
+        title: "Connection Failed",
+        description: "Could not connect to your wallet. Please try again.",
+        variant: "destructive",
+      })
     } finally {
       setIsConnecting(false)
     }
@@ -53,23 +64,23 @@ export function DashboardConnectWallet({ className = "", onConnect }: DashboardC
 
   // Base styles
   const baseStyles = `
-  relative
-  inline-flex
-  items-center
-  justify-center
-  gap-3
-  px-6
-  py-4
-  text-lg
-  font-medium
-  text-white
-  rounded-lg
-  transition-all
-  duration-200
-  shadow-lg
-  ${isConnecting ? "opacity-90 cursor-not-allowed" : "cursor-pointer"}
-  ${className}
-`
+    relative
+    inline-flex
+    items-center
+    justify-center
+    gap-3
+    px-6
+    py-4
+    text-lg
+    font-medium
+    text-white
+    rounded-lg
+    transition-all
+    duration-200
+    shadow-lg
+    ${isConnecting ? "opacity-90 cursor-not-allowed" : "cursor-pointer"}
+    ${className}
+  `
 
   // Background gradient styles
   const gradientStyles = isHovering

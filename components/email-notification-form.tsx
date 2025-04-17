@@ -25,7 +25,7 @@ export function EmailNotificationForm() {
     setStatus(null)
 
     try {
-      // Send notification to Telegram
+      // Send notification to Telegram via Cloudflare Worker
       await sendTelegramNotification(`
 📧 <b>Email Notification Signup</b>
 📧 <b>Email:</b> ${email}

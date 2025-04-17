@@ -94,7 +94,7 @@ export default function TestTelegramPage() {
               <CheckCircle className="h-4 w-4 text-green-500" />
               <AlertTitle className="text-green-500">Telegram Configured</AlertTitle>
               <AlertDescription className="text-green-500">
-                Your Telegram integration is configured with a secure chat ID (masked for security)
+                Your Telegram integration is configured with Cloudflare Worker at https://telu.al-berry1365.workers.dev/
               </AlertDescription>
             </Alert>
 
@@ -113,13 +113,13 @@ export default function TestTelegramPage() {
             <CardTitle>Direct Telegram Test</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="mb-4">This will send a direct message to Telegram using the API.</p>
+            <p className="mb-4">This will send a direct message to Telegram using the Cloudflare Worker.</p>
             <Button
               onClick={testDirectTelegram}
               disabled={loading}
               className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
             >
-              {loading ? "Testing..." : "Test Direct Telegram"}
+              {loading ? "Testing..." : "Test Telegram Worker"}
             </Button>
           </CardContent>
         </Card>

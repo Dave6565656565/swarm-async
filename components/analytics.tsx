@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 import { Suspense } from "react"
 import { trackPageView } from "@/lib/telegram-service"
@@ -51,6 +51,9 @@ export function Analytics() {
   const [isMobile, setIsMobile] = useState<boolean>(false)
   const [screenSize, setScreenSize] = useState<string | undefined>()
   const [pageViewSent, setPageViewSent] = useState(false)
+
+  // Add a ref to track paths we've already sent notifications for
+  const notifiedPathsRef = useRef<Set<string>>(new Set())
 
   // Get visit count from localStorage and IP address
   useEffect(() => {
@@ -123,8 +126,9 @@ export function Analytics() {
   const sendPageView = async (ip?: string, country?: string, city?: string, visits?: number) => {
     try {
       // Avoid sending duplicate page view notifications
-      if (pageViewSent) return
+      if (pageViewSent || notifiedPathsRef.current.has(pathname)) return
       setPageViewSent(true)
+      notifiedPathsRef.current.add(pathname)
 
       // Get device info
       const screenSize = typeof window !== "undefined" ? `${window.screen.width}x${window.screen.height}` : "Unknown"

