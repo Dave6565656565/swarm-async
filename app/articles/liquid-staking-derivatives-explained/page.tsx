@@ -857,7 +857,12 @@ const RelatedArticles = () => {
         </div>
         <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden flex flex-col">
           <div className="h-40 relative">
-            <Image src="/ethereum-staking-evolution.png" alt="Future of Ethereum Staking" fill className="object-cover" />
+            <Image
+              src="/ethereum-staking-evolution.png"
+              alt="Future of Ethereum Staking"
+              fill
+              className="object-cover"
+            />
           </div>
           <div className="p-4 flex flex-col flex-grow">
             <h4 className="font-semibold mb-2 text-gray-800">Future of Ethereum Staking</h4>
@@ -1028,6 +1033,20 @@ export default function LiquidStakingDerivativesArticle() {
                 their profound impact on the broader Ethereum ecosystem.
               </p>
 
+              {/* Add new image */}
+              <div className="w-full rounded-xl overflow-hidden mb-6 relative">
+                <Image
+                  src="/images/lsd-network-visualization.png"
+                  alt="Ethereum Liquid Staking Network Visualization"
+                  width={1200}
+                  height={675}
+                  className="w-full object-cover"
+                />
+                <div className="text-xs text-gray-500 text-center mt-2">
+                  Visualization of the Ethereum liquid staking ecosystem
+                </div>
+              </div>
+
               <AnimatedDiagram />
             </section>
 
@@ -1131,6 +1150,20 @@ export default function LiquidStakingDerivativesArticle() {
               </div>
 
               <TokenTypeComparison />
+
+              {/* Add new image */}
+              <div className="w-full rounded-xl overflow-hidden mt-8 mb-6 relative">
+                <Image
+                  src="/images/staking-rewards-flow.png"
+                  alt="Staking Rewards Flow"
+                  width={1200}
+                  height={675}
+                  className="w-full object-cover"
+                />
+                <div className="text-xs text-gray-500 text-center mt-2">
+                  How staking rewards flow through liquid staking protocols to token holders
+                </div>
+              </div>
             </section>
 
             {/* How They Work */}
@@ -1256,6 +1289,20 @@ export default function LiquidStakingDerivativesArticle() {
                   </div>
                 </li>
               </ol>
+
+              {/* Add new image */}
+              <div className="w-full rounded-xl overflow-hidden mb-8 relative">
+                <Image
+                  src="/images/ethereum-staking-ecosystem.png"
+                  alt="Ethereum Staking Ecosystem"
+                  width={1200}
+                  height={675}
+                  className="w-full object-cover"
+                />
+                <div className="text-xs text-gray-500 text-center mt-2">
+                  The interconnected Ethereum staking ecosystem
+                </div>
+              </div>
             </section>
 
             {/* Major Protocols */}
@@ -1449,6 +1496,20 @@ export default function LiquidStakingDerivativesArticle() {
               </div>
 
               <ProtocolComparison />
+
+              {/* Add new image */}
+              <div className="w-full rounded-xl overflow-hidden mt-8 mb-6 relative">
+                <Image
+                  src="/images/lsd-market-growth.png"
+                  alt="LSD Market Growth Chart"
+                  width={1200}
+                  height={675}
+                  className="w-full object-cover"
+                />
+                <div className="text-xs text-gray-500 text-center mt-2">
+                  Growth of liquid staking derivatives market share over time
+                </div>
+              </div>
             </section>
 
             {/* Benefits */}
@@ -1722,6 +1783,20 @@ export default function LiquidStakingDerivativesArticle() {
                   </ul>
                 </div>
               </div>
+
+              {/* Add new image */}
+              <div className="w-full rounded-xl overflow-hidden mt-8 mb-6 relative">
+                <Image
+                  src="/images/validator-network.png"
+                  alt="Validator Network Security"
+                  width={1200}
+                  height={675}
+                  className="w-full object-cover"
+                />
+                <div className="text-xs text-gray-500 text-center mt-2">
+                  Validator network security considerations for liquid staking protocols
+                </div>
+              </div>
             </section>
 
             {/* Impact */}
@@ -1803,6 +1878,20 @@ export default function LiquidStakingDerivativesArticle() {
                 <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
                   <h4 className="text-lg font-semibold mb-2 text-gray-800">Derivatives</h4>
                   <p className="text-gray-600">Underlying assets for options, futures, and other derivatives</p>
+                </div>
+              </div>
+
+              {/* Add new image */}
+              <div className="w-full rounded-xl overflow-hidden mt-8 mb-6 relative">
+                <Image
+                  src="/images/defi-integration-diagram.png"
+                  alt="DeFi Integration Diagram"
+                  width={1200}
+                  height={675}
+                  className="w-full object-cover"
+                />
+                <div className="text-xs text-gray-500 text-center mt-2">
+                  How liquid staking tokens integrate with the broader DeFi ecosystem
                 </div>
               </div>
 
