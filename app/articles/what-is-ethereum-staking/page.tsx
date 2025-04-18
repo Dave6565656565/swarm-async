@@ -27,6 +27,8 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { ParticlesBackground } from "@/components/particles-background"
 import { AnimatedStakingProcess } from "@/components/animated-staking-process"
+import { BeaconChainDiagram } from "@/components/beacon-chain-diagram"
+import { EthereumFutureDiagram } from "@/components/ethereum-future-diagram"
 
 // Interactive Staking Calculator component
 const StakingCalculator = () => {
@@ -1325,7 +1327,7 @@ export default function WhatIsEthereumStakingPage() {
               <div className="flex flex-col md:flex-row gap-6 mb-8">
                 <div className="md:w-1/2 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
                   <div className="aspect-video relative">
-                    <Image src="/ethereum-beacon-chain.png" alt="Ethereum Beacon Chain" fill className="object-cover" />
+                    <BeaconChainDiagram />
                   </div>
                 </div>
                 <div className="md:w-1/2">
@@ -2066,12 +2068,7 @@ export default function WhatIsEthereumStakingPage() {
               <div className="flex flex-col md:flex-row gap-6 mb-8">
                 <div className="md:w-1/2 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
                   <div className="aspect-video relative">
-                    <Image
-                      src="/ethereum-future-roadmap.png"
-                      alt="Ethereum Future Roadmap"
-                      fill
-                      className="object-cover"
-                    />
+                    <EthereumFutureDiagram />
                   </div>
                 </div>
                 <div className="md:w-1/2">
