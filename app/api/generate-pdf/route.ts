@@ -20,49 +20,70 @@ export async function GET(request: NextRequest) {
 
     console.log(`Generating PDF for: ${url}`)
 
-    // Launch browser
+    // Launch browser with more robust options
     const browser = await puppeteer.launch({
       headless: "new",
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-accelerated-2d-canvas",
+        "--no-first-run",
+        "--no-zygote",
+        "--single-process",
+        "--disable-gpu",
+      ],
     })
 
-    const page = await browser.newPage()
+    try {
+      const page = await browser.newPage()
 
-    // Set viewport for a good PDF size
-    await page.setViewport({ width: 1200, height: 800 })
+      // Set a reasonable timeout
+      page.setDefaultNavigationTimeout(30000)
 
-    // Navigate to the article
-    await page.goto(url, { waitUntil: "networkidle0" })
+      // Set viewport for a good PDF size
+      await page.setViewport({ width: 1200, height: 800 })
 
-    // Optional: Remove elements you don't want in the PDF
-    await page.evaluate(() => {
-      const elementsToRemove = document.querySelectorAll("nav, footer, button, .share-buttons, .mobile-only")
-      elementsToRemove.forEach((el) => el.remove())
-    })
+      // Navigate to the article with more robust wait conditions
+      await page.goto(url, {
+        waitUntil: ["networkidle0", "domcontentloaded"],
+        timeout: 30000,
+      })
 
-    // Generate PDF
-    const pdf = await page.pdf({
-      format: "A4",
-      printBackground: true,
-      margin: {
-        top: "20px",
-        right: "20px",
-        bottom: "20px",
-        left: "20px",
-      },
-    })
+      // Wait a bit to ensure all content is fully loaded
+      await page.waitForTimeout(2000)
 
-    await browser.close()
+      // Optional: Remove elements you don't want in the PDF
+      await page.evaluate(() => {
+        const elementsToRemove = document.querySelectorAll("nav, footer, button, .share-buttons, .mobile-only")
+        elementsToRemove.forEach((el) => el.remove())
+      })
 
-    // Return the PDF
-    return new NextResponse(pdf, {
-      headers: {
-        "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="${article}.pdf"`,
-      },
-    })
+      // Generate PDF with more specific options
+      const pdf = await page.pdf({
+        format: "A4",
+        printBackground: true,
+        margin: {
+          top: "20px",
+          right: "20px",
+          bottom: "20px",
+          left: "20px",
+        },
+        preferCSSPageSize: true,
+      })
+
+      return new NextResponse(pdf, {
+        headers: {
+          "Content-Type": "application/pdf",
+          "Content-Disposition": `attachment; filename="${article}.pdf"`,
+        },
+      })
+    } finally {
+      // Ensure browser is closed even if there's an error
+      await browser.close()
+    }
   } catch (error) {
     console.error("Error generating PDF:", error)
-    return NextResponse.json({ error: "Failed to generate PDF" }, { status: 500 })
+    return NextResponse.json({ error: "Failed to generate PDF", details: String(error) }, { status: 500 })
   }
 }

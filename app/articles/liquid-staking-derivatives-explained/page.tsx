@@ -29,11 +29,32 @@ const LSDCalculator = () => {
   const [period, setPeriod] = useState<number>(12) // months
   const [selectedProtocol, setSelectedProtocol] = useState<string>("lido")
 
+  // In the LSDCalculator component, update the protocols object to include logo URLs
   const protocols = {
-    lido: { name: "Lido", apy: 3.5, fee: 10 },
-    rocketpool: { name: "Rocket Pool", apy: 3.8, fee: 15 },
-    coinbase: { name: "Coinbase", apy: 3.2, fee: 25 },
-    frax: { name: "Frax", apy: 3.6, fee: 10 },
+    lido: {
+      name: "Lido",
+      apy: 3.5,
+      fee: 10,
+      logo: "https://s2.coinmarketcap.com/static/img/coins/200x200/8085.png",
+    },
+    rocketpool: {
+      name: "Rocket Pool",
+      apy: 3.8,
+      fee: 15,
+      logo: "https://raw.githubusercontent.com/rocket-pool/rocketpool/master/images/logo.png?raw=true",
+    },
+    coinbase: {
+      name: "Coinbase",
+      apy: 3.2,
+      fee: 25,
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6hcTTU1A8Ymi2VldXqCsPkBu_ltAhIKiRg&s",
+    },
+    frax: {
+      name: "Frax",
+      apy: 3.6,
+      fee: 10,
+      logo: "https://pbs.twimg.com/profile_images/1345677460747108352/JjqQ9ROz_400x400.jpg",
+    },
   }
 
   const calculateReturns = () => {
@@ -64,6 +85,7 @@ const LSDCalculator = () => {
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-medium mb-2 text-gray-700">Select Protocol</label>
+              {/* Update the protocol selection buttons to include logos */}
               <div className="grid grid-cols-2 gap-2">
                 {Object.entries(protocols).map(([id, protocol]) => (
                   <button
@@ -75,6 +97,11 @@ const LSDCalculator = () => {
                         : "bg-white border border-gray-200 hover:bg-gray-50"
                     }`}
                   >
+                    <div className="flex items-center justify-center mb-2">
+                      <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                        <Image src={protocol.logo || "/placeholder.svg"} alt={protocol.name} width={20} height={20} />
+                      </div>
+                    </div>
                     <div className="font-medium text-gray-800">{protocol.name}</div>
                     <div className="text-sm text-emerald-600">{protocol.apy}% APY</div>
                   </button>
@@ -130,9 +157,18 @@ const LSDCalculator = () => {
                   <span className="font-medium text-gray-800">{period} months</span>
                 </div>
 
+                {/* Also update the protocol display in the results section to include the logo */}
                 <div className="flex justify-between items-center pb-2 border-b border-gray-200">
                   <span className="text-gray-600">Protocol</span>
-                  <span className="font-medium text-gray-800">
+                  <span className="font-medium text-gray-800 flex items-center">
+                    <div className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden mr-2">
+                      <Image
+                        src={protocols[selectedProtocol as keyof typeof protocols].logo || "/placeholder.svg"}
+                        alt={protocols[selectedProtocol as keyof typeof protocols].name}
+                        width={12}
+                        height={12}
+                      />
+                    </div>
                     {protocols[selectedProtocol as keyof typeof protocols].name}
                   </span>
                 </div>
@@ -239,7 +275,7 @@ const ProtocolComparison = () => {
             <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
               <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
                 <Image
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ75b9jMdiuMz-QCpDyQa2Q5jWEfN8jSYJtsQ&s"
+                  src="https://pbs.twimg.com/profile_images/1345677460747108352/JjqQ9ROz_400x400.jpg"
                   alt="Frax"
                   width={24}
                   height={24}
@@ -325,7 +361,7 @@ const ProtocolComparison = () => {
   )
 }
 
-// Animated diagram component
+// Completely rewritten Animated diagram component with fixed layout
 const AnimatedDiagram = () => {
   const [isMobile, setIsMobile] = useState(false)
 
@@ -342,219 +378,165 @@ const AnimatedDiagram = () => {
     <div className="w-full rounded-xl overflow-hidden bg-white shadow-md border border-gray-200 p-4 sm:p-6">
       <h3 className="text-xl font-medium mb-6 text-gray-800">How Liquid Staking Works</h3>
 
-      <div className="relative h-[300px] md:h-[400px]">
-        {/* Mobile-optimized diagram */}
-        {isMobile ? (
-          <div className="h-full flex flex-col justify-around">
-            <div className="flex items-center justify-center gap-4">
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-                  <span className="text-3xl text-gray-800">Ξ</span>
-                </div>
-                <div className="text-sm font-medium text-gray-800">ETH Deposit</div>
-              </div>
-              <div className="text-gray-400">→</div>
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-                  <div className="text-center">
-                    <div className="text-xs text-gray-800">Staking</div>
-                    <div className="text-xs text-gray-800">Protocol</div>
-                  </div>
-                </div>
-                <div className="text-sm font-medium text-gray-800">Lido, etc.</div>
-              </div>
-            </div>
-
-            <div className="flex justify-center">
-              <div className="h-10 w-0.5 bg-gray-300"></div>
-            </div>
-
-            <div className="flex items-center justify-center gap-4">
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-                  <div className="text-center">
-                    <div className="text-xs text-gray-800">Ethereum</div>
-                    <div className="text-xs text-gray-800">Validators</div>
-                  </div>
-                </div>
-                <div className="text-sm font-medium text-gray-800">Network Security</div>
-              </div>
-              <div className="text-gray-400">→</div>
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-                  <span className="text-xl text-gray-800">stETH</span>
-                </div>
-                <div className="text-sm font-medium text-gray-800">LSD Token</div>
-              </div>
-            </div>
-
-            <div className="flex justify-center">
-              <div className="h-10 w-0.5 bg-gray-300"></div>
-            </div>
-
+      {isMobile ? (
+        // Mobile-optimized diagram
+        <div className="h-[300px] flex flex-col justify-around">
+          <div className="flex items-center justify-center gap-4">
             <div className="text-center">
-              <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-                <div className="text-center">
-                  <div className="text-xs text-gray-800">DeFi</div>
-                  <div className="text-xs text-gray-800">Applications</div>
-                </div>
-              </div>
-              <div className="text-sm font-medium text-gray-800">Lending, Trading, Yield</div>
-            </div>
-          </div>
-        ) : (
-          // Desktop animated diagram
-          <>
-            {/* ETH Deposit */}
-            <motion.div
-              className="absolute top-[10%] left-[5%] w-[20%] text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
               <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
                 <span className="text-3xl text-gray-800">Ξ</span>
               </div>
-              <div className="font-medium text-gray-800">ETH Deposit</div>
-            </motion.div>
-
-            {/* Arrow 1 */}
-            <motion.div
-              className="absolute top-[15%] left-[26%] w-[15%]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              <div className="h-0.5 w-full bg-gradient-to-r from-gray-400 to-gray-500"></div>
-              <div className="absolute right-0 top-[-4px] text-gray-500">
-                <ArrowRight size={20} />
+              <div className="text-sm font-medium text-gray-800">ETH Deposit</div>
+            </div>
+            <div className="text-gray-400">→</div>
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                <div className="text-center">
+                  <div className="text-xs text-gray-800">Staking</div>
+                  <div className="text-xs text-gray-800">Protocol</div>
+                </div>
               </div>
-            </motion.div>
+              <div className="text-sm font-medium text-gray-800">Lido, etc.</div>
+            </div>
+          </div>
 
-            {/* Staking Protocol */}
-            <motion.div
-              className="absolute top-[10%] left-[42%] w-[25%] text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0 }}
-            >
-              <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+          <div className="flex justify-center">
+            <div className="h-10 w-0.5 bg-gray-300"></div>
+          </div>
+
+          <div className="flex items-center justify-center gap-4">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                <div className="text-center">
+                  <div className="text-xs text-gray-800">Ethereum</div>
+                  <div className="text-xs text-gray-800">Validators</div>
+                </div>
+              </div>
+              <div className="text-sm font-medium text-gray-800">Network Security</div>
+            </div>
+            <div className="text-gray-400">→</div>
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                <span className="text-xl text-gray-800">stETH</span>
+              </div>
+              <div className="text-sm font-medium text-gray-800">LSD Token</div>
+            </div>
+          </div>
+
+          <div className="flex justify-center">
+            <div className="h-10 w-0.5 bg-gray-300"></div>
+          </div>
+
+          <div className="text-center">
+            <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+              <div className="text-center">
+                <div className="text-xs text-gray-800">DeFi</div>
+                <div className="text-xs text-gray-800">Applications</div>
+              </div>
+            </div>
+            <div className="text-sm font-medium text-gray-800">Lending, Trading, Yield</div>
+          </div>
+        </div>
+      ) : (
+        // Fixed desktop diagram with proper positioning and static elements
+        <div className="relative h-[400px] w-full">
+          {/* Static diagram for desktop */}
+          <div className="absolute top-[20px] left-[50px]">
+            <div className="flex flex-col items-center">
+              <div className="w-20 h-20 rounded-lg bg-gray-100 flex items-center justify-center">
+                <span className="text-3xl text-gray-800">Ξ</span>
+              </div>
+              <div className="mt-2 font-medium text-gray-800">ETH Deposit</div>
+            </div>
+          </div>
+
+          {/* Arrow from ETH to Protocol */}
+          <div className="absolute top-[60px] left-[120px] w-[150px] h-[2px] bg-gray-400"></div>
+          <div className="absolute top-[56px] left-[270px] text-gray-500">
+            <ArrowRight size={16} />
+          </div>
+
+          {/* Staking Protocol */}
+          <div className="absolute top-[20px] left-[300px]">
+            <div className="flex flex-col items-center">
+              <div className="w-20 h-20 rounded-lg bg-gray-100 flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-sm text-gray-800">Staking</div>
                   <div className="text-sm text-gray-800">Protocol</div>
                 </div>
               </div>
-              <div className="font-medium text-gray-800">Lido, Rocket Pool, etc.</div>
-            </motion.div>
+              <div className="mt-2 font-medium text-gray-800">Lido, Rocket Pool, etc.</div>
+            </div>
+          </div>
 
-            {/* Arrow 2 Down */}
-            <motion.div
-              className="absolute top-[32%] left-[52%] h-[15%]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.4 }}
-            >
-              <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
-              <div className="absolute bottom-0 left-[-4px] text-gray-500">
-                <ChevronDown size={20} />
-              </div>
-            </motion.div>
+          {/* Arrow down to Validators */}
+          <div className="absolute top-[100px] left-[360px] h-[80px] w-[2px] bg-gray-400"></div>
+          <div className="absolute top-[180px] left-[356px] text-gray-500">
+            <ChevronDown size={16} />
+          </div>
 
-            {/* Validator */}
-            <motion.div
-              className="absolute top-[48%] left-[42%] w-[25%] text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.8 }}
-            >
-              <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+          {/* Ethereum Validators */}
+          <div className="absolute top-[200px] left-[300px]">
+            <div className="flex flex-col items-center">
+              <div className="w-20 h-20 rounded-lg bg-gray-100 flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-sm text-gray-800">Ethereum</div>
                   <div className="text-sm text-gray-800">Validators</div>
                 </div>
               </div>
-              <div className="font-medium text-gray-800">Securing the Network</div>
-            </motion.div>
+              <div className="mt-2 font-medium text-gray-800">Securing the Network</div>
+            </div>
+          </div>
 
-            {/* Arrow 3 Up */}
-            <motion.div
-              className="absolute top-[32%] left-[67%] h-[15%]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 2.2 }}
-            >
-              <div className="w-0.5 h-full bg-gradient-to-t from-gray-400 to-gray-500 mx-auto"></div>
-              <div className="absolute top-0 left-[-4px] text-gray-500">
-                <ChevronDown size={20} style={{ transform: "rotate(180deg)" }} />
-              </div>
-            </motion.div>
+          {/* Arrow up to LSD Token */}
+          <div className="absolute top-[100px] left-[460px] h-[80px] w-[2px] bg-gray-400"></div>
+          <div className="absolute top-[100px] left-[456px] text-gray-500">
+            <ChevronDown size={16} style={{ transform: "rotate(180deg)" }} />
+          </div>
 
-            {/* LSD Token */}
-            <motion.div
-              className="absolute top-[10%] left-[75%] w-[20%] text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.6 }}
-            >
-              <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+          {/* LSD Token */}
+          <div className="absolute top-[20px] left-[550px]">
+            <div className="flex flex-col items-center">
+              <div className="w-20 h-20 rounded-lg bg-gray-100 flex items-center justify-center">
                 <span className="text-xl text-gray-800">stETH</span>
               </div>
-              <div className="font-medium text-gray-800">LSD Token</div>
-            </motion.div>
+              <div className="mt-2 font-medium text-gray-800">LSD Token</div>
+            </div>
+          </div>
 
-            {/* Arrow 4 Down to DeFi */}
-            <motion.div
-              className="absolute top-[32%] left-[80%] h-[15%]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 3.0 }}
-            >
-              <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
-              <div className="absolute bottom-0 left-[-4px] text-gray-500">
-                <ChevronDown size={20} />
-              </div>
-            </motion.div>
+          {/* Arrow down to DeFi */}
+          <div className="absolute top-[100px] left-[610px] h-[80px] w-[2px] bg-gray-400"></div>
+          <div className="absolute top-[180px] left-[606px] text-gray-500">
+            <ChevronDown size={16} />
+          </div>
 
-            {/* DeFi */}
-            <motion.div
-              className="absolute top-[48%] left-[70%] w-[25%] text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 3.4 }}
-            >
-              <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+          {/* DeFi Applications */}
+          <div className="absolute top-[200px] left-[550px]">
+            <div className="flex flex-col items-center">
+              <div className="w-20 h-20 rounded-lg bg-gray-100 flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-sm text-gray-800">DeFi</div>
                   <div className="text-sm text-gray-800">Applications</div>
                 </div>
               </div>
-              <div className="font-medium text-gray-800">Lending, Trading, Yield</div>
-            </motion.div>
+              <div className="mt-2 font-medium text-gray-800">Lending, Trading, Yield</div>
+            </div>
+          </div>
 
-            {/* Rewards Flow */}
-            <motion.div
-              className="absolute bottom-[10%] left-[20%] w-[60%] text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 3.8 }}
-            >
-              <div className="w-full h-16 mx-auto rounded-lg bg-gray-50 flex items-center justify-center">
-                <div className="flex items-center">
-                  <div className="text-emerald-600 mr-2">Staking Rewards</div>
-                  <div className="w-32 h-0.5 bg-gradient-to-r from-emerald-500 to-gray-400 relative">
-                    <motion.div
-                      className="absolute -top-1.5 w-3 h-3 rounded-full bg-emerald-500"
-                      animate={{ x: [0, 128, 0] }}
-                      transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3, ease: "linear" }}
-                    />
-                  </div>
-                  <div className="text-gray-700 ml-2">Token Value Increase</div>
+          {/* Rewards Flow */}
+          <div className="absolute bottom-[20px] left-[150px] w-[400px]">
+            <div className="w-full h-16 rounded-lg bg-gray-50 flex items-center justify-center">
+              <div className="flex items-center">
+                <div className="text-emerald-600 mr-2">Staking Rewards</div>
+                <div className="w-32 h-0.5 bg-gradient-to-r from-emerald-500 to-gray-400 relative">
+                  <div className="absolute -top-1.5 w-3 h-3 rounded-full bg-emerald-500"></div>
                 </div>
+                <div className="text-gray-700 ml-2">Token Value Increase</div>
               </div>
-            </motion.div>
-          </>
-        )}
-      </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -693,6 +675,17 @@ const TokenTypeComparison = () => {
               <div className="p-4 rounded-lg bg-gray-50">
                 <h4 className="font-medium mb-2 text-gray-800">Examples</h4>
                 <div className="space-y-2">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                      <Image
+                        src="https://pbs.twimg.com/profile_images/1345677460747108352/JjqQ9ROz_400x400.jpg"
+                        alt="Frax"
+                        width={16}
+                        height={16}
+                      />
+                    </div>
+                    <div className="text-gray-800">Frax's frxETH/sfrxETH</div>
+                  </div>
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
                       <Image
@@ -848,18 +841,33 @@ const StickyTableOfContents = () => {
 
 // Share functionality
 const ShareButtons = () => {
-  const generatePDF = () => {
-    // Create a link element
-    const link = document.createElement("a")
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
 
-    // Set link properties for PDF download
-    link.href = "/api/generate-pdf?article=liquid-staking-derivatives-explained"
-    link.download = "Liquid-Staking-Derivatives-Explained.pdf"
+  const generatePDF = async () => {
+    try {
+      setIsGeneratingPDF(true)
 
-    // Append to body, click, and remove
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
+      // Create a link element
+      const link = document.createElement("a")
+
+      // Set link properties for PDF download
+      link.href = "/api/generate-pdf?article=liquid-staking-derivatives-explained"
+      link.download = "Liquid-Staking-Derivatives-Explained.pdf"
+
+      // Append to body, click, and remove
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+
+      // Add a delay to show loading state
+      setTimeout(() => {
+        setIsGeneratingPDF(false)
+      }, 3000)
+    } catch (error) {
+      console.error("Error generating PDF:", error)
+      setIsGeneratingPDF(false)
+      alert("There was an error generating the PDF. Please try again.")
+    }
   }
 
   const handleShare = async (platform: string) => {
@@ -902,9 +910,19 @@ const ShareButtons = () => {
         variant="outline"
         className="border-gray-300 bg-white hover:bg-gray-50"
         onClick={() => handleShare("pdf")}
+        disabled={isGeneratingPDF}
       >
-        <Download className="mr-2 h-4 w-4" />
-        PDF
+        {isGeneratingPDF ? (
+          <>
+            <span className="animate-spin mr-2">⏳</span>
+            Generating...
+          </>
+        ) : (
+          <>
+            <Download className="mr-2 h-4 w-4" />
+            PDF
+          </>
+        )}
       </Button>
       <Button
         size="sm"
@@ -942,7 +960,7 @@ const RelatedArticles = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden flex flex-col">
           <div className="h-40 relative">
-            <Image src="/ethereum-staking-network.png" alt="Ethereum Staking" fill className="object-cover" />
+            <Image src="/images/ethereum-staking-ecosystem.png" alt="Ethereum Staking" fill className="object-cover" />
           </div>
           <div className="p-4 flex flex-col flex-grow">
             <h4 className="font-semibold mb-2 text-gray-800">Ethereum Staking for Beginners</h4>
@@ -957,7 +975,12 @@ const RelatedArticles = () => {
         </div>
         <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden flex flex-col">
           <div className="h-40 relative">
-            <Image src="/defi-yield-comparison.png" alt="DeFi Yield Comparison" fill className="object-cover" />
+            <Image
+              src="/images/defi-integration-diagram.png"
+              alt="DeFi Yield Comparison"
+              fill
+              className="object-cover"
+            />
           </div>
           <div className="p-4 flex flex-col flex-grow">
             <h4 className="font-semibold mb-2 text-gray-800">Staking vs DeFi Yields</h4>
@@ -974,12 +997,7 @@ const RelatedArticles = () => {
         </div>
         <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden flex flex-col">
           <div className="h-40 relative">
-            <Image
-              src="/ethereum-staking-evolution.png"
-              alt="Future of Ethereum Staking"
-              fill
-              className="object-cover"
-            />
+            <Image src="/images/validator-network.png" alt="Future of Ethereum Staking" fill className="object-cover" />
           </div>
           <div className="p-4 flex flex-col flex-grow">
             <h4 className="font-semibold mb-2 text-gray-800">Future of Ethereum Staking</h4>
@@ -1274,7 +1292,8 @@ export default function LiquidStakingDerivativesArticle() {
               <p className="text-gray-700 mb-4">
                 While there are important risks and trade-offs to consider, the benefits of liquid staking have clearly
                 resonated with the market. As the technology matures and protocols continue to innovate, we can expect
-                liquid staking to play an increasingly central role in Ethereum's economic layer.
+                liquid staking to play an increasingly central role in Ethereum's we can expect liquid staking to play
+                an increasingly central role in Ethereum's economic layer.
               </p>
               <p className="text-gray-700 mb-4">
                 Whether you're a long-term ETH holder looking to earn yield, a DeFi enthusiast seeking new
