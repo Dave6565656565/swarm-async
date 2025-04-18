@@ -7,7 +7,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   ArrowLeft,
   ChevronDown,
-  ArrowRight,
   Download,
   Twitter,
   Linkedin,
@@ -27,6 +26,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { ParticlesBackground } from "@/components/particles-background"
+import { AnimatedStakingProcess } from "@/components/animated-staking-process"
 
 // Interactive Staking Calculator component
 const StakingCalculator = () => {
@@ -341,163 +341,163 @@ const StakingMethodsComparison = () => {
 }
 
 // Animated diagram component for staking process
-const AnimatedStakingProcess = () => {
-  return (
-    <div className="w-full rounded-xl overflow-hidden bg-white shadow-md border border-gray-200 p-4 sm:p-6">
-      <h3 className="text-xl font-medium mb-6 text-gray-800">How Ethereum Staking Works</h3>
+// const AnimatedStakingProcess = () => {
+//   return (
+//     <div className="w-full rounded-xl overflow-hidden bg-white shadow-md border border-gray-200 p-4 sm:p-6">
+//       <h3 className="text-xl font-medium mb-6 text-gray-800">How Ethereum Staking Works</h3>
 
-      <div className="relative h-[300px] md:h-[400px]">
-        {/* ETH Deposit */}
-        <motion.div
-          className="absolute top-[10%] left-[5%] w-[20%] text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-            <span className="text-3xl text-gray-800">Ξ</span>
-          </div>
-          <div className="font-medium text-gray-800">32 ETH Deposit</div>
-        </motion.div>
+//       <div className="relative h-[300px] md:h-[400px]">
+//         {/* ETH Deposit */}
+//         <motion.div
+//           className="absolute top-[10%] left-[5%] w-[20%] text-center"
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: 0.2 }}
+//         >
+//           <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+//             <span className="text-3xl text-gray-800">Ξ</span>
+//           </div>
+//           <div className="font-medium text-gray-800">32 ETH Deposit</div>
+//         </motion.div>
 
-        {/* Arrow 1 */}
-        <motion.div
-          className="absolute top-[15%] left-[26%] w-[15%]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          <div className="h-0.5 w-full bg-gradient-to-r from-gray-400 to-gray-500"></div>
-          <div className="absolute right-0 top-[-4px] text-gray-500">
-            <ArrowRight size={20} />
-          </div>
-        </motion.div>
+//         {/* Arrow 1 */}
+//         <motion.div
+//           className="absolute top-[15%] left-[26%] w-[15%]"
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           transition={{ delay: 0.6 }}
+//         >
+//           <div className="h-0.5 w-full bg-gradient-to-r from-gray-400 to-gray-500"></div>
+//           <div className="absolute right-0 top-[-4px] text-gray-500">
+//             <ArrowRight size={20} />
+//           </div>
+//         </motion.div>
 
-        {/* Validator Activation */}
-        <motion.div
-          className="absolute top-[10%] left-[42%] w-[25%] text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0 }}
-        >
-          <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-            <div className="text-center">
-              <div className="text-sm text-gray-800">Validator</div>
-              <div className="text-sm text-gray-800">Activation</div>
-            </div>
-          </div>
-          <div className="font-medium text-gray-800">Enters Activation Queue</div>
-        </motion.div>
+//         {/* Validator Activation */}
+//         <motion.div
+//           className="absolute top-[10%] left-[42%] w-[25%] text-center"
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: 1.0 }}
+//         >
+//           <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+//             <div className="text-center">
+//               <div className="text-sm text-gray-800">Validator</div>
+//               <div className="text-sm text-gray-800">Activation</div>
+//             </div>
+//           </div>
+//           <div className="font-medium text-gray-800">Enters Activation Queue</div>
+//         </motion.div>
 
-        {/* Arrow 2 Down */}
-        <motion.div
-          className="absolute top-[32%] left-[52%] h-[15%]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.4 }}
-        >
-          <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
-          <div className="absolute bottom-0 left-[-4px] text-gray-500">
-            <ChevronDown size={20} />
-          </div>
-        </motion.div>
+//         {/* Arrow 2 Down */}
+//         <motion.div
+//           className="absolute top-[32%] left-[52%] h-[15%]"
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           transition={{ delay: 1.4 }}
+//         >
+//           <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
+//           <div className="absolute bottom-0 left-[-4px] text-gray-500">
+//             <ChevronDown size={20} />
+//           </div>
+//         </motion.div>
 
-        {/* Active Validation */}
-        <motion.div
-          className="absolute top-[48%] left-[42%] w-[25%] text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.8 }}
-        >
-          <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-            <div className="text-center">
-              <div className="text-sm text-gray-800">Active</div>
-              <div className="text-sm text-gray-800">Validation</div>
-            </div>
-          </div>
-          <div className="font-medium text-gray-800">Proposing & Attesting Blocks</div>
-        </motion.div>
+//         {/* Active Validation */}
+//         <motion.div
+//           className="absolute top-[48%] left-[42%] w-[25%] text-center"
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: 1.8 }}
+//         >
+//           <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+//             <div className="text-center">
+//               <div className="text-sm text-gray-800">Active</div>
+//               <div className="text-sm text-gray-800">Validation</div>
+//             </div>
+//           </div>
+//           <div className="font-medium text-gray-800">Proposing & Attesting Blocks</div>
+//         </motion.div>
 
-        {/* Arrow 3 Right */}
-        <motion.div
-          className="absolute top-[55%] left-[68%] w-[10%]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.2 }}
-        >
-          <div className="h-0.5 w-full bg-gradient-to-r from-gray-400 to-gray-500"></div>
-          <div className="absolute right-0 top-[-4px] text-gray-500">
-            <ArrowRight size={20} />
-          </div>
-        </motion.div>
+//         {/* Arrow 3 Right */}
+//         <motion.div
+//           className="absolute top-[55%] left-[68%] w-[10%]"
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           transition={{ delay: 2.2 }}
+//         >
+//           <div className="h-0.5 w-full bg-gradient-to-r from-gray-400 to-gray-500"></div>
+//           <div className="absolute right-0 top-[-4px] text-gray-500">
+//             <ArrowRight size={20} />
+//           </div>
+//         </motion.div>
 
-        {/* Rewards */}
-        <motion.div
-          className="absolute top-[48%] left-[80%] w-[15%] text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.6 }}
-        >
-          <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-            <Zap className="h-6 w-6 text-gray-600" />
-          </div>
-          <div className="font-medium text-gray-800">Staking Rewards</div>
-        </motion.div>
+//         {/* Rewards */}
+//         <motion.div
+//           className="absolute top-[48%] left-[80%] w-[15%] text-center"
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: 2.6 }}
+//         >
+//           <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+//             <Zap className="h-6 w-6 text-gray-600" />
+//           </div>
+//           <div className="font-medium text-gray-800">Staking Rewards</div>
+//         </motion.div>
 
-        {/* Optional Exit Path */}
-        <motion.div
-          className="absolute bottom-[25%] left-[52%] h-[15%]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 3.0 }}
-        >
-          <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
-          <div className="absolute bottom-0 left-[-4px] text-gray-500">
-            <ChevronDown size={20} />
-          </div>
-        </motion.div>
+//         {/* Optional Exit Path */}
+//         <motion.div
+//           className="absolute bottom-[25%] left-[52%] h-[15%]"
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           transition={{ delay: 3.0 }}
+//         >
+//           <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
+//           <div className="absolute bottom-0 left-[-4px] text-gray-500">
+//             <ChevronDown size={20} />
+//           </div>
+//         </motion.div>
 
-        {/* Exit & Withdrawal */}
-        <motion.div
-          className="absolute bottom-[10%] left-[42%] w-[25%] text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 3.4 }}
-        >
-          <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-            <div className="text-center">
-              <div className="text-sm text-gray-800">Exit &</div>
-              <div className="text-sm text-gray-800">Withdrawal</div>
-            </div>
-          </div>
-          <div className="font-medium text-gray-800">Optional</div>
-        </motion.div>
+//         {/* Exit & Withdrawal */}
+//         <motion.div
+//           className="absolute bottom-[10%] left-[42%] w-[25%] text-center"
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: 3.4 }}
+//         >
+//           <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+//             <div className="text-center">
+//               <div className="text-sm text-gray-800">Exit &</div>
+//               <div className="text-sm text-gray-800">Withdrawal</div>
+//             </div>
+//           </div>
+//           <div className="font-medium text-gray-800">Optional</div>
+//         </motion.div>
 
-        {/* Network Security */}
-        <motion.div
-          className="absolute bottom-[10%] left-[20%] w-[60%] text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 3.8 }}
-        >
-          <div className="w-full h-16 mx-auto rounded-lg bg-gray-50 flex items-center justify-center">
-            <div className="flex items-center">
-              <div className="text-gray-800 mr-2">Network Security</div>
-              <div className="w-32 h-0.5 bg-gradient-to-r from-emerald-500 to-gray-400 relative">
-                <motion.div
-                  className="absolute -top-1.5 w-3 h-3 rounded-full bg-emerald-500"
-                  animate={{ x: [0, 128, 0] }}
-                  transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3, ease: "linear" }}
-                />
-              </div>
-              <div className="text-emerald-600 ml-2">Ethereum Blockchain</div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </div>
-  )
-}
+//         {/* Network Security */}
+//         <motion.div
+//           className="absolute bottom-[10%] left-[20%] w-[60%] text-center"
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: 3.8 }}
+//         >
+//           <div className="w-full h-16 mx-auto rounded-lg bg-gray-50 flex items-center justify-center">
+//             <div className="flex items-center">
+//               <div className="text-gray-800 mr-2">Network Security</div>
+//               <div className="w-32 h-0.5 bg-gradient-to-r from-emerald-500 to-gray-400 relative">
+//                 <motion.div
+//                   className="absolute -top-1.5 w-3 h-3 rounded-full bg-emerald-500"
+//                   animate={{ x: [0, 128, 0] }}
+//                   transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3, ease: "linear" }}
+//                 />
+//               </div>
+//               <div className="text-emerald-600 ml-2">Ethereum Blockchain</div>
+//             </div>
+//           </div>
+//         </motion.div>
+//       </div>
+//     </div>
+//   )
+// }
 
 // Validator Responsibilities component
 const ValidatorResponsibilities = () => {
@@ -1384,7 +1384,7 @@ export default function WhatIsEthereumStakingPage() {
                           strokeLinejoin="round"
                         />
                         <path
-                          d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                          d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
                           stroke="#6B7280"
                           strokeWidth="2"
                           strokeLinecap="round"
