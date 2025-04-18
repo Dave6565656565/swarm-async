@@ -64,7 +64,8 @@
     "framer-motion": "latest",
     "react-chartjs-2": "latest",
     "ethers": "latest",
-    "@walletconnect/ethereum-provider": "latest"
+    "@walletconnect/ethereum-provider": "latest",
+    "puppeteer": "latest"
   },
   "devDependencies": {
     "@types/node": "^22",

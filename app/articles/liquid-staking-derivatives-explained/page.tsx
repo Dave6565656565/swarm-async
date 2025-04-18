@@ -14,12 +14,14 @@ import {
   Info,
   Check,
   ExternalLink,
-  ChevronRight,
   Share2,
+  Calculator,
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import ProtocolComparisonMobile from "@/components/protocol-comparison-mobile"
+import CalculatorCTAButton from "@/components/calculator-cta-button"
 
 // Interactive LSD Calculator component
 const LSDCalculator = () => {
@@ -165,292 +167,393 @@ const LSDCalculator = () => {
           </div>
         </div>
       </div>
+      <div className="mt-6 text-center">
+        <p className="text-sm text-gray-600 mb-3">Want more detailed calculations and comparisons?</p>
+        <Link href="/calculator">
+          <Button className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white">
+            <Calculator className="mr-2 h-4 w-4" />
+            Use Our Advanced Staking Calculator
+          </Button>
+        </Link>
+      </div>
     </div>
   )
 }
 
 // Protocol Comparison component
 const ProtocolComparison = () => {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
   return (
     <div className="w-full overflow-x-auto pb-4">
-      <div className="min-w-[800px]">
-        <div className="grid grid-cols-5 gap-4">
-          <div className="p-4"></div>
-          <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
-            <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
-              <Image
-                src="https://s2.coinmarketcap.com/static/img/coins/200x200/8085.png"
-                alt="Lido"
-                width={24}
-                height={24}
-              />
+      {isMobile ? (
+        // Mobile view with protocol selector and details
+        <ProtocolComparisonMobile />
+      ) : (
+        // Original desktop table - unchanged
+        <div className="min-w-[800px]">
+          <div className="grid grid-cols-5 gap-4">
+            <div className="p-4"></div>
+            <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
+              <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
+                <Image
+                  src="https://s2.coinmarketcap.com/static/img/coins/200x200/8085.png"
+                  alt="Lido"
+                  width={24}
+                  height={24}
+                />
+              </div>
+              <span className="text-gray-800">Lido</span>
             </div>
-            <span className="text-gray-800">Lido</span>
-          </div>
-          <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
-            <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
-              <Image
-                src="https://raw.githubusercontent.com/rocket-pool/rocketpool/master/images/logo.png?raw=true"
-                alt="Rocket Pool"
-                width={24}
-                height={24}
-              />
+            <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
+              <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
+                <Image
+                  src="https://raw.githubusercontent.com/rocket-pool/rocketpool/master/images/logo.png?raw=true"
+                  alt="Rocket Pool"
+                  width={24}
+                  height={24}
+                />
+              </div>
+              <span className="text-gray-800">Rocket Pool</span>
             </div>
-            <span className="text-gray-800">Rocket Pool</span>
-          </div>
-          <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
-            <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
-              <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6hcTTU1A8Ymi2VldXqCsPkBu_ltAhIKiRg&s"
-                alt="Coinbase"
-                width={24}
-                height={24}
-              />
+            <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
+              <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
+                <Image
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6hcTTU1A8Ymi2VldXqCsPkBu_ltAhIKiRg&s"
+                  alt="Coinbase"
+                  width={24}
+                  height={24}
+                />
+              </div>
+              <span className="text-gray-800">Coinbase</span>
             </div>
-            <span className="text-gray-800">Coinbase</span>
-          </div>
-          <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
-            <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
-              <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ75b9jMdiuMz-QCpDyQa2Q5jWEfN8jSYJtsQ&s"
-                alt="Frax"
-                width={24}
-                height={24}
-              />
+            <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
+              <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
+                <Image
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ75b9jMdiuMz-QCpDyQa2Q5jWEfN8jSYJtsQ&s"
+                  alt="Frax"
+                  width={24}
+                  height={24}
+                />
+              </div>
+              <span className="text-gray-800">Frax</span>
             </div>
-            <span className="text-gray-800">Frax</span>
-          </div>
 
-          {/* Token Type */}
-          <div className="p-4 font-medium bg-gray-100 flex items-center text-gray-800">Token Type</div>
-          <div className="p-4 text-center bg-white border border-gray-100">
-            stETH
-            <br />
-            <span className="text-xs text-gray-500">Rebasing</span>
-          </div>
-          <div className="p-4 text-center bg-white border border-gray-100">
-            rETH
-            <br />
-            <span className="text-xs text-gray-500">Value-accruing</span>
-          </div>
-          <div className="p-4 text-center bg-white border border-gray-100">
-            cbETH
-            <br />
-            <span className="text-xs text-gray-500">Value-accruing</span>
-          </div>
-          <div className="p-4 text-center bg-white border border-gray-100">
-            frxETH/sfrxETH
-            <br />
-            <span className="text-xs text-gray-500">Two-token system</span>
-          </div>
-
-          {/* APY */}
-          <div className="p-4 font-medium bg-gray-100 flex items-center text-gray-800">Current APY</div>
-          <div className="p-4 text-center bg-white border border-gray-100 text-emerald-600 font-medium">3.5%</div>
-          <div className="p-4 text-center bg-white border border-gray-100 text-emerald-600 font-medium">3.8%</div>
-          <div className="p-4 text-center bg-white border border-gray-100 text-emerald-600 font-medium">3.2%</div>
-          <div className="p-4 text-center bg-white border border-gray-100 text-emerald-600 font-medium">3.6%</div>
-
-          {/* Min Stake */}
-          <div className="p-4 font-medium bg-gray-100 flex items-center text-gray-800">Min Stake</div>
-          <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">0.01 ETH</div>
-          <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">0.01 ETH</div>
-          <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">0.01 ETH</div>
-          <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">0.01 ETH</div>
-
-          {/* Decentralization */}
-          <div className="p-4 font-medium bg-gray-100 flex items-center text-gray-800">Decentralization</div>
-          <div className="p-4 text-center bg-white border border-gray-100">
-            <div className="w-full bg-gray-200 h-2 rounded-full">
-              <div className="bg-gray-500 h-2 rounded-full" style={{ width: "60%" }}></div>
+            {/* Token Type */}
+            <div className="p-4 font-medium bg-gray-100 flex items-center text-gray-800">Token Type</div>
+            <div className="p-4 text-center bg-white border border-gray-100">
+              stETH
+              <br />
+              <span className="text-xs text-gray-500">Rebasing</span>
             </div>
-            <div className="text-xs mt-1 text-gray-500">Medium</div>
-          </div>
-          <div className="p-4 text-center bg-white border border-gray-100">
-            <div className="w-full bg-gray-200 h-2 rounded-full">
-              <div className="bg-gray-500 h-2 rounded-full" style={{ width: "90%" }}></div>
+            <div className="p-4 text-center bg-white border border-gray-100">
+              rETH
+              <br />
+              <span className="text-xs text-gray-500">Value-accruing</span>
             </div>
-            <div className="text-xs mt-1 text-gray-500">High</div>
-          </div>
-          <div className="p-4 text-center bg-white border border-gray-100">
-            <div className="w-full bg-gray-200 h-2 rounded-full">
-              <div className="bg-gray-500 h-2 rounded-full" style={{ width: "20%" }}></div>
+            <div className="p-4 text-center bg-white border border-gray-100">
+              cbETH
+              <br />
+              <span className="text-xs text-gray-500">Value-accruing</span>
             </div>
-            <div className="text-xs mt-1 text-gray-500">Low</div>
-          </div>
-          <div className="p-4 text-center bg-white border border-gray-100">
-            <div className="w-full bg-gray-200 h-2 rounded-full">
-              <div className="bg-gray-500 h-2 rounded-full" style={{ width: "70%" }}></div>
+            <div className="p-4 text-center bg-white border border-gray-100">
+              frxETH/sfrxETH
+              <br />
+              <span className="text-xs text-gray-500">Two-token system</span>
             </div>
-            <div className="text-xs mt-1 text-gray-500">Medium-High</div>
-          </div>
 
-          {/* Market Share */}
-          <div className="p-4 font-medium bg-gray-100 flex items-center text-gray-800">Market Share</div>
-          <div className="p-4 text-center bg-white border border-gray-100 font-medium text-gray-800">~30%</div>
-          <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">~8%</div>
-          <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">~7%</div>
-          <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">~5%</div>
+            {/* APY */}
+            <div className="p-4 font-medium bg-gray-100 flex items-center text-gray-800">Current APY</div>
+            <div className="p-4 text-center bg-white border border-gray-100 text-emerald-600 font-medium">3.5%</div>
+            <div className="p-4 text-center bg-white border border-gray-100 text-emerald-600 font-medium">3.8%</div>
+            <div className="p-4 text-center bg-white border border-gray-100 text-emerald-600 font-medium">3.2%</div>
+            <div className="p-4 text-center bg-white border border-gray-100 text-emerald-600 font-medium">3.6%</div>
+
+            {/* Min Stake */}
+            <div className="p-4 font-medium bg-gray-100 flex items-center text-gray-800">Min Stake</div>
+            <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">0.01 ETH</div>
+            <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">0.01 ETH</div>
+            <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">0.01 ETH</div>
+            <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">0.01 ETH</div>
+
+            {/* Decentralization */}
+            <div className="p-4 font-medium bg-gray-100 flex items-center text-gray-800">Decentralization</div>
+            <div className="p-4 text-center bg-white border border-gray-100">
+              <div className="w-full bg-gray-200 h-2 rounded-full">
+                <div className="bg-gray-500 h-2 rounded-full" style={{ width: "60%" }}></div>
+              </div>
+              <div className="text-xs mt-1 text-gray-500">Medium</div>
+            </div>
+            <div className="p-4 text-center bg-white border border-gray-100">
+              <div className="w-full bg-gray-200 h-2 rounded-full">
+                <div className="bg-gray-500 h-2 rounded-full" style={{ width: "90%" }}></div>
+              </div>
+              <div className="text-xs mt-1 text-gray-500">High</div>
+            </div>
+            <div className="p-4 text-center bg-white border border-gray-100">
+              <div className="w-full bg-gray-200 h-2 rounded-full">
+                <div className="bg-gray-500 h-2 rounded-full" style={{ width: "20%" }}></div>
+              </div>
+              <div className="text-xs mt-1 text-gray-500">Low</div>
+            </div>
+            <div className="p-4 text-center bg-white border border-gray-100">
+              <div className="w-full bg-gray-200 h-2 rounded-full">
+                <div className="bg-gray-500 h-2 rounded-full" style={{ width: "70%" }}></div>
+              </div>
+              <div className="text-xs mt-1 text-gray-500">Medium-High</div>
+            </div>
+
+            {/* Market Share */}
+            <div className="p-4 font-medium bg-gray-100 flex items-center text-gray-800">Market Share</div>
+            <div className="p-4 text-center bg-white border border-gray-100 font-medium text-gray-800">~30%</div>
+            <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">~8%</div>
+            <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">~7%</div>
+            <div className="p-4 text-center bg-white border border-gray-100 text-gray-800">~5%</div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
 
 // Animated diagram component
 const AnimatedDiagram = () => {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
   return (
     <div className="w-full rounded-xl overflow-hidden bg-white shadow-md border border-gray-200 p-4 sm:p-6">
       <h3 className="text-xl font-medium mb-6 text-gray-800">How Liquid Staking Works</h3>
 
       <div className="relative h-[300px] md:h-[400px]">
-        {/* ETH Deposit */}
-        <motion.div
-          className="absolute top-[10%] left-[5%] w-[20%] text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-            <span className="text-3xl text-gray-800">Ξ</span>
-          </div>
-          <div className="font-medium text-gray-800">ETH Deposit</div>
-        </motion.div>
-
-        {/* Arrow 1 */}
-        <motion.div
-          className="absolute top-[15%] left-[26%] w-[15%]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          <div className="h-0.5 w-full bg-gradient-to-r from-gray-400 to-gray-500"></div>
-          <div className="absolute right-0 top-[-4px] text-gray-500">
-            <ArrowRight size={20} />
-          </div>
-        </motion.div>
-
-        {/* Staking Protocol */}
-        <motion.div
-          className="absolute top-[10%] left-[42%] w-[25%] text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0 }}
-        >
-          <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-            <div className="text-center">
-              <div className="text-sm text-gray-800">Staking</div>
-              <div className="text-sm text-gray-800">Protocol</div>
-            </div>
-          </div>
-          <div className="font-medium text-gray-800">Lido, Rocket Pool, etc.</div>
-        </motion.div>
-
-        {/* Arrow 2 Down */}
-        <motion.div
-          className="absolute top-[32%] left-[52%] h-[15%]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.4 }}
-        >
-          <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
-          <div className="absolute bottom-0 left-[-4px] text-gray-500">
-            <ChevronDown size={20} />
-          </div>
-        </motion.div>
-
-        {/* Validator */}
-        <motion.div
-          className="absolute top-[48%] left-[42%] w-[25%] text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.8 }}
-        >
-          <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-            <div className="text-center">
-              <div className="text-sm text-gray-800">Ethereum</div>
-              <div className="text-sm text-gray-800">Validators</div>
-            </div>
-          </div>
-          <div className="font-medium text-gray-800">Securing the Network</div>
-        </motion.div>
-
-        {/* Arrow 3 Up */}
-        <motion.div
-          className="absolute top-[32%] left-[67%] h-[15%]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.2 }}
-        >
-          <div className="w-0.5 h-full bg-gradient-to-t from-gray-400 to-gray-500 mx-auto"></div>
-          <div className="absolute top-0 left-[-4px] text-gray-500">
-            <ChevronDown size={20} style={{ transform: "rotate(180deg)" }} />
-          </div>
-        </motion.div>
-
-        {/* LSD Token */}
-        <motion.div
-          className="absolute top-[10%] left-[75%] w-[20%] text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.6 }}
-        >
-          <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-            <span className="text-xl text-gray-800">stETH</span>
-          </div>
-          <div className="font-medium text-gray-800">LSD Token</div>
-        </motion.div>
-
-        {/* Arrow 4 Down to DeFi */}
-        <motion.div
-          className="absolute top-[32%] left-[80%] h-[15%]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 3.0 }}
-        >
-          <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
-          <div className="absolute bottom-0 left-[-4px] text-gray-500">
-            <ChevronDown size={20} />
-          </div>
-        </motion.div>
-
-        {/* DeFi */}
-        <motion.div
-          className="absolute top-[48%] left-[70%] w-[25%] text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 3.4 }}
-        >
-          <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-            <div className="text-center">
-              <div className="text-sm text-gray-800">DeFi</div>
-              <div className="text-sm text-gray-800">Applications</div>
-            </div>
-          </div>
-          <div className="font-medium text-gray-800">Lending, Trading, Yield</div>
-        </motion.div>
-
-        {/* Rewards Flow */}
-        <motion.div
-          className="absolute bottom-[10%] left-[20%] w-[60%] text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 3.8 }}
-        >
-          <div className="w-full h-16 mx-auto rounded-lg bg-gray-50 flex items-center justify-center">
-            <div className="flex items-center">
-              <div className="text-emerald-600 mr-2">Staking Rewards</div>
-              <div className="w-32 h-0.5 bg-gradient-to-r from-emerald-500 to-gray-400 relative">
-                <motion.div
-                  className="absolute -top-1.5 w-3 h-3 rounded-full bg-emerald-500"
-                  animate={{ x: [0, 128, 0] }}
-                  transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3, ease: "linear" }}
-                />
+        {/* Mobile-optimized diagram */}
+        {isMobile ? (
+          <div className="h-full flex flex-col justify-around">
+            <div className="flex items-center justify-center gap-4">
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                  <span className="text-3xl text-gray-800">Ξ</span>
+                </div>
+                <div className="text-sm font-medium text-gray-800">ETH Deposit</div>
               </div>
-              <div className="text-gray-700 ml-2">Token Value Increase</div>
+              <div className="text-gray-400">→</div>
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                  <div className="text-center">
+                    <div className="text-xs text-gray-800">Staking</div>
+                    <div className="text-xs text-gray-800">Protocol</div>
+                  </div>
+                </div>
+                <div className="text-sm font-medium text-gray-800">Lido, etc.</div>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <div className="h-10 w-0.5 bg-gray-300"></div>
+            </div>
+
+            <div className="flex items-center justify-center gap-4">
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                  <div className="text-center">
+                    <div className="text-xs text-gray-800">Ethereum</div>
+                    <div className="text-xs text-gray-800">Validators</div>
+                  </div>
+                </div>
+                <div className="text-sm font-medium text-gray-800">Network Security</div>
+              </div>
+              <div className="text-gray-400">→</div>
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                  <span className="text-xl text-gray-800">stETH</span>
+                </div>
+                <div className="text-sm font-medium text-gray-800">LSD Token</div>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <div className="h-10 w-0.5 bg-gray-300"></div>
+            </div>
+
+            <div className="text-center">
+              <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                <div className="text-center">
+                  <div className="text-xs text-gray-800">DeFi</div>
+                  <div className="text-xs text-gray-800">Applications</div>
+                </div>
+              </div>
+              <div className="text-sm font-medium text-gray-800">Lending, Trading, Yield</div>
             </div>
           </div>
-        </motion.div>
+        ) : (
+          // Desktop animated diagram
+          <>
+            {/* ETH Deposit */}
+            <motion.div
+              className="absolute top-[10%] left-[5%] w-[20%] text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                <span className="text-3xl text-gray-800">Ξ</span>
+              </div>
+              <div className="font-medium text-gray-800">ETH Deposit</div>
+            </motion.div>
+
+            {/* Arrow 1 */}
+            <motion.div
+              className="absolute top-[15%] left-[26%] w-[15%]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              <div className="h-0.5 w-full bg-gradient-to-r from-gray-400 to-gray-500"></div>
+              <div className="absolute right-0 top-[-4px] text-gray-500">
+                <ArrowRight size={20} />
+              </div>
+            </motion.div>
+
+            {/* Staking Protocol */}
+            <motion.div
+              className="absolute top-[10%] left-[42%] w-[25%] text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0 }}
+            >
+              <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                <div className="text-center">
+                  <div className="text-sm text-gray-800">Staking</div>
+                  <div className="text-sm text-gray-800">Protocol</div>
+                </div>
+              </div>
+              <div className="font-medium text-gray-800">Lido, Rocket Pool, etc.</div>
+            </motion.div>
+
+            {/* Arrow 2 Down */}
+            <motion.div
+              className="absolute top-[32%] left-[52%] h-[15%]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.4 }}
+            >
+              <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
+              <div className="absolute bottom-0 left-[-4px] text-gray-500">
+                <ChevronDown size={20} />
+              </div>
+            </motion.div>
+
+            {/* Validator */}
+            <motion.div
+              className="absolute top-[48%] left-[42%] w-[25%] text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.8 }}
+            >
+              <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                <div className="text-center">
+                  <div className="text-sm text-gray-800">Ethereum</div>
+                  <div className="text-sm text-gray-800">Validators</div>
+                </div>
+              </div>
+              <div className="font-medium text-gray-800">Securing the Network</div>
+            </motion.div>
+
+            {/* Arrow 3 Up */}
+            <motion.div
+              className="absolute top-[32%] left-[67%] h-[15%]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 2.2 }}
+            >
+              <div className="w-0.5 h-full bg-gradient-to-t from-gray-400 to-gray-500 mx-auto"></div>
+              <div className="absolute top-0 left-[-4px] text-gray-500">
+                <ChevronDown size={20} style={{ transform: "rotate(180deg)" }} />
+              </div>
+            </motion.div>
+
+            {/* LSD Token */}
+            <motion.div
+              className="absolute top-[10%] left-[75%] w-[20%] text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.6 }}
+            >
+              <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                <span className="text-xl text-gray-800">stETH</span>
+              </div>
+              <div className="font-medium text-gray-800">LSD Token</div>
+            </motion.div>
+
+            {/* Arrow 4 Down to DeFi */}
+            <motion.div
+              className="absolute top-[32%] left-[80%] h-[15%]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 3.0 }}
+            >
+              <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
+              <div className="absolute bottom-0 left-[-4px] text-gray-500">
+                <ChevronDown size={20} />
+              </div>
+            </motion.div>
+
+            {/* DeFi */}
+            <motion.div
+              className="absolute top-[48%] left-[70%] w-[25%] text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 3.4 }}
+            >
+              <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                <div className="text-center">
+                  <div className="text-sm text-gray-800">DeFi</div>
+                  <div className="text-sm text-gray-800">Applications</div>
+                </div>
+              </div>
+              <div className="font-medium text-gray-800">Lending, Trading, Yield</div>
+            </motion.div>
+
+            {/* Rewards Flow */}
+            <motion.div
+              className="absolute bottom-[10%] left-[20%] w-[60%] text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 3.8 }}
+            >
+              <div className="w-full h-16 mx-auto rounded-lg bg-gray-50 flex items-center justify-center">
+                <div className="flex items-center">
+                  <div className="text-emerald-600 mr-2">Staking Rewards</div>
+                  <div className="w-32 h-0.5 bg-gradient-to-r from-emerald-500 to-gray-400 relative">
+                    <motion.div
+                      className="absolute -top-1.5 w-3 h-3 rounded-full bg-emerald-500"
+                      animate={{ x: [0, 128, 0] }}
+                      transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3, ease: "linear" }}
+                    />
+                  </div>
+                  <div className="text-gray-700 ml-2">Token Value Increase</div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
       </div>
     </div>
   )
@@ -750,7 +853,7 @@ const ShareButtons = () => {
     const link = document.createElement("a")
 
     // Set link properties for PDF download
-    link.href = "/api/generate-pdf?article=liquid-staking-derivatives"
+    link.href = "/api/generate-pdf?article=liquid-staking-derivatives-explained"
     link.download = "Liquid-Staking-Derivatives-Explained.pdf"
 
     // Append to body, click, and remove
@@ -831,7 +934,7 @@ const ShareButtons = () => {
   )
 }
 
-// Related Articles component
+// Related Articles component with backlinks
 const RelatedArticles = () => {
   return (
     <div className="mb-8">
@@ -950,1382 +1053,243 @@ export default function LiquidStakingDerivativesArticle() {
               <span>11 min read</span>
             </div>
 
-            {/* Mobile Table of Contents */}
-            <div className="lg:hidden bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
-              <h2 className="text-xl font-bold mb-4 text-gray-800">Table of Contents</h2>
-              <ul className="space-y-2">
-                <li>
-                  <a href="#introduction" className="text-gray-600 hover:text-gray-900 flex items-center">
-                    <ChevronRight size={16} className="mr-1" />
-                    Introduction to Liquid Staking Derivatives
-                  </a>
-                </li>
-                <li>
-                  <a href="#what-are-lsds" className="text-gray-600 hover:text-gray-900 flex items-center">
-                    <ChevronRight size={16} className="mr-1" />
-                    What Are Liquid Staking Derivatives?
-                  </a>
-                </li>
-                <li>
-                  <a href="#how-they-work" className="text-gray-600 hover:text-gray-900 flex items-center">
-                    <ChevronRight size={16} className="mr-1" />
-                    How Liquid Staking Derivatives Work
-                  </a>
-                </li>
-                <li>
-                  <a href="#major-protocols" className="text-gray-600 hover:text-gray-900 flex items-center">
-                    <ChevronRight size={16} className="mr-1" />
-                    Major Liquid Staking Protocols
-                  </a>
-                </li>
-                <li>
-                  <a href="#benefits" className="text-gray-600 hover:text-gray-900 flex items-center">
-                    <ChevronRight size={16} className="mr-1" />
-                    Benefits of Liquid Staking Derivatives
-                  </a>
-                </li>
-                <li>
-                  <a href="#risks" className="text-gray-600 hover:text-gray-900 flex items-center">
-                    <ChevronRight size={16} className="mr-1" />
-                    Risks and Challenges
-                  </a>
-                </li>
-                <li>
-                  <a href="#impact" className="text-gray-600 hover:text-gray-900 flex items-center">
-                    <ChevronRight size={16} className="mr-1" />
-                    Impact on the Ethereum Ecosystem
-                  </a>
-                </li>
-                <li>
-                  <a href="#choosing" className="text-gray-600 hover:text-gray-900 flex items-center">
-                    <ChevronRight size={16} className="mr-1" />
-                    Choosing the Right Solution
-                  </a>
-                </li>
-                <li>
-                  <a href="#future" className="text-gray-600 hover:text-gray-900 flex items-center">
-                    <ChevronRight size={16} className="mr-1" />
-                    The Future of LSDs
-                  </a>
-                </li>
-                <li>
-                  <a href="#conclusion" className="text-gray-600 hover:text-gray-900 flex items-center">
-                    <ChevronRight size={16} className="mr-1" />
-                    Conclusion
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Introduction */}
-            <section id="introduction" className="mb-12 sm:mb-16">
-              <motion.h2
-                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                Introduction to Liquid Staking Derivatives
-              </motion.h2>
-
-              <p className="text-lg mb-4 text-gray-800">
-                Ethereum's transition to Proof of Stake (PoS) created new opportunities for ETH holders to earn rewards
-                by staking their assets. However, traditional staking comes with a significant drawback:{" "}
-                <strong>illiquidity</strong>. When you stake your ETH directly with the network, those assets are locked
-                up and unavailable for other uses.
+            {/* Introduction Section */}
+            <section id="introduction" className="mb-12">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">Introduction</h2>
+              <p className="text-gray-700 mb-4">
+                Ethereum's transition to Proof of Stake has created new opportunities for ETH holders to earn passive
+                income through staking. However, traditional staking comes with a significant drawback: your ETH is
+                locked up and illiquid. This is where Liquid Staking Derivatives (LSDs) come in, revolutionizing how
+                users can participate in securing the Ethereum network while maintaining liquidity.
               </p>
-
-              <p className="text-lg mb-4 text-gray-800">
-                This is where Liquid Staking Derivatives (LSDs) come in. These innovative financial instruments have
-                revolutionized the Ethereum staking ecosystem by solving the illiquidity problem while still allowing
-                users to participate in network validation and earn staking rewards.
-              </p>
-
-              <p className="text-lg mb-6 text-gray-800">
+              <p className="text-gray-700 mb-4">
                 In this comprehensive guide, we'll explore what LSDs are, how they work, their benefits and risks, and
-                their profound impact on the broader Ethereum ecosystem.
+                how they're reshaping the Ethereum ecosystem.
               </p>
 
-              {/* Add new image */}
-              <div className="w-full rounded-xl overflow-hidden mb-6 relative">
-                <Image
-                  src="/images/lsd-network-visualization.png"
-                  alt="Ethereum Liquid Staking Network Visualization"
-                  width={1200}
-                  height={675}
-                  className="w-full object-cover"
-                />
-                <div className="text-xs text-gray-500 text-center mt-2">
-                  Visualization of the Ethereum liquid staking ecosystem
-                </div>
+              {/* Calculator CTA */}
+              <div className="my-8">
+                <CalculatorCTAButton />
               </div>
-
-              <AnimatedDiagram />
             </section>
 
-            {/* What Are LSDs */}
-            <section id="what-are-lsds" className="mb-12 sm:mb-16">
-              <motion.h2
-                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
+            {/* What Are LSDs Section */}
+            <section id="what-are-lsds" className="mb-12">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">
                 What Are Liquid Staking Derivatives?
-              </motion.h2>
+              </h2>
+              <p className="text-gray-700 mb-4">
+                Liquid Staking Derivatives (LSDs) are tokens that represent staked ETH on the Ethereum network. When you
+                stake through an LSD protocol, you receive a token that represents your staked ETH plus accruing
+                rewards. These tokens can be freely traded, used in DeFi applications, or held to accumulate staking
+                rewards.
+              </p>
+              <p className="text-gray-700 mb-4">
+                Unlike traditional staking where your ETH is locked until withdrawals are enabled, LSDs provide
+                immediate liquidity while still allowing you to earn staking rewards. This innovation has dramatically
+                increased the appeal of staking for many Ethereum holders.
+              </p>
 
-              <div className="flex flex-col md:flex-row gap-6 mb-8">
-                <div className="md:w-1/2 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="aspect-video relative">
-                    <div className="w-full h-full bg-gradient-to-r from-gray-100 to-gray-50 flex items-center justify-center">
-                      <div className="flex space-x-4">
-                        <div className="bg-gray-200 rounded-lg p-4 flex items-center gap-2">
-                          <div className="w-6 h-6 overflow-hidden rounded-full">
-                            <Image
-                              src="https://s2.coinmarketcap.com/static/img/coins/200x200/8085.png"
-                              alt="Lido"
-                              width={24}
-                              height={24}
-                            />
-                          </div>
-                          <span className="text-gray-800">stETH</span>
-                        </div>
-                        <div className="bg-gray-200 rounded-lg p-4 flex items-center gap-2">
-                          <div className="w-6 h-6 overflow-hidden rounded-full">
-                            <Image
-                              src="https://raw.githubusercontent.com/rocket-pool/rocketpool/master/images/logo.png?raw=true"
-                              alt="Rocket Pool"
-                              width={24}
-                              height={24}
-                            />
-                          </div>
-                          <span className="text-gray-800">rETH</span>
-                        </div>
-                        <div className="bg-gray-200 rounded-lg p-4 flex items-center gap-2">
-                          <div className="w-6 h-6 overflow-hidden rounded-full">
-                            <Image
-                              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6hcTTU1A8Ymi2VldXqCsPkBu_ltAhIKiRg&s"
-                              alt="Coinbase"
-                              width={24}
-                              height={24}
-                            />
-                          </div>
-                          <span className="text-gray-800">cbETH</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="md:w-1/2">
-                  <p className="text-lg mb-4 text-gray-800">
-                    Liquid Staking Derivatives are tokenized representations of staked ETH that allow users to maintain
-                    liquidity while still earning staking rewards. When you use a liquid staking service, you receive a
-                    token that represents your staked ETH plus accrued rewards.
-                  </p>
-                  <p className="text-lg text-gray-800">
-                    These tokens can be freely transferred, traded, or used in DeFi applications while your original ETH
-                    remains staked on the Ethereum network, generating rewards that are reflected in the value of your
-                    LSD tokens.
-                  </p>
-                </div>
-              </div>
-
-              <h3 className="text-xl font-bold mb-4 text-gray-800">Key Characteristics of LSDs</h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Representation</h4>
-                  <p className="text-gray-600">
-                    Each LSD token represents a claim on an underlying staked ETH position plus accumulated rewards
-                  </p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Rebasing or Value Accrual</h4>
-                  <p className="text-gray-600">
-                    LSDs capture staking rewards either through rebasing (increasing the number of tokens you hold) or
-                    value accrual (increasing the value of each token)
-                  </p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Transferability</h4>
-                  <p className="text-gray-600">
-                    Unlike directly staked ETH, LSD tokens can be freely transferred between wallets and used in various
-                    applications
-                  </p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Market Price</h4>
-                  <p className="text-gray-600">
-                    LSD tokens trade on the open market, sometimes at a premium or discount to their underlying value
-                  </p>
-                </div>
-              </div>
-
+              {/* Token Type Comparison Component */}
               <TokenTypeComparison />
-
-              {/* Add new image */}
-              <div className="w-full rounded-xl overflow-hidden mt-8 mb-6 relative">
-                <Image
-                  src="/images/staking-rewards-flow.png"
-                  alt="Staking Rewards Flow"
-                  width={1200}
-                  height={675}
-                  className="w-full object-cover"
-                />
-                <div className="text-xs text-gray-500 text-center mt-2">
-                  How staking rewards flow through liquid staking protocols to token holders
-                </div>
-              </div>
             </section>
 
-            {/* How They Work */}
-            <section id="how-they-work" className="mb-12 sm:mb-16">
-              <motion.h2
-                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                How Liquid Staking Derivatives Work
-              </motion.h2>
-
-              <p className="text-lg mb-6 text-gray-800">
-                To understand LSDs, it's helpful to walk through the typical process of using a liquid staking service:
+            {/* How They Work Section */}
+            <section id="how-they-work" className="mb-12">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">How Liquid Staking Works</h2>
+              <p className="text-gray-700 mb-4">
+                The process of liquid staking is designed to be straightforward for users while handling complex
+                operations behind the scenes. Here's how it typically works:
               </p>
 
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden mb-8">
-                <div className="p-4 sm:p-6">
-                  <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-2 text-2xl text-gray-800">
-                        1
-                      </div>
-                      <div className="text-gray-800">Deposit ETH</div>
-                    </div>
-                    <div className="hidden md:block text-2xl text-gray-400">→</div>
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-2 text-2xl text-gray-800">
-                        2
-                      </div>
-                      <div className="text-gray-800">Receive LSD Tokens</div>
-                    </div>
-                    <div className="hidden md:block text-2xl text-gray-400">→</div>
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-2 text-2xl text-gray-800">
-                        3
-                      </div>
-                      <div className="text-gray-800">Protocol Stakes ETH</div>
-                    </div>
-                    <div className="hidden md:block text-2xl text-gray-400">→</div>
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-2 text-2xl text-gray-800">
-                        4
-                      </div>
-                      <div className="text-gray-800">Use LSD in DeFi</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-4 text-gray-500 text-sm text-center">
-                  The liquid staking process flow: from ETH deposit to DeFi utilization
-                </div>
-              </div>
+              {/* Animated Diagram Component */}
+              <AnimatedDiagram />
 
-              <h3 className="text-xl font-bold mb-4 text-gray-800">The Liquid Staking Process</h3>
-
-              <ol className="space-y-4 mb-8">
-                <li className="flex items-start gap-3">
-                  <div className="bg-gray-100 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1 text-gray-800">
-                    1
-                  </div>
-                  <div>
-                    <strong className="text-gray-800">Deposit ETH:</strong>{" "}
-                    <span className="text-gray-600">Users deposit their ETH into a liquid staking protocol</span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="bg-gray-100 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1 text-gray-800">
-                    2
-                  </div>
-                  <div>
-                    <strong className="text-gray-800">Receive LSD Tokens:</strong>{" "}
-                    <span className="text-gray-600">
-                      In return, users receive LSD tokens (like stETH, rETH, or cbETH) that represent their staked
-                      position
-                    </span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="bg-gray-100 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1 text-gray-800">
-                    3
-                  </div>
-                  <div>
-                    <strong className="text-gray-800">Protocol Stakes ETH:</strong>{" "}
-                    <span className="text-gray-600">
-                      The protocol uses the deposited ETH to create validators or stake with existing validators
-                    </span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="bg-gray-100 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1 text-gray-800">
-                    4
-                  </div>
-                  <div>
-                    <strong className="text-gray-800">Rewards Accrue:</strong>{" "}
-                    <span className="text-gray-600">
-                      As staking rewards are earned, they're reflected in the value of the LSD tokens
-                    </span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="bg-gray-100 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1 text-gray-800">
-                    5
-                  </div>
-                  <div>
-                    <strong className="text-gray-800">Use LSD Tokens:</strong>{" "}
-                    <span className="text-gray-600">
-                      Users can hold their LSD tokens to continue earning rewards, or use them in DeFi applications
-                    </span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="bg-gray-100 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1 text-gray-800">
-                    6
-                  </div>
-                  <div>
-                    <strong className="text-gray-800">Redemption (Optional):</strong>{" "}
-                    <span className="text-gray-600">
-                      When desired and available, users can redeem their LSD tokens for the underlying ETH plus accrued
-                      rewards
-                    </span>
-                  </div>
-                </li>
-              </ol>
-
-              {/* Add new image */}
-              <div className="w-full rounded-xl overflow-hidden mb-8 relative">
-                <Image
-                  src="/images/ethereum-staking-ecosystem.png"
-                  alt="Ethereum Staking Ecosystem"
-                  width={1200}
-                  height={675}
-                  className="w-full object-cover"
-                />
-                <div className="text-xs text-gray-500 text-center mt-2">
-                  The interconnected Ethereum staking ecosystem
-                </div>
-              </div>
+              <p className="text-gray-700 mt-6 mb-4">
+                When you deposit ETH with a liquid staking protocol, the protocol stakes your ETH with validators on
+                your behalf. In return, you receive LSD tokens that represent your staked ETH plus accruing rewards.
+                These tokens can be used throughout the DeFi ecosystem while your original ETH continues earning staking
+                rewards.
+              </p>
+              <p className="text-gray-700 mb-4">
+                Rewards are distributed either through rebasing (automatically increasing your token balance) or through
+                value accrual (each token becoming worth more ETH over time), depending on the protocol.
+              </p>
             </section>
 
-            {/* Major Protocols */}
-            <section id="major-protocols" className="mb-12 sm:mb-16">
-              <motion.h2
-                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                Major Liquid Staking Protocols
-              </motion.h2>
-
-              <p className="text-lg mb-6 text-gray-800">
-                Several protocols have emerged as leaders in the liquid staking space, each with its own approach and
-                characteristics:
+            {/* Major Protocols Section */}
+            <section id="major-protocols" className="mb-12">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">Major Liquid Staking Protocols</h2>
+              <p className="text-gray-700 mb-6">
+                Several protocols have emerged as leaders in the liquid staking space, each with unique approaches and
+                trade-offs. Let's compare the most prominent options:
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg flex flex-col">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://s2.coinmarketcap.com/static/img/coins/200x200/8085.png"
-                        alt="Lido"
-                        width={32}
-                        height={32}
-                      />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-800">Lido Finance</h3>
-                  </div>
-                  <div className="space-y-2 flex-grow text-gray-800">
-                    <p>
-                      <strong>Token:</strong> stETH (staked ETH)
-                    </p>
-                    <p>
-                      <strong>Mechanism:</strong> Rebasing token
-                    </p>
-                    <p>
-                      <strong>Market Position:</strong> Largest liquid staking protocol by total value locked (TVL)
-                    </p>
-                    <p>
-                      <strong>Governance:</strong> DAO-governed through the LDO token
-                    </p>
-                    <p>
-                      <strong>Validator Selection:</strong> Curated set of professional node operators
-                    </p>
-                    <p>
-                      <strong>Fee Structure:</strong> 10% fee on staking rewards
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Market Share</span>
-                      <span className="font-bold text-gray-800">~30%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                      <div className="bg-gray-500 h-2 rounded-full" style={{ width: "30%" }}></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg flex flex-col">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://raw.githubusercontent.com/rocket-pool/rocketpool/master/images/logo.png?raw=true"
-                        alt="Rocket Pool"
-                        width={32}
-                        height={32}
-                      />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-800">Rocket Pool</h3>
-                  </div>
-                  <div className="space-y-2 flex-grow text-gray-800">
-                    <p>
-                      <strong>Token:</strong> rETH (Rocket Pool ETH)
-                    </p>
-                    <p>
-                      <strong>Mechanism:</strong> Value-accruing token
-                    </p>
-                    <p>
-                      <strong>Market Position:</strong> Known for its decentralized approach
-                    </p>
-                    <p>
-                      <strong>Governance:</strong> DAO-governed through the RPL token
-                    </p>
-                    <p>
-                      <strong>Validator Selection:</strong> Permissionless node operators who must stake RPL as
-                      collateral
-                    </p>
-                    <p>
-                      <strong>Fee Structure:</strong> Variable commission rate set by node operators
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Market Share</span>
-                      <span className="font-bold text-gray-800">~8%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                      <div className="bg-gray-500 h-2 rounded-full" style={{ width: "8%" }}></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg flex flex-col">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6hcTTU1A8Ymi2VldXqCsPkBu_ltAhIKiRg&s"
-                        alt="Coinbase"
-                        width={32}
-                        height={32}
-                      />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-800">Coinbase</h3>
-                  </div>
-                  <div className="space-y-2 flex-grow text-gray-800">
-                    <p>
-                      <strong>Token:</strong> cbETH (Coinbase ETH)
-                    </p>
-                    <p>
-                      <strong>Mechanism:</strong> Value-accruing token
-                    </p>
-                    <p>
-                      <strong>Market Position:</strong> Backed by a major centralized exchange
-                    </p>
-                    <p>
-                      <strong>Governance:</strong> Centralized (controlled by Coinbase)
-                    </p>
-                    <p>
-                      <strong>Validator Selection:</strong> Operated by Coinbase
-                    </p>
-                    <p>
-                      <strong>Fee Structure:</strong> 25% fee on staking rewards
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Market Share</span>
-                      <span className="font-bold text-gray-800">~7%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 h-2 mt-2">
-                      <div className="bg-gray-500 h-2 rounded-full" style={{ width: "7%" }}></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg flex flex-col">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ75b9jMdiuMz-QCpDyQa2Q5jWEfN8jSYJtsQ&s"
-                        alt="Frax"
-                        width={32}
-                        height={32}
-                      />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-800">Frax Finance</h3>
-                  </div>
-                  <div className="space-y-2 flex-grow text-gray-800">
-                    <p>
-                      <strong>Tokens:</strong> frxETH (Frax ETH) and sfrxETH (Staked Frax ETH)
-                    </p>
-                    <p>
-                      <strong>Mechanism:</strong> Two-token system; frxETH is a 1:1 ETH wrapper, sfrxETH is a
-                      value-accruing staked version
-                    </p>
-                    <p>
-                      <strong>Market Position:</strong> Integrated with the broader Frax stablecoin ecosystem
-                    </p>
-                    <p>
-                      <strong>Governance:</strong> DAO-governed through the FXS token
-                    </p>
-                    <p>
-                      <strong>Fee Structure:</strong> Variable, determined by governance
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Market Share</span>
-                      <span className="font-bold text-gray-800">~5%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                      <div className="bg-gray-500 h-2 rounded-full" style={{ width: "5%" }}></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+              {/* Protocol Comparison Component */}
               <ProtocolComparison />
 
-              {/* Add new image */}
-              <div className="w-full rounded-xl overflow-hidden mt-8 mb-6 relative">
-                <Image
-                  src="/images/lsd-market-growth.png"
-                  alt="LSD Market Growth Chart"
-                  width={1200}
-                  height={675}
-                  className="w-full object-cover"
-                />
-                <div className="text-xs text-gray-500 text-center mt-2">
-                  Growth of liquid staking derivatives market share over time
+              <p className="text-gray-700 mt-6 mb-4">
+                Each protocol has its own approach to validator selection, fee structure, and token mechanics. Your
+                choice may depend on factors like decentralization preferences, yield optimization, or integration with
+                other DeFi protocols you use.
+              </p>
+            </section>
+
+            {/* Benefits Section */}
+            <section id="benefits" className="mb-12">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">Benefits of Liquid Staking</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                  <h3 className="text-xl font-medium mb-4 text-gray-800">Liquidity While Staking</h3>
+                  <p className="text-gray-700">
+                    The primary advantage of LSDs is maintaining liquidity while earning staking rewards. You can sell
+                    your position, use it as collateral, or participate in DeFi without unstaking your ETH.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                  <h3 className="text-xl font-medium mb-4 text-gray-800">Lower Barriers to Entry</h3>
+                  <p className="text-gray-700">
+                    No need for 32 ETH or technical knowledge to run a validator. You can stake any amount of ETH
+                    through liquid staking protocols, making staking accessible to everyone.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                  <h3 className="text-xl font-medium mb-4 text-gray-800">DeFi Integration</h3>
+                  <p className="text-gray-700">
+                    LSDs can be used throughout the DeFi ecosystem for lending, borrowing, providing liquidity, and
+                    more, potentially allowing you to earn additional yield on top of staking rewards.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                  <h3 className="text-xl font-medium mb-4 text-gray-800">Risk Distribution</h3>
+                  <p className="text-gray-700">
+                    Many protocols distribute your stake across multiple validators, reducing the impact of any single
+                    validator's poor performance or slashing events.
+                  </p>
                 </div>
               </div>
             </section>
 
-            {/* Benefits */}
-            <section id="benefits" className="mb-12 sm:mb-16">
-              <motion.h2
-                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                Benefits of Liquid Staking Derivatives
-              </motion.h2>
-
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-gray-50 p-4 rounded-lg text-center">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M12 8V16"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M8 12H16"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h4 className="font-semibold mb-1 text-gray-800">Maintained Liquidity</h4>
-                    <p className="text-sm text-gray-600">Use your staked ETH in DeFi</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg text-center">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M12 3V21"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M5 8H19"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M3 16H21"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h4 className="font-semibold mb-1 text-gray-800">Lower Barriers</h4>
-                    <p className="text-sm text-gray-600">No 32 ETH minimum</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg text-center">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M13 2L3 14H12L11 22L21 10H12L13 2Z"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h4 className="font-semibold mb-1 text-gray-800">Immediate Rewards</h4>
-                    <p className="text-sm text-gray-600">No waiting period</p>
-                  </div>
-                </div>
+            {/* Risks Section */}
+            <section id="risks" className="mb-12">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">Risks and Challenges</h2>
+              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-6">
+                <h3 className="text-xl font-medium mb-4 text-gray-800">Smart Contract Risks</h3>
+                <p className="text-gray-700 mb-2">
+                  Liquid staking protocols rely on complex smart contracts that could potentially contain bugs or
+                  vulnerabilities. While major protocols undergo rigorous auditing, the risk can never be completely
+                  eliminated.
+                </p>
               </div>
-
-              <h3 className="text-xl font-bold mb-4 text-gray-800">For Individual Stakers</h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Maintained Liquidity</h4>
-                  <p className="text-gray-600">Access to capital while still earning staking rewards</p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Lower Barriers to Entry</h4>
-                  <p className="text-gray-600">No minimum 32 ETH requirement and no technical expertise needed</p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Immediate Rewards</h4>
-                  <p className="text-gray-600">
-                    Start earning rewards right away without waiting for validator activation
-                  </p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Diversification</h4>
-                  <p className="text-gray-600">
-                    Spread risk across many validators rather than relying on a single validator's performance
-                  </p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">DeFi Opportunities</h4>
-                  <p className="text-gray-600">
-                    Use LSD tokens in lending, borrowing, yield farming, and other DeFi applications
-                  </p>
-                </div>
+              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-6">
+                <h3 className="text-xl font-medium mb-4 text-gray-800">Centralization Concerns</h3>
+                <p className="text-gray-700 mb-2">
+                  Some protocols control a large percentage of staked ETH, raising concerns about centralization of the
+                  Ethereum network. This concentration could potentially impact Ethereum's security and censorship
+                  resistance.
+                </p>
               </div>
-
-              <h3 className="text-xl font-bold mb-4 text-gray-800">For the Ethereum Ecosystem</h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Increased Staking Participation</h4>
-                  <p className="text-gray-600">More ETH staked means better network security</p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Capital Efficiency</h4>
-                  <p className="text-gray-600">
-                    The same ETH can simultaneously secure the network and be used in DeFi
-                  </p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Liquidity for ETH</h4>
-                  <p className="text-gray-600">Creates liquid markets for staked ETH positions</p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">DeFi Innovation</h4>
-                  <p className="text-gray-600">Enables new financial products and services built around staked ETH</p>
-                </div>
+              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-6">
+                <h3 className="text-xl font-medium mb-4 text-gray-800">Slashing and Validator Risks</h3>
+                <p className="text-gray-700 mb-2">
+                  If validators managed by the protocol are slashed for misbehavior, users holding the corresponding
+                  LSDs could lose a portion of their funds. Different protocols handle this risk in different ways.
+                </p>
               </div>
-
-              <LSDCalculator />
-            </section>
-
-            {/* Risks */}
-            <section id="risks" className="mb-12 sm:mb-16">
-              <motion.h2
-                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                Risks and Challenges of Liquid Staking Derivatives
-              </motion.h2>
-
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-gray-50 p-4 rounded-lg text-center">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M12 9V13M12 17H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h4 className="font-semibold mb-1 text-gray-800">Smart Contract Risk</h4>
-                    <p className="text-sm text-gray-600">Vulnerabilities in protocol code</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg text-center">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M12 17H12.01M12 3V13M19 10C20.6569 10 22 11.3431 22 13V18C22 20.2091 20.2091 22 18 22H6C3.79086 22 2 20.2091 2 18V13C2 11.3431 3.34315 10 5 10M15 10V5C15 3.34315 13.6569 2 12 2C10.3431 2 9 3.34315 9 5V10H15Z"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h4 className="font-semibold mb-1 text-gray-800">Slashing Risk</h4>
-                    <p className="text-sm text-gray-600">Validator penalties affect holders</p>
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-lg mb-6 text-gray-800">
-                Despite their benefits, LSDs come with several important risks that users should understand:
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800">Smart Contract Risks</h3>
-                  <ul className="space-y-2 text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Vulnerabilities in the protocol's code could lead to loss of funds</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>The complexity of some LSD protocols increases the attack surface</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Even audited contracts can have undiscovered bugs</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800">Counterparty Risks</h3>
-                  <ul className="space-y-2 text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Reliance on the protocol's operators to manage validators properly</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Potential for mismanagement or malicious behavior by node operators</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Governance risks if the protocol is controlled by a small number of token holders</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800">Slashing Risks</h3>
-                  <ul className="space-y-2 text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>If validators are slashed for misbehavior, LSD holders may suffer losses</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Different protocols handle slashing events differently</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Some protocols have insurance funds or other protections against slashing</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800">Liquidity and Market Risks</h3>
-                  <ul className="space-y-2 text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>LSD tokens may trade at a discount to their underlying value during market stress</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Liquidity can vary significantly between different LSD tokens</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Redemption mechanisms may be delayed or limited in certain circumstances</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Add new image */}
-              <div className="w-full rounded-xl overflow-hidden mt-8 mb-6 relative">
-                <Image
-                  src="/images/validator-network.png"
-                  alt="Validator Network Security"
-                  width={1200}
-                  height={675}
-                  className="w-full object-cover"
-                />
-                <div className="text-xs text-gray-500 text-center mt-2">
-                  Validator network security considerations for liquid staking protocols
-                </div>
-              </div>
-            </section>
-
-            {/* Impact */}
-            <section id="impact" className="mb-12 sm:mb-16">
-              <motion.h2
-                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                The Impact of LSDs on the Ethereum Ecosystem
-              </motion.h2>
-
-              <p className="text-lg mb-6 text-gray-800">
-                Liquid staking derivatives have had a profound impact on Ethereum's financial ecosystem:
-              </p>
-
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
-                <div className="text-center mb-4">
-                  <h3 className="text-xl font-bold text-gray-800">Ecosystem Integration</h3>
-                </div>
-                <div className="flex flex-wrap justify-center gap-4">
-                  <div className="bg-gray-50 px-4 py-2 rounded-lg text-gray-800">DeFi Lending</div>
-                  <div className="bg-gray-50 px-4 py-2 rounded-lg text-gray-800">AMM Liquidity</div>
-                  <div className="bg-gray-50 px-4 py-2 rounded-lg text-gray-800">Yield Farming</div>
-                  <div className="bg-gray-50 px-4 py-2 rounded-lg text-gray-800">Derivatives</div>
-                  <div className="bg-gray-50 px-4 py-2 rounded-lg text-gray-800">Collateral</div>
-                </div>
-              </div>
-
-              <h3 className="text-xl font-bold mb-4 text-gray-800">Growth of Staked ETH</h3>
-
-              <div className="flex flex-col md:flex-row gap-6 mb-8 items-center">
-                <div className="md:w-1/2 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="p-6">
-                    <div className="flex flex-col items-center">
-                      <div className="text-2xl font-bold mb-2 text-gray-800">30%+</div>
-                      <div className="text-gray-600 text-center">of all circulating ETH is now staked</div>
-                      <div className="w-full bg-gray-200 h-2 mt-4 rounded-full">
-                        <div className="bg-gray-500 h-2 rounded-full" style={{ width: "30%" }}></div>
-                      </div>
-                      <div className="mt-4 text-sm text-gray-500">
-                        Over half of staked ETH uses liquid staking protocols
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="md:w-1/2">
-                  <p className="text-lg mb-4 text-gray-800">
-                    LSDs have significantly increased the total amount of ETH staked on the network. As of early 2024,
-                    over 30% of all circulating ETH is staked, with liquid staking protocols accounting for more than
-                    half of that amount.
-                  </p>
-                  <p className="text-gray-600">
-                    This growth has been exponential since the Merge, with liquid staking solutions making it easier
-                    than ever for users to participate in network security while maintaining liquidity.
-                  </p>
-                </div>
-              </div>
-
-              <h3 className="text-xl font-bold mb-4 text-gray-800">DeFi Integration</h3>
-
-              <p className="mb-4 text-gray-800">LSD tokens have become fundamental building blocks in DeFi:</p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Lending/Borrowing</h4>
-                  <p className="text-gray-600">Used as collateral on platforms like Aave and Compound</p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">AMM Liquidity</h4>
-                  <p className="text-gray-600">Major trading pairs on decentralized exchanges</p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Yield Strategies</h4>
-                  <p className="text-gray-600">Core components in yield aggregators and vaults</p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Derivatives</h4>
-                  <p className="text-gray-600">Underlying assets for options, futures, and other derivatives</p>
-                </div>
-              </div>
-
-              {/* Add new image */}
-              <div className="w-full rounded-xl overflow-hidden mt-8 mb-6 relative">
-                <Image
-                  src="/images/defi-integration-diagram.png"
-                  alt="DeFi Integration Diagram"
-                  width={1200}
-                  height={675}
-                  className="w-full object-cover"
-                />
-                <div className="text-xs text-gray-500 text-center mt-2">
-                  How liquid staking tokens integrate with the broader DeFi ecosystem
-                </div>
-              </div>
-
-              <h3 className="text-xl font-bold mb-4 text-gray-800">Centralization Debates</h3>
-
-              <div className="flex flex-col md:flex-row gap-6 mb-8 items-center">
-                <div className="md:w-1/2 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="p-6">
-                    <div className="mb-4 text-center">
-                      <div className="text-lg font-bold mb-2 text-gray-800">Market Share by Protocol</div>
-                    </div>
-                    <div className="space-y-4">
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-gray-800">Lido</span>
-                          <span className="text-gray-800">~30%</span>
-                        </div>
-                        <div className="w-full bg-gray-200 h-2 rounded-full">
-                          <div className="bg-gray-500 h-2 rounded-full" style={{ width: "30%" }}></div>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-gray-800">Rocket Pool</span>
-                          <span className="text-gray-800">~8%</span>
-                        </div>
-                        <div className="w-full bg-gray-200 h-2 rounded-full">
-                          <div className="bg-gray-500 h-2 rounded-full" style={{ width: "8%" }}></div>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-gray-800">Coinbase</span>
-                          <span className="text-gray-800">~7%</span>
-                        </div>
-                        <div className="w-full bg-gray-200 h-2 rounded-full">
-                          <div className="bg-gray-500 h-2 rounded-full" style={{ width: "7%" }}></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="md:w-1/2">
-                  <ul className="space-y-3 text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Concerns about Lido's dominant market share (over 30% of all staked ETH)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Debates about limiting protocol growth to prevent centralization</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Development of more decentralized alternatives</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            {/* Choosing */}
-            <section id="choosing" className="mb-12 sm:mb-16">
-              <motion.h2
-                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                Choosing the Right Liquid Staking Solution
-              </motion.h2>
-
-              <p className="text-lg mb-6 text-gray-800">
-                With multiple options available, how should users choose the right liquid staking solution? Consider
-                these factors:
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800">Decentralization vs. Efficiency</h3>
-                  <div className="bg-gray-50 rounded-lg p-4 mb-4 flex items-center justify-center">
-                    <div className="flex flex-col items-center">
-                      <div className="flex items-center gap-8 mb-4">
-                        <div className="text-center">
-                          <div className="text-lg font-bold mb-1 text-gray-800">Decentralized</div>
-                          <div className="text-sm text-gray-600">Rocket Pool</div>
-                        </div>
-                        <div className="text-xl text-gray-400">⟷</div>
-                        <div className="text-center">
-                          <div className="text-lg font-bold mb-1 text-gray-800">Centralized</div>
-                          <div className="text-sm text-gray-600">Coinbase</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <ul className="space-y-2 text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>
-                        More decentralized protocols (like Rocket Pool) may offer better alignment with Ethereum's
-                        values
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>More centralized solutions might offer better yields or user experience</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Consider your personal values and risk tolerance</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800">Yield Considerations</h3>
-                  <div className="bg-gray-50 rounded-lg p-4 mb-4 flex items-center justify-center">
-                    <div className="flex flex-col items-center">
-                      <div className="text-center mb-2 text-gray-800">Net Yield After Fees</div>
-                      <div className="flex items-center gap-4">
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-gray-800">3-5%</div>
-                          <div className="text-sm text-gray-600">Annual</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <ul className="space-y-2 text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Compare net yields after protocol fees</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Consider the consistency and reliability of rewards</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Evaluate additional yield opportunities in the DeFi ecosystem</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800">Liquidity and Market Depth</h3>
-                  <ul className="space-y-2 text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Assess trading volumes and liquidity across different exchanges</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Consider the availability of trading pairs with other assets you use</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Evaluate the stability of the token's price relative to ETH</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800">Security and Track Record</h3>
-                  <ul className="space-y-2 text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Research the protocol's security history and audits</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Evaluate the team's experience and reputation</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Consider how long the protocol has been operating successfully</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            {/* Future */}
-            <section id="future" className="mb-12 sm:mb-16">
-              <motion.h2
-                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                The Future of Liquid Staking Derivatives
-              </motion.h2>
-
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
-                <div className="text-center mb-6">
-                  <h3 className="text-xl font-bold text-gray-800">Emerging Trends</h3>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-gray-50 p-4 rounded-lg text-center">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M4 4V9H9M20 4V9H15M4 20V15H9M15 20H20V15"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h4 className="font-semibold mb-1 text-gray-800">Restaking</h4>
-                    <p className="text-sm text-gray-600">Multi-network security</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg text-center">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M22 12H18L15 21L9 3L6 12H2"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h4 className="font-semibold mb-1 text-gray-800">Layer 2 Integration</h4>
-                    <p className="text-sm text-gray-600">Lower gas fees</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg text-center">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M3 22L12 2L21 22H3Z"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h4 className="font-semibold mb-1 text-gray-800">Regulatory Clarity</h4>
-                    <p className="text-sm text-gray-600">Institutional adoption</p>
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-lg mb-6 text-gray-800">
-                The liquid staking landscape continues to evolve rapidly. Here are some trends and developments to
-                watch:
-              </p>
-
-              <h3 className="text-xl font-bold mb-4 text-gray-800">Protocol Innovations</h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg h-full">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Restaking and EigenLayer</h4>
-                  <p className="text-gray-600">
-                    Using staked ETH to secure multiple networks simultaneously, creating a new paradigm for blockchain
-                    security
-                  </p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg h-full">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">DVT (Distributed Validator Technology)</h4>
-                  <p className="text-gray-600">
-                    Improving validator security and decentralization through multi-operator validation
-                  </p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg h-full">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Layer 2 Integration</h4>
-                  <p className="text-gray-600">
-                    Native liquid staking solutions on L2 networks, reducing gas costs and improving user experience
-                  </p>
-                </div>
-              </div>
-
-              <h3 className="text-xl font-bold mb-4 text-gray-800">Market Evolution</h3>
-
-              <ul className="space-y-2 mb-6 text-gray-600">
-                <li className="flex items-start gap-2">
-                  <span className="text-gray-500 font-bold">•</span>
-                  <span>Increased competition among liquid staking providers</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-gray-500 font-bold">•</span>
-                  <span>More institutional participation in liquid staking</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-gray-500 font-bold">•</span>
-                  <span>Development of standardized LSD indices and baskets</span>
-                </li>
-              </ul>
-
-              <h3 className="text-xl font-bold mb-4 text-gray-800">Regulatory Adaptation</h3>
-
-              <ul className="space-y-2 mb-6 text-gray-600">
-                <li className="flex items-start gap-2">
-                  <span className="text-gray-500 font-bold">•</span>
-                  <span>Protocols developing more regulatory-compliant offerings</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-gray-500 font-bold">•</span>
-                  <span>Clearer regulatory frameworks for staking derivatives</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-gray-500 font-bold">•</span>
-                  <span>Potential bifurcation between permissioned and permissionless solutions</span>
-                </li>
-              </ul>
-            </section>
-
-            {/* Conclusion */}
-            <section id="conclusion" className="mb-12 sm:mb-16">
-              <motion.h2
-                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                Conclusion: The Transformative Power of Liquid Staking
-              </motion.h2>
-
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
-                <div className="text-center">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800">Unlocking Capital Efficiency</h3>
-                  <p className="text-gray-600 mb-4">
-                    Liquid staking derivatives represent one of the most significant innovations in the Ethereum
-                    ecosystem since DeFi itself
-                  </p>
-                  <div className="inline-block bg-gray-50 px-4 py-2 rounded-lg text-gray-800">
-                    Staking + Liquidity = Capital Efficiency
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-lg mb-4 text-gray-800">
-                Liquid staking derivatives represent one of the most significant innovations in the Ethereum ecosystem
-                since DeFi itself. By solving the illiquidity problem of traditional staking, LSDs have unlocked
-                billions of dollars of capital efficiency and created new opportunities for users to participate in
-                network security while maintaining financial flexibility.
-              </p>
-
-              <p className="text-lg mb-4 text-gray-800">
-                As the ecosystem matures, we can expect to see continued innovation, increased adoption, and greater
-                integration with the broader financial system. Whether you're a casual ETH holder looking to earn yield
-                or a sophisticated DeFi user seeking new strategies, understanding liquid staking derivatives is
-                essential for navigating the evolving Ethereum landscape.
-              </p>
-
-              <p className="text-lg mb-6 text-gray-800">
-                The rise of LSDs demonstrates how financial innovation can solve practical problems while creating new
-                possibilities. As Ethereum continues to grow and evolve, liquid staking will likely remain a cornerstone
-                of its economic infrastructure.
-              </p>
-
-              <div className="bg-white shadow-md border border-gray-200 p-4 sm:p-6 rounded-lg mb-8">
-                <p className="text-lg font-semibold mb-2 text-gray-800">Key Takeaways:</p>
-                <ul className="space-y-2 text-gray-600">
-                  <li className="flex items-start gap-2">
-                    <span className="text-gray-500 font-bold">•</span>
-                    <span>
-                      LSDs solve the illiquidity problem of traditional staking while maintaining network security
-                      benefits
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-gray-500 font-bold">•</span>
-                    <span>
-                      Different protocols offer varying approaches to decentralization, yield distribution, and security
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-gray-500 font-bold">•</span>
-                    <span>Understanding the risks and benefits is crucial for making informed staking decisions</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-gray-500 font-bold">•</span>
-                    <span>
-                      The future of LSDs will likely include more innovation, integration, and regulatory clarity
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-white shadow-md border border-gray-200 p-4 sm:p-6 rounded-lg mb-8">
-                <p className="text-gray-800">
-                  <strong>Disclaimer:</strong> This article is for informational purposes only and should not be
-                  construed as financial advice. Always do your own research before making investment decisions.
+              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                <h3 className="text-xl font-medium mb-4 text-gray-800">Regulatory Uncertainty</h3>
+                <p className="text-gray-700 mb-2">
+                  The regulatory status of LSDs remains unclear in many jurisdictions. Future regulatory actions could
+                  impact how these tokens operate or are traded.
                 </p>
               </div>
             </section>
 
-            {/* Download and Share */}
-            <div className="bg-white shadow-md border border-gray-200 p-4 sm:p-6 rounded-lg mb-8">
-              <h3 className="text-xl font-bold mb-4 text-gray-800">Share This Article</h3>
-              <div className="flex flex-wrap gap-4">
-                <Button className="bg-gray-800 hover:bg-gray-700" onClick={() => handleShare("pdf")}>
-                  <Download className="mr-2 h-4 w-4" />
-                  Download PDF
-                </Button>
-                <Button
-                  className="bg-gray-800 hover:bg-gray-700"
-                  onClick={() => {
-                    window.open(
-                      `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent("Learn about Liquid Staking Derivatives and how they're revolutionizing Ethereum staking.")}`,
-                      "_blank",
-                    )
-                  }}
-                >
-                  <Twitter className="mr-2 h-4 w-4" />
-                  Share on Twitter
-                </Button>
-                <Button
-                  className="bg-gray-800 hover:bg-gray-700"
-                  onClick={() => {
-                    window.open(
-                      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`,
-                      "_blank",
-                    )
-                  }}
-                >
-                  <Linkedin className="mr-2 h-4 w-4" />
-                  Share on LinkedIn
-                </Button>
-              </div>
-            </div>
+            {/* Impact on Ethereum Section */}
+            <section id="impact" className="mb-12">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">Impact on the Ethereum Ecosystem</h2>
+              <p className="text-gray-700 mb-4">Liquid staking has had a profound impact on Ethereum's ecosystem:</p>
+              <ul className="list-disc pl-6 mb-6 space-y-2 text-gray-700">
+                <li>Increased staking participation, with over 30% of all ETH now staked</li>
+                <li>Enhanced network security through greater validator diversity</li>
+                <li>Expanded DeFi opportunities through LSD integration</li>
+                <li>Created new yield strategies combining staking with other DeFi activities</li>
+              </ul>
+              <p className="text-gray-700 mb-4">
+                As liquid staking continues to grow, it's becoming an increasingly important part of Ethereum's economic
+                layer, influencing everything from network security to DeFi innovation.
+              </p>
 
-            {/* Related Articles */}
+              {/* Calculator CTA */}
+              <div className="my-8">
+                <CalculatorCTAButton />
+              </div>
+            </section>
+
+            {/* Choosing the Right Solution Section */}
+            <section id="choosing" className="mb-12">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">
+                Choosing the Right Liquid Staking Solution
+              </h2>
+              <p className="text-gray-700 mb-6">When selecting a liquid staking protocol, consider these factors:</p>
+
+              {/* Interactive Calculator Component */}
+              <LSDCalculator />
+
+              <p className="text-gray-700 mt-6 mb-4">
+                Beyond the numbers, also consider factors like the protocol's track record, security measures,
+                decentralization level, and integration with your preferred DeFi platforms.
+              </p>
+            </section>
+
+            {/* Future of LSDs Section */}
+            <section id="future" className="mb-12">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">
+                The Future of Liquid Staking Derivatives
+              </h2>
+              <p className="text-gray-700 mb-4">
+                The liquid staking space continues to evolve rapidly. Here are some developments to watch:
+              </p>
+              <ul className="list-disc pl-6 mb-6 space-y-2 text-gray-700">
+                <li>Increased competition among protocols, potentially leading to better yields and features</li>
+                <li>More sophisticated risk management and insurance mechanisms</li>
+                <li>Greater integration with Layer 2 solutions and other blockchains</li>
+                <li>New governance models that give LSD holders more say in protocol decisions</li>
+                <li>Regulatory clarity that could shape how these protocols operate</li>
+              </ul>
+              <p className="text-gray-700 mb-4">
+                As Ethereum continues to mature, liquid staking is likely to become an even more integral part of the
+                ecosystem, potentially becoming the default way most users stake their ETH.
+              </p>
+            </section>
+
+            {/* Conclusion Section */}
+            <section id="conclusion" className="mb-12">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">Conclusion</h2>
+              <p className="text-gray-700 mb-4">
+                Liquid staking derivatives represent one of the most significant innovations in the Ethereum ecosystem
+                since DeFi itself. By solving the liquidity problem inherent in traditional staking, LSDs have made
+                staking more accessible and attractive to a wider audience.
+              </p>
+              <p className="text-gray-700 mb-4">
+                While there are important risks and trade-offs to consider, the benefits of liquid staking have clearly
+                resonated with the market. As the technology matures and protocols continue to innovate, we can expect
+                liquid staking to play an increasingly central role in Ethereum's economic layer.
+              </p>
+              <p className="text-gray-700 mb-4">
+                Whether you're a long-term ETH holder looking to earn yield, a DeFi enthusiast seeking new
+                opportunities, or simply curious about the future of Ethereum, understanding liquid staking derivatives
+                is becoming essential knowledge in the evolving crypto landscape.
+              </p>
+
+              {/* Final Calculator CTA */}
+              <div className="my-8 text-center">
+                <p className="text-lg text-gray-700 mb-4">Ready to calculate your potential staking returns?</p>
+                <CalculatorCTAButton />
+              </div>
+            </section>
+
+            {/* Related Articles with backlinks */}
             <RelatedArticles />
           </div>
 
