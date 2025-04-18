@@ -856,7 +856,12 @@ const RelatedArticles = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden flex flex-col">
           <div className="h-40 relative">
-            <Image src="/ethereum-staking-rewards-over-time.png" alt="Ethereum Staking Rewards" fill className="object-cover" />
+            <Image
+              src="/ethereum-staking-rewards-over-time.png"
+              alt="Ethereum Staking Rewards"
+              fill
+              className="object-cover"
+            />
           </div>
           <div className="p-4 flex flex-col flex-grow">
             <h4 className="font-semibold mb-2 text-gray-800">Ethereum Staking Rewards Explained</h4>
@@ -1320,12 +1325,7 @@ export default function WhatIsEthereumStakingPage() {
               <div className="flex flex-col md:flex-row gap-6 mb-8">
                 <div className="md:w-1/2 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
                   <div className="aspect-video relative">
-                    <Image
-                      src="/placeholder.svg?height=400&width=600&query=ethereum beacon chain visualization with connected nodes"
-                      alt="Ethereum Beacon Chain"
-                      fill
-                      className="object-cover"
-                    />
+                    <Image src="/ethereum-beacon-chain.png" alt="Ethereum Beacon Chain" fill className="object-cover" />
                   </div>
                 </div>
                 <div className="md:w-1/2">
@@ -1465,7 +1465,7 @@ export default function WhatIsEthereumStakingPage() {
                 <div className="md:w-1/2 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
                   <div className="aspect-video relative">
                     <Image
-                      src="/placeholder.svg?height=400&width=600&query=ethereum staking rewards chart showing APR vs total staked ETH"
+                      src="/ethereum-staking-rewards-chart.png"
                       alt="Staking Rewards Chart"
                       fill
                       className="object-cover"
@@ -1536,12 +1536,7 @@ export default function WhatIsEthereumStakingPage() {
               <div className="flex flex-col md:flex-row gap-6 mb-8">
                 <div className="md:w-1/3 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
                   <div className="aspect-square relative">
-                    <Image
-                      src="/placeholder.svg?height=400&width=400&query=ethereum solo staking validator node setup"
-                      alt="Solo Staking Setup"
-                      fill
-                      className="object-cover"
-                    />
+                    <Image src="/ethereum-solo-staking.png" alt="Solo Staking Setup" fill className="object-cover" />
                   </div>
                 </div>
                 <div className="md:w-2/3">
@@ -1621,7 +1616,7 @@ export default function WhatIsEthereumStakingPage() {
                 <div className="md:w-1/3 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
                   <div className="aspect-square relative">
                     <Image
-                      src="/placeholder.svg?height=400&width=400&query=ethereum staking as a service dashboard interface"
+                      src="/ethereum-staking-as-service.png"
                       alt="Staking as a Service"
                       fill
                       className="object-cover"
@@ -1635,12 +1630,7 @@ export default function WhatIsEthereumStakingPage() {
               <div className="flex flex-col md:flex-row gap-6 mb-8">
                 <div className="md:w-1/3 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
                   <div className="aspect-square relative">
-                    <Image
-                      src="/placeholder.svg?height=400&width=400&query=ethereum pooled staking visualization with multiple users"
-                      alt="Pooled Staking"
-                      fill
-                      className="object-cover"
-                    />
+                    <Image src="/ethereum-pooled-staking.png" alt="Pooled Staking" fill className="object-cover" />
                   </div>
                 </div>
                 <div className="md:w-2/3">
@@ -1724,12 +1714,7 @@ export default function WhatIsEthereumStakingPage() {
                 </div>
                 <div className="md:w-1/3 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
                   <div className="aspect-square relative">
-                    <Image
-                      src="/placeholder.svg?height=400&width=400&query=ethereum liquid staking tokens visualization"
-                      alt="Liquid Staking"
-                      fill
-                      className="object-cover"
-                    />
+                    <Image src="/ethereum-liquid-staking.png" alt="Liquid Staking" fill className="object-cover" />
                   </div>
                 </div>
               </div>
@@ -1739,12 +1724,7 @@ export default function WhatIsEthereumStakingPage() {
               <div className="flex flex-col md:flex-row gap-6 mb-8">
                 <div className="md:w-1/3 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
                   <div className="aspect-square relative">
-                    <Image
-                      src="/placeholder.svg?height=400&width=400&query=cryptocurrency exchange staking interface"
-                      alt="Exchange Staking"
-                      fill
-                      className="object-cover"
-                    />
+                    <Image src="/ethereum-exchange-staking.png" alt="Exchange Staking" fill className="object-cover" />
                   </div>
                 </div>
                 <div className="md:w-2/3">
@@ -1972,7 +1952,7 @@ export default function WhatIsEthereumStakingPage() {
                 <div className="md:w-1/2 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
                   <div className="aspect-video relative">
                     <Image
-                      src="/placeholder.svg?height=400&width=600&query=ethereum validator node architecture diagram showing execution and consensus clients"
+                      src="/ethereum-validator-architecture.png"
                       alt="Ethereum Validator Architecture"
                       fill
                       className="object-cover"
@@ -2051,7 +2031,7 @@ export default function WhatIsEthereumStakingPage() {
                 </p>
                 <div className="aspect-video relative rounded-lg overflow-hidden">
                   <Image
-                    src="/placeholder.svg?height=400&width=600&query=ethereum client diversity pie chart showing distribution of consensus clients"
+                    src="/ethereum-client-diversity.png"
                     alt="Ethereum Client Diversity"
                     fill
                     className="object-cover"
@@ -2087,7 +2067,7 @@ export default function WhatIsEthereumStakingPage() {
                 <div className="md:w-1/2 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
                   <div className="aspect-video relative">
                     <Image
-                      src="/placeholder.svg?height=400&width=600&query=ethereum future roadmap visualization with upcoming protocol upgrades"
+                      src="/ethereum-future-roadmap.png"
                       alt="Ethereum Future Roadmap"
                       fill
                       className="object-cover"
