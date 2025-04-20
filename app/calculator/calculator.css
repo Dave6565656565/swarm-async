@@ -1,0 +1,36 @@
+.touch-manipulation {
+  touch-action: manipulation;
+}
+
+.slider-thumb {
+  transform: scale(1.5);
+}
+
+/* Ensure inputs are large enough for touch */
+input[type="number"] {
+  font-size: 16px; /* Prevents iOS zoom */
+  touch-action: manipulation;
+}
+
+/* Prevent text selection during touch interactions */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Haptic feedback visual cue */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.haptic-feedback {
+  animation: pulse 0.3s ease-in-out;
+}
