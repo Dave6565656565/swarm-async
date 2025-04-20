@@ -172,8 +172,8 @@ const LSDCalculator = () => {
 // Protocol Comparison component
 const ProtocolComparison = () => {
   return (
-    <div className="w-full overflow-x-auto pb-4">
-      <div className="min-w-[800px]">
+    <div className="w-full overflow-x-auto pb-4 -mx-4 sm:mx-0">
+      <div className="min-w-[800px] px-4 sm:px-0">
         <div className="grid grid-cols-5 gap-4">
           <div className="p-4"></div>
           <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
@@ -303,7 +303,7 @@ const AnimatedDiagram = () => {
     <div className="w-full rounded-xl overflow-hidden bg-white shadow-md border border-gray-200 p-4 sm:p-6">
       <h3 className="text-xl font-medium mb-6 text-gray-800">How Liquid Staking Works</h3>
 
-      <div className="relative h-[300px] md:h-[400px]">
+      <div className="relative h-[250px] sm:h-[300px] md:h-[400px]">
         {/* ETH Deposit */}
         <motion.div
           className="absolute top-[10%] left-[5%] w-[20%] text-center"
@@ -475,7 +475,7 @@ const TokenTypeComparison = () => {
         </TabsList>
 
         <TabsContent value="rebasing" className="space-y-4">
-          <div className="flex flex-col md:flex-row gap-6">
+          <div className="flex flex-col md:flex-row gap-4 sm:gap-6">
             <div className="md:w-1/2">
               <div className="aspect-video rounded-lg bg-gray-50 flex items-center justify-center p-6 mb-4">
                 <div className="text-center">
@@ -540,7 +540,7 @@ const TokenTypeComparison = () => {
         </TabsContent>
 
         <TabsContent value="value-accruing" className="space-y-4">
-          <div className="flex flex-col md:flex-row gap-6">
+          <div className="flex flex-col md:flex-row gap-4 sm:gap-6">
             <div className="md:w-1/2">
               <div className="aspect-video rounded-lg bg-gray-50 flex items-center justify-center p-6 mb-4">
                 <div className="text-center">
@@ -797,7 +797,7 @@ const ShareButtons = () => {
       <Button
         size="sm"
         variant="outline"
-        className="border-gray-300 bg-white hover:bg-gray-50"
+        className="border-gray-300 bg-white hover:bg-gray-50 h-10 sm:h-9 px-3 sm:px-4"
         onClick={() => handleShare("pdf")}
       >
         <Download className="mr-2 h-4 w-4" />
@@ -806,7 +806,7 @@ const ShareButtons = () => {
       <Button
         size="sm"
         variant="outline"
-        className="border-gray-300 bg-white hover:bg-gray-50"
+        className="border-gray-300 bg-white hover:bg-gray-50 h-10 sm:h-9 px-3 sm:px-4"
         onClick={() => handleShare("twitter")}
       >
         <Twitter className="h-4 w-4" />
@@ -814,7 +814,7 @@ const ShareButtons = () => {
       <Button
         size="sm"
         variant="outline"
-        className="border-gray-300 bg-white hover:bg-gray-50"
+        className="border-gray-300 bg-white hover:bg-gray-50 h-10 sm:h-9 px-3 sm:px-4"
         onClick={() => handleShare("linkedin")}
       >
         <Linkedin className="h-4 w-4" />
@@ -822,7 +822,7 @@ const ShareButtons = () => {
       <Button
         size="sm"
         variant="outline"
-        className="border-gray-300 bg-white hover:bg-gray-50"
+        className="border-gray-300 bg-white hover:bg-gray-50 h-10 sm:h-9 px-3 sm:px-4"
         onClick={() => handleShare("general")}
       >
         <Share2 className="h-4 w-4" />
@@ -836,7 +836,7 @@ const RelatedArticles = () => {
   return (
     <div className="mb-8">
       <h3 className="text-xl font-bold mb-4 text-gray-800">Related Articles</h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden flex flex-col">
           <div className="h-40 relative">
             <Image src="/ethereum-staking-network.png" alt="Ethereum Staking" fill className="object-cover" />
@@ -914,18 +914,24 @@ export default function LiquidStakingDerivativesArticle() {
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="lg:w-3/4">
             {/* Hero Image */}
-            <div className="w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden mb-6 relative">
+            <div className="w-full h-48 sm:h-64 md:h-80 lg:h-96 rounded-xl overflow-hidden mb-4 sm:mb-6 relative">
               <Image
                 src="/ethereal-ethereum-flow.png"
                 alt="Liquid Staking Derivatives"
                 fill
                 className="object-cover"
                 priority
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, (max-width: 1024px) 60vw, 800px"
+                loading="eager"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement
+                  target.src = "/ethereum-staking-network.png" // Fallback image
+                }}
               />
             </div>
 
             <motion.h1
-              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-gray-900"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4 text-gray-900"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -934,7 +940,7 @@ export default function LiquidStakingDerivativesArticle() {
             </motion.h1>
 
             <motion.div
-              className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-4"
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 mb-3 sm:mb-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
@@ -951,9 +957,9 @@ export default function LiquidStakingDerivativesArticle() {
             </div>
 
             {/* Mobile Table of Contents */}
-            <div className="lg:hidden bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
-              <h2 className="text-xl font-bold mb-4 text-gray-800">Table of Contents</h2>
-              <ul className="space-y-2">
+            <div className="lg:hidden bg-white shadow-md border border-gray-200 rounded-lg p-3 sm:p-4 mb-6 sm:mb-8">
+              <h2 className="text-lg font-bold mb-3 text-gray-800">Table of Contents</h2>
+              <ul className="space-y-1.5">
                 <li>
                   <a href="#introduction" className="text-gray-600 hover:text-gray-900 flex items-center">
                     <ChevronRight size={16} className="mr-1" />
@@ -1048,15 +1054,17 @@ export default function LiquidStakingDerivativesArticle() {
               </p>
 
               {/* Add new image */}
-              <div className="w-full rounded-xl overflow-hidden mb-6 relative">
+              <div className="w-full rounded-xl overflow-hidden mb-4 sm:mb-6 relative">
                 <Image
                   src="/images/lsd-network-visualization.png"
                   alt="Ethereum Liquid Staking Network Visualization"
-                  width={1200}
-                  height={675}
+                  width={800}
+                  height={450}
                   className="w-full object-cover"
+                  loading="lazy"
+                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, 800px"
                 />
-                <div className="text-xs text-gray-500 text-center mt-2">
+                <div className="text-xs text-gray-500 text-center mt-1">
                   Visualization of the Ethereum liquid staking ecosystem
                 </div>
               </div>
@@ -1535,7 +1543,7 @@ export default function LiquidStakingDerivativesArticle() {
               </motion.h2>
 
               <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
                   <div className="bg-gray-50 p-4 rounded-lg text-center">
                     <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
