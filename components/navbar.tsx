@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ConnectWallet } from "@/components/connect-wallet"
-import { Menu, X, Search, FlipHorizontalIcon as SwitchHorizontal } from "lucide-react"
+import { Menu, X, Search, FlipHorizontalIcon as SwitchHorizontal, FileText } from "lucide-react"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
@@ -33,6 +33,11 @@ export function Navbar() {
     { href: "/calculator", label: "Calculator" },
     { href: "/airdrop", label: "Airdrop" },
     { href: "/articles", label: "Articles" },
+    {
+      label: "Portfolio",
+      path: "/portfolio-tracker",
+      icon: <FileText className="mr-2 h-4 w-4" />,
+    },
   ]
 
   // Format ETH balance if connected
@@ -62,10 +67,10 @@ export function Navbar() {
         <nav className="hidden md:flex items-center">
           <ul className="flex space-x-8">
             {routes.map((route) => (
-              <li key={route.href}>
+              <li key={route.href || route.path}>
                 <Link
-                  href={route.href}
-                  className={`apple-nav-link ${pathname === route.href ? "text-black font-medium" : "text-gray-600"}`}
+                  href={route.href || route.path}
+                  className={`apple-nav-link ${pathname === (route.href || route.path) ? "text-black font-medium" : "text-gray-600"}`}
                 >
                   {route.label}
                 </Link>
@@ -108,9 +113,9 @@ export function Navbar() {
             <nav className="flex flex-col gap-5">
               {routes.map((route) => (
                 <Link
-                  key={route.href}
-                  href={route.href}
-                  className={`text-base ${pathname === route.href ? "text-black font-medium" : "text-gray-600"}`}
+                  key={route.href || route.path}
+                  href={route.href || route.path}
+                  className={`text-base ${pathname === (route.href || route.path) ? "text-black font-medium" : "text-gray-600"}`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {route.label}
