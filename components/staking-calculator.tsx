@@ -42,6 +42,7 @@ export function StakingCalculator() {
   const [swipeStartX, setSwipeStartX] = useState<number | null>(null)
   const [activeTab, setActiveTab] = useState<string>("calculator")
   const amountInputRef = useRef<HTMLInputElement>(null)
+  const sliderRef = useRef<HTMLDivElement>(null)
 
   // Check if mobile
   useEffect(() => {
@@ -176,10 +177,27 @@ export function StakingCalculator() {
 
   // Handle slider change with haptic feedback
   const handleSliderChange = (value: number[]) => {
+    console.log("Slider value changed:", value)
     setPeriod(value[0])
     // Provide haptic feedback if supported
     if (navigator.vibrate) {
       navigator.vibrate(10)
+    }
+  }
+
+  // Handle track click for tap-to-set functionality
+  const handleTrackClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (sliderRef.current) {
+      const rect = sliderRef.current.getBoundingClientRect()
+      const clickX = e.clientX - rect.left
+      const width = rect.width
+      const percentage = Math.max(0, Math.min(1, clickX / width))
+      const newPeriod = Math.round(1 + percentage * (60 - 1)) // Map to 1-60 months
+      console.log("Track clicked, new period:", newPeriod)
+      setPeriod(newPeriod)
+      if (navigator.vibrate) {
+        navigator.vibrate(10)
+      }
     }
   }
 
@@ -398,19 +416,26 @@ export function StakingCalculator() {
                 type="number"
                 min="0.1"
                 step="0.1"
-                value={amount}
+                value={amount === 0 ? "" : amount}
                 onChange={(e) => {
                   const value = e.target.value
                   if (value === "") {
                     setAmount(0)
                   } else {
-                    setAmount(Number.parseFloat(value) || 0)
+                    const parsedValue = Number.parseFloat(value)
+                    if (!isNaN(parsedValue) && parsedValue >= 0) {
+                      setAmount(parsedValue)
+                    }
                   }
                 }}
                 onFocus={(e) => e.target.select()}
                 className="glassmorphism border-none mt-1 bg-gray-500/10"
                 inputMode="decimal"
+                placeholder="Enter amount"
               />
+              {amount > 0 && amount < (platform?.minStake || 0.1) && (
+                <p className="text-red-500 text-xs mt-1">Minimum stake is {platform?.minStake || 0.1} ETH</p>
+              )}
 
               {/* Quick Presets */}
               <div className="flex gap-2 mt-2">
@@ -436,19 +461,21 @@ export function StakingCalculator() {
                 </Label>
                 <span className="text-xs">{period} months</span>
               </div>
-              <Slider
-                id="mobile-period"
-                min={1}
-                max={60}
-                step={1}
-                value={[period]}
-                onValueChange={handleSliderChange}
-                className="py-2 touch-manipulation"
-                aria-label={`Staking period: ${period} months`}
-                aria-valuemin={1}
-                aria-valuemax={60}
-                aria-valuenow={period}
-              />
+              <div ref={sliderRef} onClick={handleTrackClick} className="relative py-4">
+                <Slider
+                  id="mobile-period"
+                  min={1}
+                  max={60}
+                  step={1}
+                  value={[period]}
+                  onValueChange={handleSliderChange}
+                  className="py-2"
+                  aria-label={`Staking period: ${period} months`}
+                  aria-valuemin={1}
+                  aria-valuemax={60}
+                  aria-valuenow={period}
+                />
+              </div>
               <div className="flex justify-between text-xs text-muted-foreground">
                 <span>1m</span>
                 <span>5y</span>
@@ -605,18 +632,22 @@ export function StakingCalculator() {
                         type="number"
                         min="0.1"
                         step="0.1"
-                        value={amount}
+                        value={amount === 0 ? "" : amount}
                         onChange={(e) => {
                           const value = e.target.value
                           if (value === "") {
                             setAmount(0)
                           } else {
-                            setAmount(Number.parseFloat(value) || 0)
+                            const parsedValue = Number.parseFloat(value)
+                            if (!isNaN(parsedValue) && parsedValue >= 0) {
+                              setAmount(parsedValue)
+                            }
                           }
                         }}
                         onFocus={(e) => e.target.select()}
                         className="glassmorphism border-none bg-gray-500/10"
                         inputMode="decimal"
+                        placeholder="Enter amount"
                       />
 
                       {/* Quick Presets */}
@@ -640,19 +671,21 @@ export function StakingCalculator() {
                         <Label htmlFor="period">Staking Period</Label>
                         <span className="text-sm text-muted-foreground">{period} months</span>
                       </div>
-                      <Slider
-                        id="period"
-                        min={1}
-                        max={60}
-                        step={1}
-                        value={[period]}
-                        onChange={(value) => setPeriod(value[0])}
-                        className="py-4"
-                        aria-label={`Staking period: ${period} months`}
-                        aria-valuemin={1}
-                        aria-valuemax={60}
-                        aria-valuenow={period}
-                      />
+                      <div ref={sliderRef} onClick={handleTrackClick} className="relative py-4">
+                        <Slider
+                          id="period"
+                          min={1}
+                          max={60}
+                          step={1}
+                          value={[period]}
+                          onValueChange={handleSliderChange}
+                          className="py-4"
+                          aria-label={`Staking period: ${period} months`}
+                          aria-valuemin={1}
+                          aria-valuemax={60}
+                          aria-valuenow={period}
+                        />
+                      </div>
                       <div className="flex justify-between text-xs text-muted-foreground">
                         <span>1 month</span>
                         <span>5 years</span>
