@@ -4,6 +4,7 @@ import { PartnersSection } from "@/components/partners-section"
 import { AirdropSection } from "@/components/airdrop-section"
 import { NewsletterSection } from "@/components/newsletter-section"
 import { ContractSection } from "@/components/contract-section"
+import { EthBettingSection } from "@/components/eth-betting-section"
 
 export default function HomePage() {
   return (
@@ -11,6 +12,7 @@ export default function HomePage() {
       <HeroSection />
       <FeaturesSection />
       <ContractSection />
+      <EthBettingSection />
       <AirdropSection />
       <PartnersSection />
       <NewsletterSection />

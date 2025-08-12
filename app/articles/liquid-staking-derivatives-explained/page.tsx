@@ -1029,7 +1029,6 @@ export default function LiquidStakingDerivativesArticle() {
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
                 Introduction to Liquid Staking Derivatives
@@ -2288,6 +2287,35 @@ export default function LiquidStakingDerivativesArticle() {
                     </span>
                   </li>
                 </ul>
+              </div>
+
+              <div className="bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-lg p-6 sm:p-8 mb-8">
+                <div className="text-center">
+                  <h3 className="text-xl font-bold mb-4 text-gray-800">Ready to Start Liquid Staking?</h3>
+                  <p className="text-gray-600 mb-6">
+                    Now that you understand liquid staking derivatives, you can start earning rewards on your ETH while
+                    maintaining liquidity. Our platform makes it simple to get started with trusted liquid staking
+                    protocols.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <Link
+                      href="/"
+                      className="inline-flex items-center px-6 py-3 bg-gray-800 text-white font-medium rounded-lg hover:bg-gray-700 transition-colors"
+                    >
+                      Start Staking ETH
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                    <Link
+                      href="/calculator"
+                      className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      Calculate Rewards
+                    </Link>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-4">
+                    Compare liquid staking options and find the best yields for your ETH
+                  </p>
+                </div>
               </div>
 
               <div className="bg-white shadow-md border border-gray-200 p-4 sm:p-6 rounded-lg mb-8">
