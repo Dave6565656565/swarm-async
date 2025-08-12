@@ -630,7 +630,7 @@ export default function PortfolioTracker() {
                           <Button
                             size="sm"
                             variant="outline"
-                            className="flex-1"
+                            className="flex-1 bg-transparent"
                             onClick={() => setEditingId(holding.id)}
                           >
                             <Edit className="h-4 w-4 mr-1" /> Edit

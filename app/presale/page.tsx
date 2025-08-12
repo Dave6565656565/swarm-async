@@ -1,6 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ParticlesBackground } from "@/components/particles-background"
 import { PresaleNotifyForm } from "@/components/presale-notify-form"
+import { RelatedArticles } from "@/components/related-articles"
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 
 export default function PresalePage() {
   // Calculate presale date (2 months from now)
@@ -82,6 +85,49 @@ export default function PresalePage() {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      <RelatedArticles
+        articles={[
+          {
+            title: "Future of Ethereum Staking",
+            description: "Explore what's next for Ethereum staking and upcoming developments",
+            href: "/articles/future-of-ethereum-staking",
+            readTime: "16 min read",
+          },
+          {
+            title: "Ethereum Staking for Institutions",
+            description: "How institutions are approaching Ethereum staking strategies",
+            href: "/articles/ethereum-staking-for-institutions",
+            readTime: "14 min read",
+          },
+          {
+            title: "Liquid Staking Derivatives Explained",
+            description: "Understanding LSDs and their role in the staking ecosystem",
+            href: "/articles/liquid-staking-derivatives-explained",
+            readTime: "18 min read",
+          },
+          {
+            title: "Staking vs DeFi Yields",
+            description: "Comparing Ethereum staking returns with DeFi opportunities",
+            href: "/articles/staking-vs-defi-yields",
+            readTime: "11 min read",
+          },
+        ]}
+      />
+
+      {/* Parlay Calculator Backlink */}
+      <div className="text-center py-8 border-t border-gray-200">
+        <p className="text-sm text-gray-500 mb-2">Looking for sports betting tools?</p>
+        <Link
+          href="https://luxuryfootballelite.com/parlay-calculator/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
+        >
+          <span>Calculate Parlay Odds</span>
+          <ArrowRight className="w-4 h-4" />
+        </Link>
       </div>
     </div>
   )

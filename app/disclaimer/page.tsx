@@ -1,106 +1,120 @@
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ParticlesBackground } from "@/components/particles-background"
+import { RelatedArticles } from "@/components/related-articles"
+import { AlertTriangle } from "lucide-react"
 
 export default function DisclaimerPage() {
   return (
     <div className="container mx-auto px-4 py-12 relative">
       <ParticlesBackground />
 
-      <h1 className="text-3xl font-bold mb-8 neon-text">Disclaimer</h1>
+      <h1 className="text-3xl font-bold mb-8 neon-text text-center">Disclaimer</h1>
 
-      <Card className="glassmorphism neon-border overflow-hidden max-w-4xl mx-auto">
-        <CardContent className="p-6 space-y-6">
-          <div>
-            <h2 className="text-xl font-bold mb-2">1. No Financial Advice</h2>
-            <p className="text-muted-foreground">
-              The information provided on StakeETH Portal is for general informational purposes only and should not be
-              construed as financial, investment, or legal advice. We do not provide personalized investment advice or
-              recommendations.
-            </p>
-          </div>
+      <div className="max-w-4xl mx-auto">
+        <Card className="glassmorphism neon-border overflow-hidden mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-yellow-500" />
+              Important Disclaimer
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6 prose prose-invert max-w-none">
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Investment Risk</h3>
+              <p className="text-muted-foreground">
+                Cryptocurrency staking involves significant risk. The value of cryptocurrencies can be extremely
+                volatile and may result in substantial losses. Past performance is not indicative of future results.
+              </p>
+            </div>
 
-          <div>
-            <h2 className="text-xl font-bold mb-2">2. Risk Disclosure</h2>
-            <p className="text-muted-foreground">
-              Cryptocurrency staking and investing involve significant risks, including but not limited to market
-              volatility, technical vulnerabilities, regulatory changes, and potential loss of principal. The value of
-              cryptocurrencies can fluctuate significantly in a short period of time, and you may lose all of your
-              investment.
-            </p>
-            <p className="text-muted-foreground mt-2">
-              You should carefully consider your financial situation, risk tolerance, and investment objectives before
-              engaging in cryptocurrency staking. Past performance is not indicative of future results.
-            </p>
-          </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-3">No Financial Advice</h3>
+              <p className="text-muted-foreground">
+                The information provided on this platform is for educational purposes only and should not be considered
+                as financial, investment, or legal advice. Always consult with qualified professionals before making
+                investment decisions.
+              </p>
+            </div>
 
-          <div>
-            <h2 className="text-xl font-bold mb-2">3. Expected Returns</h2>
-            <p className="text-muted-foreground">
-              Any displayed APY rates, rewards, or potential returns are estimates based on current market conditions
-              and historical data. These figures are subject to change with notice and are influenced by many factors
-              beyond our control. All staking rewards depend on network parameters, validator performance, and other
-              variables.
-            </p>
-          </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Platform Risks</h3>
+              <p className="text-muted-foreground">
+                Staking platforms may experience technical issues, security breaches, or other operational problems that
+                could result in loss of funds. We cannot guarantee the security or availability of our services.
+              </p>
+            </div>
 
-          <div>
-            <h2 className="text-xl font-bold mb-2">4. Technical Risks</h2>
-            <p className="text-muted-foreground">
-              Blockchain technology and smart contracts are relatively new and untested technologies. There are inherent
-              risks associated with using these technologies, including but not limited to software bugs, technical
-              vulnerabilities, network failures, and security breaches.
-            </p>
-          </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Regulatory Risk</h3>
+              <p className="text-muted-foreground">
+                Cryptocurrency regulations are evolving and may change in ways that could affect the legality or
+                profitability of staking activities in your jurisdiction.
+              </p>
+            </div>
 
-          <div>
-            <h2 className="text-xl font-bold mb-2">5. Regulatory Risks</h2>
-            <p className="text-muted-foreground">
-              The regulatory landscape for cryptocurrencies and blockchain technology is evolving. Changes in laws,
-              regulations, or policies may adversely affect the operation of StakeETH Portal or the value of staked
-              assets.
-            </p>
-          </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Technical Risks</h3>
+              <p className="text-muted-foreground">
+                Ethereum network upgrades, protocol changes, or technical issues could affect staking rewards or the
+                ability to unstake your tokens.
+              </p>
+            </div>
 
-          <div>
-            <h2 className="text-xl font-bold mb-2">6. Independent Research</h2>
-            <p className="text-muted-foreground">
-              Users are encouraged to conduct their own research and consult with financial, legal, and tax
-              professionals before making any investment decisions. You are solely responsible for your investment
-              decisions.
-            </p>
-          </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-3">No Guarantees</h3>
+              <p className="text-muted-foreground">
+                We make no guarantees about staking rewards, platform uptime, or the security of your funds. Use our
+                services at your own risk.
+              </p>
+            </div>
 
-          <div>
-            <h2 className="text-xl font-bold mb-2">7. Accuracy of Information</h2>
-            <p className="text-muted-foreground">
-              While we strive to provide accurate and up-to-date information, StakeETH Portal makes no representations
-              or warranties about the accuracy, completeness, or reliability of any information on our platform.
-            </p>
-          </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Limitation of Liability</h3>
+              <p className="text-muted-foreground">
+                To the maximum extent permitted by law, we shall not be liable for any direct, indirect, incidental, or
+                consequential damages arising from your use of our platform.
+              </p>
+            </div>
 
-          <div>
-            <h2 className="text-xl font-bold mb-2">8. Limitation of Liability</h2>
-            <p className="text-muted-foreground">
-              To the maximum extent permitted by law, StakeETH Portal and its affiliates, officers, directors,
-              employees, and agents shall not be liable for any direct, indirect, incidental, special, consequential, or
-              punitive damages resulting from your use of our platform or any investment decisions you make.
-            </p>
-          </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Due Diligence</h3>
+              <p className="text-muted-foreground">
+                You are responsible for conducting your own research and due diligence before participating in any
+                staking activities. Understand the risks involved and only stake what you can afford to lose.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
 
-          <div>
-            <h2 className="text-xl font-bold mb-2">9. Updates to Disclaimer</h2>
-            <p className="text-muted-foreground">
-              We reserve the right to modify this disclaimer at any time. We will provide notice of significant changes
-              by updating the date at the top of this disclaimer and by maintaining a current version on our website.
-              All changes will be made with proper notice to users.
-            </p>
-          </div>
-
-          <div className="pt-4 border-t border-muted">
-            <p className="text-sm text-muted-foreground">Last updated: April 11, 2023</p>
-          </div>
-        </CardContent>
-      </Card>
+        <RelatedArticles
+          articles={[
+            {
+              title: "Understanding Staking Risks",
+              description: "Comprehensive guide to the risks involved in Ethereum staking",
+              href: "/articles/staking-risks",
+              readTime: "15 min read",
+            },
+            {
+              title: "Risk Management Strategies",
+              description: "How to minimize risks while maximizing staking rewards",
+              href: "/articles/staking-risk-management",
+              readTime: "12 min read",
+            },
+            {
+              title: "Tax Implications of Staking",
+              description: "Understanding the tax consequences of staking rewards",
+              href: "/articles/tax-implications-of-eth-staking",
+              readTime: "14 min read",
+            },
+            {
+              title: "Regulatory Landscape",
+              description: "Current and future regulatory considerations for staking",
+              href: "/articles/eth-staking-regulatory-landscape",
+              readTime: "11 min read",
+            },
+          ]}
+        />
+      </div>
     </div>
   )
 }

@@ -1,9 +1,8 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   ArrowLeft,
   ChevronDown,
@@ -11,7 +10,6 @@ import {
   Twitter,
   Linkedin,
   Info,
-  Check,
   ExternalLink,
   ChevronRight,
   Share2,
@@ -26,9 +24,8 @@ import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { ParticlesBackground } from "@/components/particles-background"
-import { AnimatedStakingProcess } from "@/components/animated-staking-process"
-import { BeaconChainDiagram } from "@/components/beacon-chain-diagram"
-import { EthereumFutureDiagram } from "@/components/ethereum-future-diagram"
+import { StickyTableOfContents } from "@/components/sticky-table-of-contents"
+import { LSDCalculator } from "@/components/lsd-calculator"
 
 // Interactive Staking Calculator component
 const StakingCalculator = () => {
@@ -303,12 +300,6 @@ const StakingMethodsComparison = () => {
             </div>
             <div className="text-xs mt-1 text-gray-500">Very Low</div>
           </div>
-          <div className="p-4 text-center bg-white border border-gray-100">
-            <div className="w-full bg-gray-200 h-2 rounded-full">
-              <div className="bg-gray-500 h-2 rounded-full" style={{ width: "10%" }}></div>
-            </div>
-            <div className="text-xs mt-1 text-gray-500">Minimal</div>
-          </div>
 
           {/* Decentralization Impact */}
           <div className="p-4 font-medium bg-gray-100 flex items-center text-gray-800">Decentralization Impact</div>
@@ -343,421 +334,160 @@ const StakingMethodsComparison = () => {
 }
 
 // Animated diagram component for staking process
-// const AnimatedStakingProcess = () => {
-//   return (
-//     <div className="w-full rounded-xl overflow-hidden bg-white shadow-md border border-gray-200 p-4 sm:p-6">
-//       <h3 className="text-xl font-medium mb-6 text-gray-800">How Ethereum Staking Works</h3>
-
-//       <div className="relative h-[300px] md:h-[400px]">
-//         {/* ETH Deposit */}
-//         <motion.div
-//           className="absolute top-[10%] left-[5%] w-[20%] text-center"
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ delay: 0.2 }}
-//         >
-//           <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-//             <span className="text-3xl text-gray-800">Ξ</span>
-//           </div>
-//           <div className="font-medium text-gray-800">32 ETH Deposit</div>
-//         </motion.div>
-
-//         {/* Arrow 1 */}
-//         <motion.div
-//           className="absolute top-[15%] left-[26%] w-[15%]"
-//           initial={{ opacity: 0 }}
-//           animate={{ opacity: 1 }}
-//           transition={{ delay: 0.6 }}
-//         >
-//           <div className="h-0.5 w-full bg-gradient-to-r from-gray-400 to-gray-500"></div>
-//           <div className="absolute right-0 top-[-4px] text-gray-500">
-//             <ArrowRight size={20} />
-//           </div>
-//         </motion.div>
-
-//         {/* Validator Activation */}
-//         <motion.div
-//           className="absolute top-[10%] left-[42%] w-[25%] text-center"
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ delay: 1.0 }}
-//         >
-//           <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-//             <div className="text-center">
-//               <div className="text-sm text-gray-800">Validator</div>
-//               <div className="text-sm text-gray-800">Activation</div>
-//             </div>
-//           </div>
-//           <div className="font-medium text-gray-800">Enters Activation Queue</div>
-//         </motion.div>
-
-//         {/* Arrow 2 Down */}
-//         <motion.div
-//           className="absolute top-[32%] left-[52%] h-[15%]"
-//           initial={{ opacity: 0 }}
-//           animate={{ opacity: 1 }}
-//           transition={{ delay: 1.4 }}
-//         >
-//           <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
-//           <div className="absolute bottom-0 left-[-4px] text-gray-500">
-//             <ChevronDown size={20} />
-//           </div>
-//         </motion.div>
-
-//         {/* Active Validation */}
-//         <motion.div
-//           className="absolute top-[48%] left-[42%] w-[25%] text-center"
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ delay: 1.8 }}
-//         >
-//           <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-//             <div className="text-center">
-//               <div className="text-sm text-gray-800">Active</div>
-//               <div className="text-sm text-gray-800">Validation</div>
-//             </div>
-//           </div>
-//           <div className="font-medium text-gray-800">Proposing & Attesting Blocks</div>
-//         </motion.div>
-
-//         {/* Arrow 3 Right */}
-//         <motion.div
-//           className="absolute top-[55%] left-[68%] w-[10%]"
-//           initial={{ opacity: 0 }}
-//           animate={{ opacity: 1 }}
-//           transition={{ delay: 2.2 }}
-//         >
-//           <div className="h-0.5 w-full bg-gradient-to-r from-gray-400 to-gray-500"></div>
-//           <div className="absolute right-0 top-[-4px] text-gray-500">
-//             <ArrowRight size={20} />
-//           </div>
-//         </motion.div>
-
-//         {/* Rewards */}
-//         <motion.div
-//           className="absolute top-[48%] left-[80%] w-[15%] text-center"
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ delay: 2.6 }}
-//         >
-//           <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-//             <Zap className="h-6 w-6 text-gray-600" />
-//           </div>
-//           <div className="font-medium text-gray-800">Staking Rewards</div>
-//         </motion.div>
-
-//         {/* Optional Exit Path */}
-//         <motion.div
-//           className="absolute bottom-[25%] left-[52%] h-[15%]"
-//           initial={{ opacity: 0 }}
-//           animate={{ opacity: 1 }}
-//           transition={{ delay: 3.0 }}
-//         >
-//           <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
-//           <div className="absolute bottom-0 left-[-4px] text-gray-500">
-//             <ChevronDown size={20} />
-//           </div>
-//         </motion.div>
-
-//         {/* Exit & Withdrawal */}
-//         <motion.div
-//           className="absolute bottom-[10%] left-[42%] w-[25%] text-center"
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ delay: 3.4 }}
-//         >
-//           <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
-//             <div className="text-center">
-//               <div className="text-sm text-gray-800">Exit &</div>
-//               <div className="text-sm text-gray-800">Withdrawal</div>
-//             </div>
-//           </div>
-//           <div className="font-medium text-gray-800">Optional</div>
-//         </motion.div>
-
-//         {/* Network Security */}
-//         <motion.div
-//           className="absolute bottom-[10%] left-[20%] w-[60%] text-center"
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ delay: 3.8 }}
-//         >
-//           <div className="w-full h-16 mx-auto rounded-lg bg-gray-50 flex items-center justify-center">
-//             <div className="flex items-center">
-//               <div className="text-gray-800 mr-2">Network Security</div>
-//               <div className="w-32 h-0.5 bg-gradient-to-r from-emerald-500 to-gray-400 relative">
-//                 <motion.div
-//                   className="absolute -top-1.5 w-3 h-3 rounded-full bg-emerald-500"
-//                   animate={{ x: [0, 128, 0] }}
-//                   transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3, ease: "linear" }}
-//                 />
-//               </div>
-//               <div className="text-emerald-600 ml-2">Ethereum Blockchain</div>
-//             </div>
-//           </div>
-//         </motion.div>
-//       </div>
-//     </div>
-//   )
-// }
-
-// Validator Responsibilities component
-const ValidatorResponsibilities = () => {
-  const [activeTab, setActiveTab] = useState("attestation")
-
+const AnimatedStakingProcess = () => {
   return (
     <div className="w-full rounded-xl overflow-hidden bg-white shadow-md border border-gray-200 p-4 sm:p-6">
-      <h3 className="text-xl font-medium mb-6 text-gray-800">Validator Responsibilities</h3>
+      <h3 className="text-xl font-medium mb-6 text-gray-800">How Staking Works</h3>
 
-      <Tabs defaultValue="attestation" className="w-full" onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-2 mb-6 bg-gray-100">
-          <TabsTrigger value="attestation" className="data-[state=active]:bg-white">
-            Attestation
-          </TabsTrigger>
-          <TabsTrigger value="block-proposal" className="data-[state=active]:bg-white">
-            Block Proposal
-          </TabsTrigger>
-        </TabsList>
+      <div className="relative h-[300px] md:h-[400px]">
+        {/* ETH Deposit */}
+        <motion.div
+          className="absolute top-[10%] left-[5%] w-[20%] text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+            <span className="text-3xl text-gray-800">Ξ</span>
+          </div>
+          <div className="font-medium text-gray-800">ETH Deposit</div>
+        </motion.div>
 
-        <TabsContent value="attestation" className="space-y-4">
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="md:w-1/2">
-              <div className="aspect-video rounded-lg bg-gray-50 flex items-center justify-center p-6 mb-4">
-                <div className="text-center">
-                  <div className="text-xl mb-4 text-gray-800">Attestation Process</div>
-                  <div className="flex flex-col items-center">
-                    <div className="mb-2 text-gray-800">Receive Block from Proposer</div>
-                    <ChevronDown className="my-2 text-gray-400" />
-                    <div className="mb-2 text-gray-800">Verify Block Validity</div>
-                    <ChevronDown className="my-2 text-gray-400" />
-                    <div className="text-gray-800">Submit Vote (Attestation)</div>
-                  </div>
-                </div>
-              </div>
+        {/* Arrow 1 */}
+        <motion.div
+          className="absolute top-[15%] left-[26%] w-[15%]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          <div className="h-0.5 w-full bg-gradient-to-r from-gray-400 to-gray-500"></div>
+          <div className="absolute right-0 top-[-4px] text-gray-500">
+            <ArrowRight size={20} />
+          </div>
+        </motion.div>
 
-              <div className="text-sm text-gray-600">
-                Attestations are votes that confirm the validity of blocks. Validators are regularly assigned to
-                committees that must attest to the state of the chain and proposed blocks. This is the most frequent
-                activity validators perform.
-              </div>
-            </div>
-
-            <div className="md:w-1/2 space-y-4">
-              <div className="p-4 rounded-lg bg-gray-50">
-                <h4 className="font-medium mb-2 flex items-center text-gray-800">
-                  <Check size={16} className="mr-2 text-emerald-600" />
-                  Attestation Duties
-                </h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li>• Verify the proposer's block is valid</li>
-                  <li>• Confirm the current state of the blockchain</li>
-                  <li>• Submit votes as part of a committee</li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-gray-50">
-                <h4 className="font-medium mb-2 flex items-center text-gray-800">
-                  <Info size={16} className="mr-2 text-amber-600" />
-                  Importance
-                </h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li>• Attestations secure the network through consensus</li>
-                  <li>• Majority of validator rewards come from attestations</li>
-                  <li>• Helps prevent chain forks and attacks</li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-gray-50">
-                <h4 className="font-medium mb-2 text-gray-800">Frequency</h4>
-                <div className="text-sm text-gray-600">
-                  Validators are assigned to make attestations approximately once every 6.4 minutes (each epoch).
-                </div>
-              </div>
+        {/* Validator Activation */}
+        <motion.div
+          className="absolute top-[10%] left-[42%] w-[25%] text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.0 }}
+        >
+          <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+            <div className="text-center">
+              <div className="text-sm text-gray-800">Validator</div>
+              <div className="text-sm text-gray-800">Activation</div>
             </div>
           </div>
-        </TabsContent>
+          <div className="font-medium text-gray-800">Enters Activation Queue</div>
+        </motion.div>
 
-        <TabsContent value="block-proposal" className="space-y-4">
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="md:w-1/2">
-              <div className="aspect-video rounded-lg bg-gray-50 flex items-center justify-center p-6 mb-4">
-                <div className="text-center">
-                  <div className="text-xl mb-4 text-gray-800">Block Proposal Process</div>
-                  <div className="flex flex-col items-center">
-                    <div className="mb-2 text-gray-800">Collect Transactions</div>
-                    <ChevronDown className="my-2 text-gray-400" />
-                    <div className="mb-2 text-gray-800">Create & Sign Block</div>
-                    <ChevronDown className="my-2 text-gray-400" />
-                    <div className="text-gray-800">Broadcast to Network</div>
-                  </div>
-                </div>
-              </div>
+        {/* Arrow 2 Down */}
+        <motion.div
+          className="absolute top-[32%] left-[52%] h-[15%]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.4 }}
+        >
+          <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
+          <div className="absolute bottom-0 left-[-4px] text-gray-500">
+            <ChevronDown size={20} />
+          </div>
+        </motion.div>
 
-              <div className="text-sm text-gray-600">
-                Block proposal is the process of creating new blocks for the Ethereum blockchain. When selected as a
-                proposer, a validator is responsible for bundling transactions, creating a new block, and broadcasting
-                it to the network.
-              </div>
-            </div>
-
-            <div className="md:w-1/2 space-y-4">
-              <div className="p-4 rounded-lg bg-gray-50">
-                <h4 className="font-medium mb-2 flex items-center text-gray-800">
-                  <Check size={16} className="mr-2 text-emerald-600" />
-                  Block Proposal Duties
-                </h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li>• Collect and verify pending transactions</li>
-                  <li>• Bundle transactions into a block</li>
-                  <li>• Execute transactions to compute state changes</li>
-                  <li>• Sign and broadcast the new block</li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-gray-50">
-                <h4 className="font-medium mb-2 flex items-center text-gray-800">
-                  <Info size={16} className="mr-2 text-amber-600" />
-                  Rewards
-                </h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li>• Base rewards for successful block proposal</li>
-                  <li>• Priority fees from transactions</li>
-                  <li>• MEV (Maximal Extractable Value) opportunities</li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-gray-50">
-                <h4 className="font-medium mb-2 text-gray-800">Frequency</h4>
-                <div className="text-sm text-gray-600">
-                  Validators are randomly selected to propose blocks. With current validator counts, a validator might
-                  propose a block once every few months.
-                </div>
-              </div>
+        {/* Active Validation */}
+        <motion.div
+          className="absolute top-[48%] left-[42%] w-[25%] text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.8 }}
+        >
+          <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+            <div className="text-center">
+              <div className="text-sm text-gray-800">Active</div>
+              <div className="text-sm text-gray-800">Validation</div>
             </div>
           </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-  )
-}
+          <div className="font-medium text-gray-800">Proposing & Attesting Blocks</div>
+        </motion.div>
 
-// Sticky Table of Contents component
-const StickyTableOfContents = () => {
-  const [activeSection, setActiveSection] = useState("introduction")
-  const observer = useRef<IntersectionObserver | null>(null)
+        {/* Arrow 3 Right */}
+        <motion.div
+          className="absolute top-[55%] left-[68%] w-[10%]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.2 }}
+        >
+          <div className="h-0.5 w-full bg-gradient-to-r from-gray-400 to-gray-500"></div>
+          <div className="absolute right-0 top-[-4px] text-gray-500">
+            <ArrowRight size={20} />
+          </div>
+        </motion.div>
 
-  useEffect(() => {
-    const sections = document.querySelectorAll("section[id]")
+        {/* Rewards */}
+        <motion.div
+          className="absolute top-[48%] left-[80%] w-[15%] text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2.6 }}
+        >
+          <div className="w-16 h-16 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+            <Zap className="h-6 w-6 text-gray-600" />
+          </div>
+          <div className="font-medium text-gray-800">Staking Rewards</div>
+        </motion.div>
 
-    observer.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
-          }
-        })
-      },
-      { threshold: 0.3 },
-    )
+        {/* Optional Exit Path */}
+        <motion.div
+          className="absolute bottom-[25%] left-[52%] h-[15%]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 3.0 }}
+        >
+          <div className="w-0.5 h-full bg-gradient-to-b from-gray-400 to-gray-500 mx-auto"></div>
+          <div className="absolute bottom-0 left-[-4px] text-gray-500">
+            <ChevronDown size={20} />
+          </div>
+        </motion.div>
 
-    sections.forEach((section) => {
-      if (observer.current) {
-        observer.current.observe(section)
-      }
-    })
+        {/* Exit & Withdrawal */}
+        <motion.div
+          className="absolute bottom-[10%] left-[42%] w-[25%] text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 3.4 }}
+        >
+          <div className="w-20 h-20 mx-auto rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+            <div className="text-center">
+              <div className="text-sm text-gray-800">Exit &</div>
+              <div className="text-sm text-gray-800">Withdrawal</div>
+            </div>
+          </div>
+          <div className="font-medium text-gray-800">Optional</div>
+        </motion.div>
 
-    return () => {
-      if (observer.current) {
-        observer.current.disconnect()
-      }
-    }
-  }, [])
-
-  return (
-    <div className="hidden lg:block sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto p-4 rounded-lg bg-white shadow-md border border-gray-200">
-      <h3 className="text-lg font-medium mb-4 text-gray-800">Table of Contents</h3>
-      <ul className="space-y-2 text-sm">
-        <li>
-          <a
-            href="#introduction"
-            className={`block py-1.5 px-3 rounded-lg transition-colors ${activeSection === "introduction" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-700"}`}
-          >
-            Introduction
-          </a>
-        </li>
-        <li>
-          <a
-            href="#fundamentals"
-            className={`block py-1.5 px-3 rounded-lg transition-colors ${activeSection === "fundamentals" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-700"}`}
-          >
-            The Fundamentals of Proof of Stake
-          </a>
-        </li>
-        <li>
-          <a
-            href="#how-staking-works"
-            className={`block py-1.5 px-3 rounded-lg transition-colors ${activeSection === "how-staking-works" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-700"}`}
-          >
-            How Ethereum Staking Works
-          </a>
-        </li>
-        <li>
-          <a
-            href="#staking-rewards"
-            className={`block py-1.5 px-3 rounded-lg transition-colors ${activeSection === "staking-rewards" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-700"}`}
-          >
-            Staking Rewards
-          </a>
-        </li>
-        <li>
-          <a
-            href="#participation-methods"
-            className={`block py-1.5 px-3 rounded-lg transition-colors ${activeSection === "participation-methods" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-700"}`}
-          >
-            Ways to Participate
-          </a>
-        </li>
-        <li>
-          <a
-            href="#risks"
-            className={`block py-1.5 px-3 rounded-lg transition-colors ${activeSection === "risks" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-700"}`}
-          >
-            Risks and Considerations
-          </a>
-        </li>
-        <li>
-          <a
-            href="#technical-architecture"
-            className={`block py-1.5 px-3 rounded-lg transition-colors ${activeSection === "technical-architecture" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-700"}`}
-          >
-            Technical Architecture
-          </a>
-        </li>
-        <li>
-          <a
-            href="#future"
-            className={`block py-1.5 px-3 rounded-lg transition-colors ${activeSection === "future" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-700"}`}
-          >
-            The Future of Ethereum Staking
-          </a>
-        </li>
-        <li>
-          <a
-            href="#getting-started"
-            className={`block py-1.5 px-3 rounded-lg transition-colors ${activeSection === "getting-started" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-700"}`}
-          >
-            Getting Started
-          </a>
-        </li>
-        <li>
-          <a
-            href="#conclusion"
-            className={`block py-1.5 px-3 rounded-lg transition-colors ${activeSection === "conclusion" ? "bg-gray-100 text-gray-900" : "hover:bg-gray-50 text-gray-700"}`}
-          >
-            Conclusion
-          </a>
-        </li>
-      </ul>
+        {/* Network Security */}
+        <motion.div
+          className="absolute bottom-[10%] left-[20%] w-[60%] text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 3.8 }}
+        >
+          <div className="w-full h-16 mx-auto rounded-lg bg-gray-50 flex items-center justify-center">
+            <div className="flex items-center">
+              <div className="text-gray-800 mr-2">Network Security</div>
+              <div className="w-32 h-0.5 bg-gradient-to-r from-emerald-500 to-gray-400 relative">
+                <motion.div
+                  className="absolute -top-1.5 w-3 h-3 rounded-full bg-emerald-500"
+                  animate={{ x: [0, 128, 0] }}
+                  transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3, ease: "linear" }}
+                />
+              </div>
+              <div className="text-emerald-600 ml-2">Ethereum Blockchain</div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
     </div>
   )
 }
@@ -854,7 +584,7 @@ const ShareButtons = () => {
 const RelatedArticles = () => {
   return (
     <div className="mb-8">
-      <h3 className="text-xl font-bold mb-4 text-gray-800">Related Articles</h3>
+      <h3 className="text-xl font-bold mb-4 text-gray-800">Further Reading</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden flex flex-col">
           <div className="h-40 relative">
@@ -866,7 +596,7 @@ const RelatedArticles = () => {
             />
           </div>
           <div className="p-4 flex flex-col flex-grow">
-            <h4 className="font-semibold mb-2 text-gray-800">Ethereum Staking Rewards Explained</h4>
+            <h4 className="font-semibold mb-2 text-gray-800">Explore Staking Rewards</h4>
             <p className="text-sm text-gray-600 mb-4 flex-grow">
               A detailed breakdown of staking rewards and how they're calculated
             </p>
@@ -883,9 +613,9 @@ const RelatedArticles = () => {
             <Image src="/ethereum-staking-risks.png" alt="Staking Risks" fill className="object-cover" />
           </div>
           <div className="p-4 flex flex-col flex-grow">
-            <h4 className="font-semibold mb-2 text-gray-800">Understanding Staking Risks</h4>
+            <h4 className="font-semibold mb-2 text-gray-800">Understand Staking Risks</h4>
             <p className="text-sm text-gray-600 mb-4 flex-grow">
-              Exploring the potential risks and how to mitigate them
+              In-depth analysis of risk factors and mitigation strategies
             </p>
             <Link
               href="/articles/staking-risks"
@@ -900,7 +630,7 @@ const RelatedArticles = () => {
             <Image src="/ethereum-staking-comparison.png" alt="Best Staking Platforms" fill className="object-cover" />
           </div>
           <div className="p-4 flex flex-col flex-grow">
-            <h4 className="font-semibold mb-2 text-gray-800">Best Ethereum Staking Platforms</h4>
+            <h4 className="font-semibold mb-2 text-gray-800">Discover Staking Platforms</h4>
             <p className="text-sm text-gray-600 mb-4 flex-grow">Comparing the top platforms for staking your ETH</p>
             <Link
               href="/articles/best-eth-staking-platforms"
@@ -1102,6 +832,7 @@ export default function WhatIsEthereumStakingPage() {
                   width={1200}
                   height={675}
                   className="w-full object-cover"
+                  loading="eager"
                 />
                 <div className="text-xs text-gray-500 text-center mt-2">
                   Ethereum's transition from Proof of Work to Proof of Stake
@@ -1231,129 +962,43 @@ export default function WhatIsEthereumStakingPage() {
 
               <h3 className="text-xl font-bold mb-4 mt-8 text-gray-800">The Validator Lifecycle</h3>
 
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden mb-8">
-                <div className="p-4 sm:p-6">
-                  <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-2 text-2xl text-gray-800">
-                        1
-                      </div>
-                      <div className="text-gray-800">Deposit & Activation</div>
-                    </div>
-                    <div className="hidden md:block text-2xl text-gray-400">→</div>
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-2 text-2xl text-gray-800">
-                        2
-                      </div>
-                      <div className="text-gray-800">Active Validation</div>
-                    </div>
-                    <div className="hidden md:block text-2xl text-gray-400">→</div>
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-2 text-2xl text-gray-800">
-                        3
-                      </div>
-                      <div className="text-gray-800">Rewards Accumulation</div>
-                    </div>
-                    <div className="hidden md:block text-2xl text-gray-400">→</div>
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-2 text-2xl text-gray-800">
-                        4
-                      </div>
-                      <div className="text-gray-800">Exit (Optional)</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-4 text-gray-500 text-sm text-center">
-                  The complete lifecycle of an Ethereum validator
-                </div>
+              <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 my-6">
+                <h4 className="font-semibold text-gray-800 mb-2">Key Stages</h4>
+                <ol className="list-decimal pl-5 text-gray-600">
+                  <li>
+                    <strong>Deposit and Activation:</strong> Validators deposit 32 ETH and enter an activation queue.
+                  </li>
+                  <li>
+                    <strong>Active Validation:</strong> Validators propose and attest to blocks.
+                  </li>
+                  <li>
+                    <strong>Rewards Accumulation:</strong> Validators earn ETH rewards for their service.
+                  </li>
+                  <li>
+                    <strong>Exit (Optional):</strong> Validators can exit and withdraw their stake.
+                  </li>
+                </ol>
               </div>
 
-              <ol className="space-y-4 mb-8">
-                <li className="flex items-start gap-3">
-                  <div className="bg-gray-100 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1 text-gray-800">
-                    1
-                  </div>
-                  <div>
-                    <strong className="text-gray-800">Deposit and activation:</strong>{" "}
-                    <span className="text-gray-600">
-                      A validator begins by depositing 32 ETH to the Ethereum deposit contract. After the deposit is
-                      recognized, the validator enters an activation queue before becoming active.
-                    </span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="bg-gray-100 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1 text-gray-800">
-                    2
-                  </div>
-                  <div>
-                    <strong className="text-gray-800">Active validation:</strong>{" "}
-                    <span className="text-gray-600">
-                      Once activated, the validator participates in the consensus process by proposing and attesting to
-                      blocks.
-                    </span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="bg-gray-100 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1 text-gray-800">
-                    3
-                  </div>
-                  <div>
-                    <strong className="text-gray-800">Rewards accumulation:</strong>{" "}
-                    <span className="text-gray-600">
-                      For their service, validators earn rewards in ETH, which are distributed periodically.
-                    </span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="bg-gray-100 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1 text-gray-800">
-                    4
-                  </div>
-                  <div>
-                    <strong className="text-gray-800">Exit (optional):</strong>{" "}
-                    <span className="text-gray-600">
-                      Validators can choose to exit the validation process, after which they can withdraw their stake
-                      and accumulated rewards.
-                    </span>
-                  </div>
-                </li>
-              </ol>
-
               <h3 className="text-xl font-bold mb-4 text-gray-800">Validator Responsibilities</h3>
+              <p className="text-gray-700 mb-4">
+                Active validators have two primary responsibilities: attesting to blocks and proposing new blocks.
+              </p>
 
-              <ValidatorResponsibilities />
+              <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 my-6">
+                <h4 className="font-semibold text-gray-800 mb-2">Attesting to Blocks</h4>
+                <p className="text-gray-600">
+                  Validators vote on the validity of blocks proposed by other validators. These votes, called
+                  attestations, help the network come to a consensus on the state of the blockchain.
+                </p>
+              </div>
 
-              <h3 className="text-xl font-bold mb-4 mt-8 text-gray-800">The Beacon Chain</h3>
-
-              <div className="flex flex-col md:flex-row gap-6 mb-8">
-                <div className="md:w-1/2 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="aspect-video relative">
-                    <BeaconChainDiagram />
-                  </div>
-                </div>
-                <div className="md:w-1/2">
-                  <p className="text-lg mb-4 text-gray-800">
-                    The Beacon Chain is the coordination layer for Ethereum's Proof of Stake system. It serves as the
-                    backbone of the staking mechanism, managing validators and coordinating the consensus process.
-                  </p>
-                  <ul className="space-y-2 text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Tracks validators and their stakes</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Randomly assigns validators to block proposal and attestation duties</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Implements the consensus rules and penalties</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>Distributes rewards to validators</span>
-                    </li>
-                  </ul>
-                </div>
+              <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 my-6">
+                <h4 className="font-semibold text-gray-800 mb-2">Proposing New Blocks</h4>
+                <p className="text-gray-600">
+                  Validators are randomly selected to propose new blocks, which involves bundling transactions,
+                  executing smart contracts, and computing the new state of the blockchain.
+                </p>
               </div>
             </section>
 
@@ -1368,7 +1013,7 @@ export default function WhatIsEthereumStakingPage() {
                 Staking Rewards: How and Why They're Earned
               </motion.h2>
 
-              <p className="text-lg mb-6 text-gray-800">
+              <p className="text-gray-700 mb-4">
                 Validators earn rewards for their participation in the network's consensus process. These rewards serve
                 as an incentive for validators to act honestly and maintain the security of the network.
               </p>
@@ -1688,7 +1333,7 @@ export default function WhatIsEthereumStakingPage() {
                       <ul className="space-y-1 text-sm text-gray-600">
                         <li>• Deposit ETH to the protocol</li>
                         <li>• Receive liquid staking tokens (e.g., stETH)</li>
-                        <li>• Use tokens in DeFi while earning staking rewards</li>
+                        <li>• Use tokens in DeFi integration</li>
                       </ul>
                     </div>
                     <div className="bg-gray-50 p-4 rounded-lg">
@@ -1774,7 +1419,7 @@ export default function WhatIsEthereumStakingPage() {
                 Risks and Considerations in Ethereum Staking
               </motion.h2>
 
-              <p className="text-lg mb-6 text-gray-800">
+              <p className="text-lg mb-4 text-gray-800">
                 While staking offers attractive rewards, it's important to understand the associated risks before
                 committing your ETH. Different staking methods come with different risk profiles, and being aware of
                 these risks can help you make informed decisions.
@@ -1866,26 +1511,36 @@ export default function WhatIsEthereumStakingPage() {
                   <li className="flex items-start gap-2">
                     <span className="text-gray-500 font-bold">•</span>
                     <span>
-                      <strong>Diversification:</strong> Consider spreading your ETH across different staking methods
+                      <strong>Platform Diversification:</strong> Distribute your ETH across multiple staking platforms
+                      to reduce single-point failure risks.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-gray-500 font-bold">•</span>
                     <span>
-                      <strong>Due diligence:</strong> Research providers thoroughly before committing your ETH
+                      <strong>Security Audit Verification:</strong> Choose platforms with multiple independent security
+                      audits from reputable firms.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-gray-500 font-bold">•</span>
                     <span>
-                      <strong>Start small:</strong> Begin with a smaller amount to gain experience before committing
-                      more
+                      <strong>Non-Custodial Preference:</strong> When possible, opt for non-custodial staking solutions
+                      that allow you to maintain control of your private keys.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-gray-500 font-bold">•</span>
                     <span>
-                      <strong>Stay informed:</strong> Keep up with Ethereum developments and protocol changes
+                      <strong>Performance Monitoring:</strong> Regularly track validator performance, platform TVL
+                      trends, and derivative token prices to identify potential issues early.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-gray-500 font-bold">•</span>
+                    <span>
+                      <strong>Insurance Coverage:</strong> Consider platforms offering insurance against slashing or
+                      smart contract failures, or explore third-party DeFi insurance protocols like Nexus Mutual.
                     </span>
                   </li>
                 </ul>
@@ -1900,123 +1555,78 @@ export default function WhatIsEthereumStakingPage() {
               </p>
             </section>
 
-            {/* Technical Architecture */}
-            <section id="technical-architecture" className="mb-12 sm:mb-16">
+            {/* Impact on Ethereum */}
+            <section id="impact" className="mb-12 sm:mb-16">
               <motion.h2
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                The Technical Architecture of Ethereum Staking
+                Impact on the Ethereum Ecosystem
               </motion.h2>
 
               <p className="text-lg mb-6 text-gray-800">
-                For those interested in the technical aspects, Ethereum's staking system involves several components
-                that work together to maintain the network's security and process transactions.
+                Liquid Staking Derivatives have had a profound impact on the Ethereum ecosystem, influencing everything
+                from network security to DeFi composability.
               </p>
 
-              <div className="flex flex-col md:flex-row gap-6 mb-8">
-                <div className="md:w-1/2">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800">Client Software</h3>
-                  <p className="text-gray-600 mb-4">
-                    Validators run two types of client software that work together to participate in the Ethereum
-                    network:
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
+                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Increased Staking Participation</h4>
+                  <p className="text-gray-600">
+                    LSDs have lowered the barrier to entry for staking, allowing users with less than 32 ETH to
+                    participate and earn rewards.
                   </p>
-
-                  <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg mb-4">
-                    <h4 className="font-semibold mb-2 text-gray-800">Execution Client</h4>
-                    <p className="text-gray-600 mb-2">
-                      Handles transactions, smart contracts, and maintains the state of the blockchain.
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="bg-gray-100 px-2 py-1 rounded text-xs text-gray-600">Geth</span>
-                      <span className="bg-gray-100 px-2 py-1 rounded text-xs text-gray-600">Nethermind</span>
-                      <span className="bg-gray-100 px-2 py-1 rounded text-xs text-gray-600">Besu</span>
-                      <span className="bg-gray-100 px-2 py-1 rounded text-xs text-gray-600">Erigon</span>
-                    </div>
-                  </div>
-
-                  <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                    <h4 className="font-semibold mb-2 text-gray-800">Consensus Client</h4>
-                    <p className="text-gray-600 mb-2">
-                      Implements the Proof of Stake protocol and coordinates with other validators.
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="bg-gray-100 px-2 py-1 rounded text-xs text-gray-600">Prysm</span>
-                      <span className="bg-gray-100 px-2 py-1 rounded text-xs text-gray-600">Lighthouse</span>
-                      <span className="bg-gray-100 px-2 py-1 rounded text-xs text-gray-600">Teku</span>
-                      <span className="bg-gray-100 px-2 py-1 rounded text-xs text-gray-600">Nimbus</span>
-                      <span className="bg-gray-100 px-2 py-1 rounded text-xs text-gray-600">Lodestar</span>
-                    </div>
-                  </div>
                 </div>
-                <div className="md:w-1/2 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="aspect-video relative">
-                    <Image
-                      src="/ethereum-validator-architecture.png"
-                      alt="Ethereum Validator Architecture"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4 text-sm text-gray-500 text-center">
-                    The architecture of an Ethereum validator node showing the relationship between execution and
-                    consensus clients
-                  </div>
+                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
+                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Enhanced Capital Efficiency</h4>
+                  <p className="text-gray-600">
+                    LSDs unlock liquidity for staked ETH, allowing users to deploy their capital in DeFi protocols while
+                    still earning staking rewards.
+                  </p>
+                </div>
+                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
+                  <h4 className="text-lg font-semibold mb-2 text-gray-800">DeFi Composability</h4>
+                  <p className="text-gray-600">
+                    LSD tokens have become building blocks for DeFi, enabling new financial products and strategies that
+                    leverage staked ETH.
+                  </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800">The Validator Key Pair</h3>
-                  <p className="text-gray-600 mb-4">
-                    Each validator uses two key pairs that serve different purposes in the staking process:
-                  </p>
-                  <ul className="space-y-3 text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <div>
-                        <strong>Signing key:</strong> Used for day-to-day validator operations like attesting and
-                        proposing blocks. This key needs to be available to the validator software.
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <div>
-                        <strong>Withdrawal key:</strong> Used to withdraw staked ETH and rewards. This key should be
-                        kept in cold storage for maximum security.
-                      </div>
-                    </li>
-                  </ul>
-                  <p className="text-gray-600 mt-4">
-                    Proper key management is crucial for validator security. The signing key should be accessible but
-                    secured, while the withdrawal key should be stored with the highest security measures.
-                  </p>
-                </div>
+              <h3 className="text-xl font-bold mb-4 text-gray-800">Centralization Concerns</h3>
 
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800">The Deposit Contract</h3>
-                  <p className="text-gray-600 mb-4">
-                    The deposit contract is the bridge between Ethereum's execution layer and consensus layer:
+              <div className="flex flex-col md:flex-row gap-6 mb-8">
+                <div className="md:w-2/3">
+                  <p className="text-lg mb-4 text-gray-800">
+                    However, the rise of LSDs has also raised concerns about centralization. As a few large liquid
+                    staking providers control a significant portion of the staked ETH, they could potentially exert
+                    undue influence over the network.
                   </p>
-                  <ul className="space-y-3 text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>It receives the 32 ETH deposits from prospective validators</span>
+                  <ul className="list-disc pl-5 text-gray-700 space-y-2 mb-6">
+                    <li>
+                      <strong>Governance Influence:</strong> Large LSD providers could influence protocol governance
+                      decisions.
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>It registers validator public keys and initial deposits</span>
+                    <li>
+                      <strong>Validator Selection:</strong> Centralized validator selection processes could reduce
+                      network diversity.
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <span>It serves as the canonical record of validator registrations</span>
+                    <li>
+                      <strong>Systemic Risk:</strong> Operational failures or security breaches at major LSD providers
+                      could have widespread consequences.
                     </li>
                   </ul>
-                  <div className="mt-4 p-3 bg-gray-50 rounded-lg text-sm text-gray-600">
-                    <strong>Deposit Contract Address:</strong>
-                    <div className="font-mono mt-1 break-all">0x00000000219ab540356cBB839Cbe05303d7705Fa</div>
+                </div>
+                <div className="md:w-1/3 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
+                  <div className="aspect-square relative">
+                    <Image
+                      src="/images/centralization-concerns.jpg"
+                      alt="Centralization Concerns"
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                 </div>
               </div>
@@ -2024,32 +1634,156 @@ export default function WhatIsEthereumStakingPage() {
               <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg mb-8">
                 <div className="flex items-center mb-4">
                   <Info className="h-6 w-6 text-amber-600 mr-3 flex-shrink-0" />
-                  <h4 className="text-lg font-semibold text-gray-800">Client Diversity</h4>
+                  <h4 className="text-lg font-semibold text-gray-800">Mitigating Centralization</h4>
                 </div>
                 <p className="text-gray-600 mb-4">
-                  Running diverse client implementations helps improve network security by preventing any single
-                  implementation from having too much influence over the network. If a bug affects one client, others
-                  can continue to function correctly.
+                  Various efforts are underway to mitigate centralization risks in the LSD ecosystem:
                 </p>
-                <div className="aspect-video relative rounded-lg overflow-hidden">
-                  <Image
-                    src="/ethereum-client-diversity.png"
-                    alt="Ethereum Client Diversity"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <p className="text-gray-600 mt-4">
-                  For more information on the importance of client diversity, see our article on{" "}
-                  <Link href="/articles/multi-client-diversity-importance" className="text-gray-800 hover:underline">
-                    client diversity in Ethereum staking
-                  </Link>
-                  .
-                </p>
+                <ul className="list-disc pl-5 text-gray-700 space-y-2 mb-6">
+                  <li>
+                    <strong>Distributed Validator Technology (DVT):</strong> Spreading validator responsibilities across
+                    multiple nodes to reduce single points of failure
+                  </li>
+                  <li>
+                    <strong>Client Diversity:</strong> Encouraging the use of minority client implementations to improve
+                    network resilience
+                  </li>
+                  <li>
+                    <strong>Governance Mechanisms:</strong> Implementing governance structures that empower LSD holders
+                    to influence protocol decisions
+                  </li>
+                </ul>
               </div>
             </section>
 
-            {/* The Future of Ethereum Staking */}
+            {/* Choosing */}
+            <section id="choosing" className="mb-12 sm:mb-16">
+              <motion.h2
+                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                Choosing the Right Liquid Staking Solution
+              </motion.h2>
+
+              <p className="text-lg mb-6 text-gray-800">
+                Selecting the optimal liquid staking solution requires balancing multiple factors, including rewards,
+                risks, and decentralization. Here are key considerations to guide your decision-making process:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
+                  <h3 className="text-xl font-semibold mb-4 text-gray-800">Reward Optimization</h3>
+                  <ul className="space-y-3 text-gray-600">
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-500 font-bold">•</span>
+                      <div>
+                        <strong>APY:</strong> Compare the current and historical APYs offered by different protocols
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-500 font-bold">•</span>
+                      <div>
+                        <strong>Fees:</strong> Consider the fees charged by the protocol, which can impact net returns
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-500 font-bold">•</span>
+                      <div>
+                        <strong>Tokenomics:</strong> Understand how rewards are distributed and how the LSD token
+                        maintains its value
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
+                  <h3 className="text-xl font-semibold mb-4 text-gray-800">Risk Assessment</h3>
+                  <ul className="space-y-3 text-gray-600">
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-500 font-bold">•</span>
+                      <div>
+                        <strong>Smart Contract Risk:</strong> Evaluate the security of the protocol's smart contracts
+                        through audits and community reviews
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-500 font-bold">•</span>
+                      <div>
+                        <strong>Slashing Risk:</strong> Understand the protocol's slashing penalties and mitigation
+                        strategies
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-500 font-bold">•</span>
+                      <div>
+                        <strong>Depeg Risk:</strong> Assess the potential for the LSD token to lose its peg to ETH
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
+                  <h3 className="text-xl font-semibold mb-4 text-gray-800">Decentralization and Governance</h3>
+                  <ul className="space-y-3 text-gray-600">
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-500 font-bold">•</span>
+                      <div>
+                        <strong>Validator Selection:</strong> Consider how validators are selected and whether the
+                        process is permissionless or permissioned
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-500 font-bold">•</span>
+                      <div>
+                        <strong>Governance:</strong> Evaluate the protocol's governance structure and the influence of
+                        token holders
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-500 font-bold">•</span>
+                      <div>
+                        <strong>Client Diversity:</strong> Check if the protocol promotes client diversity among its
+                        validators
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
+                  <h3 className="text-xl font-semibold mb-4 text-gray-800">DeFi Integration</h3>
+                  <ul className="space-y-3 text-gray-600">
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-500 font-bold">•</span>
+                      <div>
+                        <strong>Liquidity:</strong> Assess the liquidity of the LSD token on various DeFi platforms
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-500 font-bold">•</span>
+                      <div>
+                        <strong>Composability:</strong> Consider how well the LSD token integrates with other DeFi
+                        protocols and strategies
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-500 font-bold">•</span>
+                      <div>
+                        <strong>Use Cases:</strong> Explore the available use cases for the LSD token in lending,
+                        trading, and yield farming
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mb-8">
+                <LSDCalculator />
+              </div>
+            </section>
+
+            {/* Future */}
             <section id="future" className="mb-12 sm:mb-16">
               <motion.h2
                 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
@@ -2057,313 +1791,64 @@ export default function WhatIsEthereumStakingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                The Future of Ethereum Staking
+                The Future of LSDs
               </motion.h2>
 
               <p className="text-lg mb-6 text-gray-800">
-                Ethereum staking continues to evolve with several developments on the horizon that will shape its
-                future. These upcoming changes aim to improve scalability, security, and user experience for stakers.
+                The liquid staking landscape is rapidly evolving, with several key trends shaping its future:
               </p>
-
-              <div className="flex flex-col md:flex-row gap-6 mb-8">
-                <div className="md:w-1/2 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="aspect-video relative">
-                    <EthereumFutureDiagram />
-                  </div>
-                </div>
-                <div className="md:w-1/2">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800">Protocol Upgrades</h3>
-                  <ul className="space-y-3 text-gray-600">
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <div>
-                        <strong>Sharding:</strong> Will distribute the network's data storage needs across multiple
-                        "shards," potentially increasing staking rewards for validators who secure these shards
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <div>
-                        <strong>Single Slot Finality:</strong> Aims to reduce the time needed for transaction finality,
-                        making the network more efficient
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-gray-500 font-bold">•</span>
-                      <div>
-                        <strong>Proposer-Builder Separation:</strong> Will change how blocks are created and proposed,
-                        potentially affecting MEV distribution
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <h3 className="text-xl font-bold mb-4 text-gray-800">Staking Innovations</h3>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="font-semibold mb-2 text-gray-800">Distributed Validator Technology (DVT)</h4>
+                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Increased Competition</h4>
                   <p className="text-gray-600">
-                    DVT allows validators to operate across multiple machines for improved security and uptime. This
-                    technology distributes the validator's signing responsibilities across several nodes, reducing the
-                    risk of downtime and slashing.
+                    New protocols are emerging, offering innovative features and competitive yields to attract stakers.
                   </p>
                 </div>
                 <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="font-semibold mb-2 text-gray-800">Restaking</h4>
+                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Improved Capital Efficiency</h4>
                   <p className="text-gray-600">
-                    Protocols like EigenLayer allow staked ETH to secure multiple protocols simultaneously. This
-                    innovation enables validators to earn additional rewards by providing security to other networks
-                    without unstaking their ETH.
+                    Protocols are exploring ways to further enhance the capital efficiency of LSDs, such as through
+                    leveraged staking or cross-chain deployment.
                   </p>
                 </div>
                 <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="font-semibold mb-2 text-gray-800">Advanced Liquid Staking Derivatives</h4>
+                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Enhanced Risk Management</h4>
                   <p className="text-gray-600">
-                    More sophisticated financial products built on staked ETH are emerging, offering features like
-                    yield-bearing tokens, governance rights, and integration with DeFi protocols for enhanced capital
-                    efficiency.
+                    Protocols are implementing more robust risk management mechanisms, such as slashing insurance and
+                    decentralized governance, to protect stakers.
                   </p>
                 </div>
               </div>
 
-              <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg mb-8">
-                <div className="flex items-center mb-4">
-                  <Info className="h-6 w-6 text-amber-600 mr-3 flex-shrink-0" />
-                  <h4 className="text-lg font-semibold text-gray-800">Institutional Adoption</h4>
-                </div>
-                <p className="text-gray-600">
-                  Institutional investors are increasingly entering the Ethereum staking space, bringing significant
-                  capital and professional infrastructure. This trend is expected to continue as regulatory clarity
-                  improves and institutional-grade staking services develop.
-                </p>
-                <p className="text-gray-600 mt-4">
-                  For more information on institutional staking, see our article on{" "}
-                  <Link href="/articles/eth-staking-for-institutions" className="text-gray-800 hover:underline">
-                    ETH staking for institutions
-                  </Link>
-                  .
-                </p>
-              </div>
-            </section>
+              <h3 className="text-xl font-bold mb-4 text-gray-800">Potential Developments</h3>
 
-            {/* Getting Started */}
-            <section id="getting-started" className="mb-12 sm:mb-16">
-              <motion.h2
-                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                Getting Started with Ethereum Staking
-              </motion.h2>
+              <ul className="list-disc pl-5 text-gray-700 space-y-2 mb-6">
+                <li>
+                  <strong>Cross-Chain LSDs:</strong> LSDs that can be used on multiple blockchain networks, expanding
+                  their utility and reach
+                </li>
+                <li>
+                  <strong>Programmable LSDs:</strong> LSDs with built-in smart contract functionality, enabling more
+                  complex financial products
+                </li>
+                <li>
+                  <strong>Decentralized Governance:</strong> More robust governance mechanisms that empower LSD holders
+                  to influence protocol decisions
+                </li>
+              </ul>
 
-              <p className="text-lg mb-6 text-gray-800">
-                If you're interested in starting your staking journey, here are some steps to consider:
-              </p>
-
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden mb-8">
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-6 text-gray-800">Step-by-Step Guide to Staking</h3>
-
-                  <div className="space-y-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 text-xl font-bold text-gray-800">
-                        1
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-semibold mb-2 text-gray-800">Assess Your Resources and Goals</h4>
-                        <ul className="space-y-2 text-gray-600">
-                          <li className="flex items-start gap-2">
-                            <span className="text-gray-500 font-bold">•</span>
-                            <span>
-                              <strong>Amount of ETH:</strong> Determine how much ETH you're willing to stake
-                            </span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-gray-500 font-bold">•</span>
-                            <span>
-                              <strong>Technical comfort:</strong> Evaluate your technical skills and willingness to
-                              manage validator hardware
-                            </span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-gray-500 font-bold">•</span>
-                            <span>
-                              <strong>Time commitment:</strong> Consider how much time you can dedicate to monitoring
-                              and maintaining your stake
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 text-xl font-bold text-gray-800">
-                        2
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-semibold mb-2 text-gray-800">Choose Your Staking Method</h4>
-                        <p className="text-gray-600 mb-2">
-                          Based on your assessment, select the staking approach that best fits your situation:
-                        </p>
-                        <ul className="space-y-2 text-gray-600">
-                          <li className="flex items-start gap-2">
-                            <span className="text-gray-500 font-bold">•</span>
-                            <span>Solo staking for those with 32 ETH and technical skills</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-gray-500 font-bold">•</span>
-                            <span>Staking as a service for those with 32 ETH but limited technical skills</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-gray-500 font-bold">•</span>
-                            <span>Pooled or liquid staking for those with less than 32 ETH</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-gray-500 font-bold">•</span>
-                            <span>Exchange staking for those prioritizing simplicity</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 text-xl font-bold text-gray-800">
-                        3
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-semibold mb-2 text-gray-800">
-                          Research Providers (If Not Solo Staking)
-                        </h4>
-                        <p className="text-gray-600 mb-2">
-                          If using a staking service, pool, or liquid staking protocol:
-                        </p>
-                        <ul className="space-y-2 text-gray-600">
-                          <li className="flex items-start gap-2">
-                            <span className="text-gray-500 font-bold">•</span>
-                            <span>Compare fees and historical performance</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-gray-500 font-bold">•</span>
-                            <span>Assess security measures and track record</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-gray-500 font-bold">•</span>
-                            <span>Consider the level of decentralization</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 text-xl font-bold text-gray-800">
-                        4
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-semibold mb-2 text-gray-800">Set Up and Monitor</h4>
-                        <ul className="space-y-2 text-gray-600">
-                          <li className="flex items-start gap-2">
-                            <span className="text-gray-500 font-bold">•</span>
-                            <span>Follow the specific setup instructions for your chosen staking method</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-gray-500 font-bold">•</span>
-                            <span>Establish a monitoring system to track validator performance and rewards</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-gray-500 font-bold">•</span>
-                            <span>Stay informed about Ethereum updates that might affect staking</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-gray-600 mb-6">
-                For a more detailed beginner's guide, see our article on{" "}
-                <Link href="/articles/ethereum-staking-for-beginners" className="text-gray-800 hover:underline">
-                  Ethereum staking for beginners
-                </Link>
-                .
-              </p>
-
-              <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg mb-8">
-                <h3 className="text-xl font-bold mb-4 text-gray-800">Recommended Resources</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="p-4 rounded-lg bg-gray-50">
-                    <h4 className="font-semibold mb-2 text-gray-800">Official Resources</h4>
-                    <ul className="space-y-2 text-sm text-gray-600">
-                      <li>
-                        <a
-                          href="https://ethereum.org/staking"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center hover:text-gray-900"
-                        >
-                          Ethereum.org Staking Page <ExternalLink size={14} className="ml-1" />
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="https://launchpad.ethereum.org"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center hover:text-gray-900"
-                        >
-                          Ethereum Staking Launchpad <ExternalLink size={14} className="ml-1" />
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="https://ethresear.ch"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center hover:text-gray-900"
-                        >
-                          Ethereum Research Forum <ExternalLink size={14} className="ml-1" />
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="p-4 rounded-lg bg-gray-50">
-                    <h4 className="font-semibold mb-2 text-gray-800">Community Resources</h4>
-                    <ul className="space-y-2 text-sm text-gray-600">
-                      <li>
-                        <a
-                          href="https://www.reddit.com/r/ethstaker/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center hover:text-gray-900"
-                        >
-                          r/ethstaker Subreddit <ExternalLink size={14} className="ml-1" />
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="https://discord.gg/ethstaker"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center hover:text-gray-900"
-                        >
-                          EthStaker Discord <ExternalLink size={14} className="ml-1" />
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="https://twitter.com/ethstaker"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center hover:text-gray-900"
-                        >
-                          EthStaker Twitter <ExternalLink size={14} className="ml-1" />
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+              {/* Add new image */}
+              <div className="w-full rounded-xl overflow-hidden mt-8 mb-6 relative">
+                <Image
+                  src="/images/defi-integration-diagram.png"
+                  alt="DeFi Integration Diagram"
+                  width={1200}
+                  height={675}
+                  className="w-full object-cover"
+                />
+                <div className="text-xs text-gray-500 text-center mt-2">
+                  The growing integration of LSDs into the broader DeFi ecosystem
                 </div>
               </div>
             </section>
@@ -2376,82 +1861,45 @@ export default function WhatIsEthereumStakingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                Conclusion: The Value Proposition of Ethereum Staking
+                Conclusion: The Enduring Impact of LSDs
               </motion.h2>
 
               <p className="text-lg mb-4 text-gray-800">
-                Ethereum staking represents a significant evolution in how blockchain networks achieve consensus and
-                distribute rewards. By allowing ETH holders to actively participate in securing the network, staking
-                creates a more sustainable, accessible, and potentially more secure system than previous approaches.
+                Liquid Staking Derivatives have transformed the Ethereum staking landscape, unlocking liquidity and
+                enabling new opportunities for ETH holders. By tokenizing staked ETH, LSDs have not only made staking
+                more accessible but have also fueled innovation in the DeFi ecosystem.
               </p>
 
               <p className="text-lg mb-4 text-gray-800">
-                Whether you're interested in the technical aspects of running a validator, seeking passive income from
-                your ETH holdings, or simply want to support the Ethereum network, staking offers various entry points
-                to suit different needs and capabilities.
+                As the LSD market continues to evolve, it's crucial to carefully evaluate the risks and rewards
+                associated with different protocols. By understanding the mechanics of LSDs, assessing their security,
+                and considering their impact on the broader Ethereum ecosystem, you can make informed decisions that
+                align with your investment goals and risk tolerance.
               </p>
 
               <p className="text-lg mb-4 text-gray-800">
-                As Ethereum continues to develop and improve, staking will remain a fundamental component of its
-                ecosystem, offering both opportunities and challenges for participants. By understanding the basics
-                outlined in this guide, you're well-equipped to explore this important aspect of the Ethereum ecosystem
-                further.
+                Whether you're a seasoned DeFi user or new to the world of Ethereum staking, Liquid Staking Derivatives
+                offer a powerful tool for unlocking the potential of your ETH holdings.
               </p>
 
-              <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg mb-8">
-                <div className="flex items-center mb-4">
-                  <Info className="h-6 w-6 text-amber-600 mr-3 flex-shrink-0" />
-                  <h4 className="text-lg font-semibold text-gray-800">Key Takeaways</h4>
-                </div>
-                <ul className="space-y-2 text-gray-600">
-                  <li className="flex items-start gap-2">
-                    <span className="text-gray-500 font-bold">•</span>
-                    <span>
-                      Ethereum staking is the process of depositing ETH to become a validator and help secure the
-                      network
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-gray-500 font-bold">•</span>
-                    <span>
-                      Multiple staking options exist, from solo staking with 32 ETH to pooled staking with any amount
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-gray-500 font-bold">•</span>
-                    <span>
-                      Staking rewards currently range from 3-5% APR, depending on the method and total ETH staked
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-gray-500 font-bold">•</span>
-                    <span>
-                      Understanding the risks and technical aspects can help you make informed decisions about staking
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-gray-500 font-bold">•</span>
-                    <span>
-                      The future of Ethereum staking includes protocol upgrades and innovations that will enhance its
-                      capabilities
-                    </span>
-                  </li>
+              <div className="mt-6 p-4 rounded-md bg-gray-50 border border-gray-200">
+                <h4 className="font-medium mb-2 text-gray-800">Key Takeaways</h4>
+                <ul className="list-disc pl-5 text-sm text-gray-600 space-y-1">
+                  <li>LSDs are tokenized representations of staked ETH that provide liquidity</li>
+                  <li>Major protocols include Lido, Rocket Pool, Coinbase, and Frax</li>
+                  <li>LSDs offer benefits such as increased staking participation and DeFi composability</li>
+                  <li>Risks include smart contract vulnerabilities and centralization concerns</li>
+                  <li>The future of LSDs includes cross-chain deployment and programmable tokens</li>
                 </ul>
               </div>
 
-              <p className="text-lg text-gray-800">
-                To learn more about specific aspects of Ethereum staking, explore our other articles or try our{" "}
-                <Link href="/calculator" className="text-gray-800 hover:underline">
-                  staking calculator
-                </Link>{" "}
-                to estimate your potential rewards.
-              </p>
+              <div className="mt-6 text-sm text-gray-500">
+                Last updated: <time dateTime="2024-04-16">April 16, 2024</time>
+              </div>
             </section>
 
             {/* Related Articles */}
-            <section className="mb-12">
-              <RelatedArticles />
-            </section>
+            <RelatedArticles />
           </div>
 
           <div className="lg:w-1/4">

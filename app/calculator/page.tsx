@@ -1,33 +1,50 @@
-"use client"
-
 import { StakingCalculator } from "@/components/staking-calculator"
+import { RelatedArticles } from "@/components/related-articles"
 import { ParticlesBackground } from "@/components/particles-background"
-import { MiniCalculator } from "@/components/mini-calculator"
-// import { Button } from "@/components/ui/button"
-// import { Download } from 'lucide-react'
 
 export default function CalculatorPage() {
   return (
-    <div className="container mx-auto px-4 py-12 relative">
+    <div className="min-h-screen relative">
       <ParticlesBackground />
 
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4 neon-text">ETH Staking Calculator</h1>
-        <p className="text-lg text-muted-foreground">Stake smart, anywhere. Calculate your ETH rewards on the go!</p>
-        {/* <Button
-          className="mt-6 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
-          onClick={() => window.location.reload()}
-        >
-          <Download className="mr-2 h-4 w-4" /> Install as App
-        </Button> */}
-      </div>
+      <div className="container mx-auto px-4 py-12">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold mb-4 neon-text">ETH Staking Calculator</h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Calculate your potential Ethereum staking rewards and see how much you could earn
+          </p>
+        </div>
 
-      <div className="max-w-md mx-auto mb-12 hidden md:block">
-        <MiniCalculator />
-      </div>
-
-      <div className="max-w-5xl mx-auto">
         <StakingCalculator />
+
+        <RelatedArticles
+          articles={[
+            {
+              title: "ETH Staking Rewards Explained",
+              description: "Understanding how Ethereum staking rewards are calculated and distributed",
+              href: "/articles/eth-staking-rewards",
+              readTime: "10 min read",
+            },
+            {
+              title: "Best ETH Staking Platforms",
+              description: "Compare platforms to find the best staking yields and features",
+              href: "/articles/best-eth-staking-platforms",
+              readTime: "15 min read",
+            },
+            {
+              title: "Staking vs DeFi Yields",
+              description: "Compare Ethereum staking returns with DeFi yield opportunities",
+              href: "/articles/staking-vs-defi-yields",
+              readTime: "11 min read",
+            },
+            {
+              title: "Tax Implications of Staking",
+              description: "Understand the tax considerations for your staking rewards",
+              href: "/articles/tax-implications-of-eth-staking",
+              readTime: "12 min read",
+            },
+          ]}
+        />
       </div>
     </div>
   )

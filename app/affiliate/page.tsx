@@ -3,6 +3,9 @@ import { ParticlesBackground } from "@/components/particles-background"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ReferralSystem } from "@/components/referral-system"
 import { TopAffiliatesTable } from "@/components/top-affiliates-table"
+import { RelatedArticles } from "@/components/related-articles"
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 
 export default function AffiliatePage() {
   return (
@@ -77,6 +80,49 @@ export default function AffiliatePage() {
             </Tabs>
           </CardContent>
         </Card>
+
+        <RelatedArticles
+          articles={[
+            {
+              title: "Best ETH Staking Platforms 2024",
+              description: "Learn about the platforms you'll be promoting to your referrals",
+              href: "/articles/best-eth-staking-platforms",
+              readTime: "15 min read",
+            },
+            {
+              title: "Ethereum Staking for Beginners",
+              description: "Help your referrals understand the basics of Ethereum staking",
+              href: "/articles/ethereum-staking-for-beginners",
+              readTime: "12 min read",
+            },
+            {
+              title: "Staking Security Best Practices",
+              description: "Share essential security tips with your referred users",
+              href: "/articles/staking-security-best-practices",
+              readTime: "10 min read",
+            },
+            {
+              title: "ETH Staking Rewards Calculator",
+              description: "Show potential earnings to attract more referrals",
+              href: "/articles/staking-rewards-calculator",
+              readTime: "5 min read",
+            },
+          ]}
+        />
+
+        {/* Parlay Calculator Backlink */}
+        <div className="text-center py-8 border-t border-gray-200">
+          <p className="text-sm text-gray-500 mb-2">Looking for sports betting tools?</p>
+          <Link
+            href="https://luxuryfootballelite.com/parlay-calculator/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
+          >
+            <span>Use the best Parlay Betting Calculator</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
       </div>
     </div>
   )

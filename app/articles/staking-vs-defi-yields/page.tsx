@@ -1,7 +1,72 @@
 import { ParticlesBackground } from "@/components/particles-background"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
+
+const RelatedArticles = () => {
+  return (
+    <div className="mb-8">
+      <h3 className="text-xl font-bold mb-4 text-gray-800">Further Reading</h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden flex flex-col">
+          <div className="h-40 relative">
+            <Image
+              src="/ethereum-staking-rewards-over-time.png"
+              alt="Ethereum Staking Rewards"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="p-4 flex flex-col flex-grow">
+            <h4 className="font-semibold mb-2 text-gray-800">Understanding Staking Rewards</h4>
+            <p className="text-sm text-gray-600 mb-4 flex-grow">
+              Learn how validators earn rewards for securing the network.
+            </p>
+            <Link
+              href="/articles/staking-rewards-calculator"
+              className="text-gray-600 text-sm hover:text-gray-900 flex items-center"
+            >
+              Calculate Rewards <ArrowLeft className="ml-1 h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+        <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden flex flex-col">
+          <div className="h-40 relative">
+            <Image src="/ethereum-staking-risks.png" alt="Staking Risks" fill className="object-cover" />
+          </div>
+          <div className="p-4 flex flex-col flex-grow">
+            <h4 className="font-semibold mb-2 text-gray-800">Understanding Staking Risks</h4>
+            <p className="text-sm text-gray-600 mb-4 flex-grow">
+              Explore the potential risks and challenges associated with staking Ethereum.
+            </p>
+            <Link
+              href="/articles/staking-risks"
+              className="text-gray-600 text-sm hover:text-gray-900 flex items-center"
+            >
+              Learn More <ArrowLeft className="ml-1 h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+        <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden flex flex-col">
+          <div className="h-40 relative">
+            <Image src="/ethereum-staking-comparison.png" alt="Best Staking Platforms" fill className="object-cover" />
+          </div>
+          <div className="p-4 flex flex-col flex-grow">
+            <h4 className="font-semibold mb-2 text-gray-800">Best Ethereum Staking Platforms</h4>
+            <p className="text-sm text-gray-600 mb-4 flex-grow">Compare the top Ethereum staking platforms.</p>
+            <Link
+              href="/articles/best-eth-staking-platforms"
+              className="text-gray-600 text-sm hover:text-gray-900 flex items-center"
+            >
+              Compare Platforms <ArrowLeft className="ml-1 h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default function ArticlePage() {
   const article = {
@@ -185,7 +250,7 @@ export default function ArticlePage() {
       <ParticlesBackground />
 
       <div className="max-w-3xl mx-auto">
-        <Button variant="outline" asChild className="mb-6 glassmorphism border-none">
+        <Button variant="outline" asChild className="mb-6 glassmorphism border-none bg-transparent">
           <Link href="/articles">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Articles
@@ -205,6 +270,7 @@ export default function ArticlePage() {
           dangerouslySetInnerHTML={{ __html: article.content }}
         />
       </div>
+      <RelatedArticles />
     </div>
   )
 }
