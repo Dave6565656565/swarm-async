@@ -1603,4 +1603,739 @@ export default function LiquidStakingDerivativesArticle() {
                         <path
                           d="M12 8V16"
                           stroke="#6B7280"
-\
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M8 12H16"
+                          stroke="#6B7280"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <div className="font-medium text-gray-800">Liquidity</div>
+                    <div className="text-sm text-gray-600">Trade anytime</div>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg text-center">
+                    <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z"
+                          stroke="#6B7280"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <div className="font-medium text-gray-800">Rewards</div>
+                    <div className="text-sm text-gray-600">Earn while liquid</div>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg text-center">
+                    <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M21 16V8A2 2 0 0 0 19 6H5A2 2 0 0 0 3 8V16A2 2 0 0 0 5 18H19A2 2 0 0 0 21 16Z"
+                          stroke="#6B7280"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M21 6L12 13L3 6"
+                          stroke="#6B7280"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <div className="font-medium text-gray-800">DeFi Access</div>
+                    <div className="text-sm text-gray-600">Use in protocols</div>
+                  </div>
+                </div>
+
+                <h3 className="text-xl font-bold mb-4 text-gray-800">Key Benefits</h3>
+
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="bg-emerald-100 rounded-full p-1 flex-shrink-0 mt-1">
+                      <Check size={16} className="text-emerald-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800">Maintain Liquidity</h4>
+                      <p className="text-gray-600">
+                        Unlike traditional staking where your ETH is locked, LSDs allow you to maintain liquidity while
+                        still earning staking rewards. You can trade, transfer, or use your tokens at any time.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="bg-emerald-100 rounded-full p-1 flex-shrink-0 mt-1">
+                      <Check size={16} className="text-emerald-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800">Lower Barriers to Entry</h4>
+                      <p className="text-gray-600">
+                        Most liquid staking protocols allow you to stake any amount of ETH, removing the 32 ETH minimum
+                        required for solo staking. This makes staking accessible to smaller holders.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="bg-emerald-100 rounded-full p-1 flex-shrink-0 mt-1">
+                      <Check size={16} className="text-emerald-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800">DeFi Composability</h4>
+                      <p className="text-gray-600">
+                        LSD tokens can be used across the DeFi ecosystem. You can lend them, use them as collateral,
+                        provide liquidity, or participate in yield farming strategies while still earning staking
+                        rewards.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="bg-emerald-100 rounded-full p-1 flex-shrink-0 mt-1">
+                      <Check size={16} className="text-emerald-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800">No Technical Expertise Required</h4>
+                      <p className="text-gray-600">
+                        Liquid staking protocols handle all the technical aspects of running validators, including
+                        hardware maintenance, software updates, and slashing protection.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="bg-emerald-100 rounded-full p-1 flex-shrink-0 mt-1">
+                      <Check size={16} className="text-emerald-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800">Diversified Risk</h4>
+                      <p className="text-gray-600">
+                        By pooling ETH from many users, liquid staking protocols can distribute risk across multiple
+                        validators, reducing the impact of any single validator's poor performance.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <LSDCalculator />
+            </section>
+
+            {/* Risks */}
+            <section id="risks" className="mb-12 sm:mb-16">
+              <motion.h2
+                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                Risks and Challenges
+              </motion.h2>
+
+              <p className="text-lg mb-6 text-gray-800">
+                While LSDs offer significant benefits, they also come with their own set of risks and challenges that
+                users should understand:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="bg-red-100 rounded-full p-2">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M12 9V13"
+                          stroke="#DC2626"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M12 17H12.01"
+                          stroke="#DC2626"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M12 2L22 20H2L12 2Z"
+                          stroke="#DC2626"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-800">Smart Contract Risk</h3>
+                  </div>
+                  <p className="text-gray-600">
+                    LSDs rely on smart contracts that could contain bugs or vulnerabilities. While most protocols have
+                    been audited, smart contract risk can never be completely eliminated.
+                  </p>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="bg-amber-100 rounded-full p-2">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z"
+                          stroke="#D97706"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-800">Slashing Risk</h3>
+                  </div>
+                  <p className="text-gray-600">
+                    If validators operated by the protocol misbehave or go offline, they can be slashed (penalized),
+                    which would reduce the value of LSD tokens.
+                  </p>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="bg-blue-100 rounded-full p-2">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                          stroke="#2563EB"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M12 8V16"
+                          stroke="#2563EB"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M8 12H16"
+                          stroke="#2563EB"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-800">Liquidity Risk</h3>
+                  </div>
+                  <p className="text-gray-600">
+                    While LSD tokens are generally liquid, they can trade at a discount to their underlying value during
+                    market stress or if there are concerns about the protocol.
+                  </p>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="bg-purple-100 rounded-full p-2">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M16 4H18C19.1046 4 20 4.89543 20 6V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V6C4 4.89543 4.89543 4 6 4H8"
+                          stroke="#7C3AED"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M15 2H9C8.44772 2 8 2.44772 8 3V5C8 5.55228 8.44772 6 9 6H15C15.5523 6 16 5.55228 16 5V3C16 2.44772 15.5523 2 15 2Z"
+                          stroke="#7C3AED"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-800">Centralization Concerns</h3>
+                  </div>
+                  <p className="text-gray-600">
+                    Some liquid staking protocols are more centralized than others, which could pose risks to Ethereum's
+                    decentralization if they become too dominant.
+                  </p>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="bg-green-100 rounded-full p-2">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z"
+                          stroke="#059669"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M14 2V8H20"
+                          stroke="#059669"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M16 13H8"
+                          stroke="#059669"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M16 17H8"
+                          stroke="#059669"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M10 9H9H8"
+                          stroke="#059669"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-800">Regulatory Risk</h3>
+                  </div>
+                  <p className="text-gray-600">
+                    The regulatory landscape for liquid staking is still evolving. Future regulations could impact how
+                    these protocols operate or how tokens are treated for tax purposes.
+                  </p>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="bg-orange-100 rounded-full p-2">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M12 2L2 7L12 12L22 7L12 2Z"
+                          stroke="#EA580C"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M2 17L12 22L22 17"
+                          stroke="#EA580C"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M2 12L12 17L22 12"
+                          stroke="#EA580C"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-800">Protocol Fees</h3>
+                  </div>
+                  <p className="text-gray-600">
+                    Liquid staking protocols charge fees (typically 5-25% of staking rewards), which reduce your overall
+                    returns compared to solo staking.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 sm:p-6">
+                <div className="flex items-start gap-3">
+                  <div className="bg-amber-100 rounded-full p-1 flex-shrink-0 mt-1">
+                    <Info size={16} className="text-amber-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-amber-800 mb-2">Risk Mitigation</h4>
+                    <p className="text-amber-700">
+                      To minimize risks, consider diversifying across multiple liquid staking protocols, researching
+                      their security practices and governance models, and only investing what you can afford to lose.
+                      Always do your own research before participating in any DeFi protocol.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Impact */}
+            <section id="impact" className="mb-12 sm:mb-16">
+              <motion.h2
+                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                Impact on the Ethereum Ecosystem
+              </motion.h2>
+
+              <p className="text-lg mb-6 text-gray-800">
+                Liquid staking derivatives have had a profound impact on the Ethereum ecosystem, influencing everything
+                from network security to DeFi innovation:
+              </p>
+
+              <div className="space-y-6 mb-8">
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">Increased Staking Participation</h3>
+                  <p className="text-gray-600 mb-4">
+                    LSDs have significantly lowered the barriers to staking, leading to increased participation in
+                    Ethereum's consensus mechanism. This has helped secure the network while making staking rewards
+                    accessible to a broader range of users.
+                  </p>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-gray-600">Total ETH Staked</span>
+                      <span className="font-bold text-gray-800">~30M ETH</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">Liquid Staking Share</span>
+                      <span className="font-bold text-gray-800">~40%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">DeFi Innovation</h3>
+                  <p className="text-gray-600">
+                    LSD tokens have become fundamental building blocks in DeFi, enabling new yield strategies,
+                    collateral types, and financial products. They've created a new category of "productive assets" that
+                    earn yield while remaining liquid and composable.
+                  </p>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">Capital Efficiency</h3>
+                  <p className="text-gray-600">
+                    By allowing staked ETH to remain productive in DeFi, LSDs have dramatically improved capital
+                    efficiency across the Ethereum ecosystem. Users can now earn staking rewards while simultaneously
+                    participating in lending, trading, and other DeFi activities.
+                  </p>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">Centralization Concerns</h3>
+                  <p className="text-gray-600">
+                    The dominance of certain liquid staking protocols has raised concerns about validator
+                    centralization. If a single protocol controls too large a share of staked ETH, it could potentially
+                    influence network governance or pose systemic risks.
+                  </p>
+                </div>
+              </div>
+
+              {/* Add new image */}
+              <div className="w-full rounded-xl overflow-hidden mb-6 relative">
+                <Image
+                  src="/images/validator-network.png"
+                  alt="Ethereum Validator Network"
+                  width={1200}
+                  height={675}
+                  className="w-full object-cover"
+                />
+                <div className="text-xs text-gray-500 text-center mt-2">
+                  The distributed Ethereum validator network powered by liquid staking protocols
+                </div>
+              </div>
+            </section>
+
+            {/* Choosing */}
+            <section id="choosing" className="mb-12 sm:mb-16">
+              <motion.h2
+                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                Choosing the Right Liquid Staking Solution
+              </motion.h2>
+
+              <p className="text-lg mb-6 text-gray-800">
+                With multiple liquid staking protocols available, choosing the right one depends on your priorities and
+                risk tolerance. Here are key factors to consider:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-lg font-bold mb-4 text-gray-800">Decentralization</h3>
+                  <p className="text-gray-600 mb-4">
+                    Consider how decentralized the protocol is in terms of governance, validator selection, and
+                    operations.
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">Rocket Pool</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-20 bg-gray-200 h-2 rounded-full">
+                          <div className="bg-green-500 h-2 rounded-full" style={{ width: "90%" }}></div>
+                        </div>
+                        <span className="text-xs text-gray-500">High</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">Lido</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-20 bg-gray-200 h-2 rounded-full">
+                          <div className="bg-yellow-500 h-2 rounded-full" style={{ width: "60%" }}></div>
+                        </div>
+                        <span className="text-xs text-gray-500">Medium</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">Coinbase</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-20 bg-gray-200 h-2 rounded-full">
+                          <div className="bg-red-500 h-2 rounded-full" style={{ width: "20%" }}></div>
+                        </div>
+                        <span className="text-xs text-gray-500">Low</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-lg font-bold mb-4 text-gray-800">Fees</h3>
+                  <p className="text-gray-600 mb-4">
+                    Compare the fees charged by different protocols, as they directly impact your returns.
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">Lido</span>
+                      <span className="text-sm font-medium text-gray-800">10%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">Frax</span>
+                      <span className="text-sm font-medium text-gray-800">10%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">Rocket Pool</span>
+                      <span className="text-sm font-medium text-gray-800">15%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">Coinbase</span>
+                      <span className="text-sm font-medium text-gray-800">25%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-lg font-bold mb-4 text-gray-800">Liquidity</h3>
+                  <p className="text-gray-600 mb-4">
+                    Check the trading volume and liquidity of the LSD token to ensure you can easily buy and sell.
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">stETH</span>
+                      <span className="text-sm font-medium text-green-600">Excellent</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">rETH</span>
+                      <span className="text-sm font-medium text-green-600">Good</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">cbETH</span>
+                      <span className="text-sm font-medium text-yellow-600">Moderate</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">sfrxETH</span>
+                      <span className="text-sm font-medium text-yellow-600">Moderate</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-lg font-bold mb-4 text-gray-800">DeFi Integration</h3>
+                  <p className="text-gray-600 mb-4">
+                    Consider which DeFi protocols support the LSD token you're interested in.
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">stETH</span>
+                      <span className="text-sm font-medium text-green-600">Widespread</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">rETH</span>
+                      <span className="text-sm font-medium text-green-600">Good</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">cbETH</span>
+                      <span className="text-sm font-medium text-yellow-600">Growing</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">sfrxETH</span>
+                      <span className="text-sm font-medium text-yellow-600">Limited</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 sm:p-6">
+                <div className="flex items-start gap-3">
+                  <div className="bg-blue-100 rounded-full p-1 flex-shrink-0 mt-1">
+                    <Info size={16} className="text-blue-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-blue-800 mb-2">Diversification Strategy</h4>
+                    <p className="text-blue-700">
+                      Consider diversifying across multiple liquid staking protocols to reduce concentration risk and
+                      support Ethereum's decentralization. Many experienced users split their holdings between 2-3
+                      different protocols.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Future */}
+            <section id="future" className="mb-12 sm:mb-16">
+              <motion.h2
+                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                The Future of Liquid Staking Derivatives
+              </motion.h2>
+
+              <p className="text-lg mb-6 text-gray-800">
+                The liquid staking ecosystem continues to evolve rapidly, with several exciting developments on the
+                horizon:
+              </p>
+
+              <div className="space-y-6 mb-8">
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">Withdrawal Functionality</h3>
+                  <p className="text-gray-600">
+                    With Ethereum's Shanghai upgrade enabling validator withdrawals, liquid staking protocols are
+                    implementing direct redemption mechanisms, allowing users to exchange their LSD tokens directly for
+                    ETH without relying on secondary markets.
+                  </p>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">Improved Decentralization</h3>
+                  <p className="text-gray-600">
+                    New protocols are focusing on further decentralizing validator operations, with innovations like
+                    distributed validator technology (DVT) that allows multiple parties to jointly operate a single
+                    validator, reducing single points of failure.
+                  </p>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">Cross-Chain Expansion</h3>
+                  <p className="text-gray-600">
+                    Liquid staking is expanding beyond Ethereum to other proof-of-stake networks, with protocols
+                    developing multi-chain solutions that allow users to stake assets across different blockchains
+                    through a single interface.
+                  </p>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">Enhanced Yield Strategies</h3>
+                  <p className="text-gray-600">
+                    New financial products are being built on top of LSD tokens, including structured products, options,
+                    and more sophisticated yield farming strategies that can potentially increase returns while managing
+                    risk.
+                  </p>
+                </div>
+
+                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">Regulatory Clarity</h3>
+                  <p className="text-gray-600">
+                    As the regulatory landscape evolves, clearer guidelines for liquid staking tokens may emerge,
+                    potentially leading to increased institutional adoption and more sophisticated financial products
+                    built on LSDs.
+                  </p>
+                </div>
+              </div>
+
+              {/* Add new image */}
+              <div className="w-full rounded-xl overflow-hidden mb-6 relative">
+                <Image
+                  src="/images/defi-integration-diagram.png"
+                  alt="DeFi Integration with Liquid Staking"
+                  width={1200}
+                  height={675}
+                  className="w-full object-cover"
+                />
+                <div className="text-xs text-gray-500 text-center mt-2">
+                  Future integration possibilities between liquid staking and DeFi protocols
+                </div>
+              </div>
+            </section>
+
+            {/* Conclusion */}
+            <section id="conclusion" className="mb-12 sm:mb-16">
+              <motion.h2
+                className="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                Conclusion
+              </motion.h2>
+
+              <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg mb-8">
+                <p className="text-lg mb-4 text-gray-800">
+                  Liquid Staking Derivatives have fundamentally transformed the Ethereum staking landscape by solving
+                  the liquidity problem that previously limited staking adoption. They've made staking accessible to
+                  users of all sizes while enabling new forms of capital efficiency and DeFi innovation.
+                </p>
+
+                <p className="text-lg mb-4 text-gray-800">
+                  However, as with any financial innovation, LSDs come with their own set of risks and trade-offs. Users
+                  must carefully consider factors like smart contract risk, centralization concerns, and protocol fees
+                  when choosing how to participate in liquid staking.
+                </p>
+
+                <p className="text-lg mb-6 text-gray-800">
+                  As the ecosystem continues to mature, we can expect to see further innovations that address current
+                  limitations while opening up new possibilities for yield generation and capital efficiency. The future
+                  of Ethereum staking is likely to be increasingly liquid, composable, and integrated with the broader
+                  DeFi ecosystem.
+                </p>
+
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h3 className="font-bold mb-2 text-gray-800">Key Takeaways</h3>
+                  <ul className="space-y-1 text-gray-600">
+                    <li>• LSDs solve the liquidity problem of traditional staking</li>
+                    <li>• They enable capital efficiency and DeFi composability</li>
+                    <li>• Different protocols offer varying levels of decentralization and fees</li>
+                    <li>• Risks include smart contract vulnerabilities and centralization concerns</li>
+                    <li>• The ecosystem continues to evolve with new innovations and improvements</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <p className="text-gray-600 mb-4">
+                  Ready to start your liquid staking journey? Explore the different protocols and find the one that best
+                  fits your needs.
+                </p>
+                <Button asChild className="bg-gray-800 hover:bg-gray-900 text-white">
+                  <Link href="/dashboard">Start Staking</Link>
+                </Button>
+              </div>
+            </section>
+
+            <RelatedArticles />
+          </div>
+
+          <div className="lg:w-1/4">
+            <StickyTableOfContents />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
