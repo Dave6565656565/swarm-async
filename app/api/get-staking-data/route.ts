@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import { getContractBalance, getUserStakedAmount, calculateUserRewards } from "@/lib/alchemy-service"
 
+export const dynamic = "force-dynamic"
+
 export async function GET(request: Request) {
   try {
     // Get the user address from the query parameters

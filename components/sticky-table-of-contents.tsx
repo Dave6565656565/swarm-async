@@ -10,10 +10,10 @@ interface TOCItem {
 }
 
 interface StickyTableOfContentsProps {
-  headings: TOCItem[]
+  headings?: TOCItem[]
 }
 
-export default function StickyTableOfContents({ headings }: StickyTableOfContentsProps) {
+export function StickyTableOfContents({ headings = [] }: StickyTableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>("")
   const [isVisible, setIsVisible] = useState(false)
 
@@ -95,3 +95,5 @@ export default function StickyTableOfContents({ headings }: StickyTableOfContent
     </div>
   )
 }
+
+export default StickyTableOfContents

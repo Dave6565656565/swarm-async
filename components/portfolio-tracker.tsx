@@ -83,7 +83,7 @@ const INITIAL_HOLDINGS: Holding[] = []
 // Fallback prices if API fails
 const CRYPTO_PRICES: Record<string, number> = FALLBACK_PRICES
 
-export default function PortfolioTracker() {
+export function PortfolioTracker() {
   const { isConnected, address, balance, connect, tokenBalances } = useWeb3()
   const [holdings, setHoldings] = useState<Holding[]>([])
   const [activeTab, setActiveTab] = useState("holdings")
@@ -817,3 +817,5 @@ function Achievement({
     </div>
   )
 }
+
+export default PortfolioTracker

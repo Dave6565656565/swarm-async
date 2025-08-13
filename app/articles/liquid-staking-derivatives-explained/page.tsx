@@ -178,45 +178,25 @@ const ProtocolComparison = () => {
           <div className="p-4"></div>
           <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
             <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
-              <Image
-                src="https://s2.coinmarketcap.com/static/img/coins/200x200/8085.png"
-                alt="Lido"
-                width={24}
-                height={24}
-              />
+              <Image src="/placeholder.svg?height=24&width=24&text=Lido" alt="Lido" width={24} height={24} />
             </div>
             <span className="text-gray-800">Lido</span>
           </div>
           <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
             <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
-              <Image
-                src="https://raw.githubusercontent.com/rocket-pool/rocketpool/master/images/logo.png?raw=true"
-                alt="Rocket Pool"
-                width={24}
-                height={24}
-              />
+              <Image src="/placeholder.svg?height=24&width=24&text=RP" alt="Rocket Pool" width={24} height={24} />
             </div>
             <span className="text-gray-800">Rocket Pool</span>
           </div>
           <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
             <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
-              <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6hcTTU1A8Ymi2VldXqCsPkBu_ltAhIKiRg&s"
-                alt="Coinbase"
-                width={24}
-                height={24}
-              />
+              <Image src="/placeholder.svg?height=24&width=24&text=CB" alt="Coinbase" width={24} height={24} />
             </div>
             <span className="text-gray-800">Coinbase</span>
           </div>
           <div className="p-4 text-center font-medium bg-gray-50 rounded-t-lg">
             <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center overflow-hidden">
-              <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ75b9jMdiuMz-QCpDyQa2Q5jWEfN8jSYJtsQ&s"
-                alt="Frax"
-                width={24}
-                height={24}
-              />
+              <Image src="/placeholder.svg?height=24&width=24&text=Frax" alt="Frax" width={24} height={24} />
             </div>
             <span className="text-gray-800">Frax</span>
           </div>
@@ -525,12 +505,7 @@ const TokenTypeComparison = () => {
                 <h4 className="font-medium mb-2 text-gray-800">Examples</h4>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
-                    <Image
-                      src="https://s2.coinmarketcap.com/static/img/coins/200x200/8085.png"
-                      alt="Lido"
-                      width={16}
-                      height={16}
-                    />
+                    <Image src="/placeholder.svg?height=16&width=16&text=L" alt="Lido" width={16} height={16} />
                   </div>
                   <div className="text-gray-800">Lido's stETH</div>
                 </div>
@@ -593,7 +568,7 @@ const TokenTypeComparison = () => {
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
                       <Image
-                        src="https://raw.githubusercontent.com/rocket-pool/rocketpool/master/images/logo.png?raw=true"
+                        src="/placeholder.svg?height=16&width=16&text=R"
                         alt="Rocket Pool"
                         width={16}
                         height={16}
@@ -603,12 +578,7 @@ const TokenTypeComparison = () => {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6hcTTU1A8Ymi2VldXqCsPkBu_ltAhIKiRg&s"
-                        alt="Coinbase"
-                        width={16}
-                        height={16}
-                      />
+                      <Image src="/placeholder.svg?height=16&width=16&text=C" alt="Coinbase" width={16} height={16} />
                     </div>
                     <div className="text-gray-800">Coinbase's cbETH</div>
                   </div>
@@ -897,53 +867,6 @@ const RelatedArticles = () => {
 }
 
 export default function LiquidStakingDerivativesArticle() {
-  const handleShare = async (platform: string) => {
-    const url = window.location.href
-    const title = "Liquid Staking Derivatives Explained"
-    const text = "Learn about Liquid Staking Derivatives and how they're revolutionizing Ethereum staking."
-
-    const generatePDF = () => {
-      // Create a link element
-      const link = document.createElement("a")
-
-      // Set link properties for PDF download
-      link.href = "/api/generate-pdf?article=liquid-staking-derivatives"
-      link.download = "Liquid-Staking-Derivatives-Explained.pdf"
-
-      // Append to body, click, and remove
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-    }
-
-    switch (platform) {
-      case "twitter":
-        window.open(
-          `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
-          "_blank",
-        )
-        break
-      case "linkedin":
-        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, "_blank")
-        break
-      case "pdf":
-        // Generate and download PDF
-        generatePDF()
-        break
-      default:
-        if (navigator.share) {
-          try {
-            await navigator.share({ title, text, url })
-          } catch (err) {
-            console.error("Error sharing:", err)
-          }
-        } else {
-          await navigator.clipboard.writeText(url)
-          alert("Link copied to clipboard!")
-        }
-    }
-  }
-
   return (
     <div className="min-h-screen relative bg-gray-50">
       <div className="container mx-auto px-4 py-8 sm:py-12">
@@ -969,11 +892,6 @@ export default function LiquidStakingDerivativesArticle() {
                 className="object-cover"
                 priority
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, (max-width: 1024px) 60vw, 800px"
-                loading="eager"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement
-                  target.src = "/ethereum-staking-network.png" // Fallback image
-                }}
               />
             </div>
 
@@ -1099,22 +1017,6 @@ export default function LiquidStakingDerivativesArticle() {
                 their profound impact on the broader Ethereum ecosystem.
               </p>
 
-              {/* Add new image */}
-              <div className="w-full rounded-xl overflow-hidden mb-4 sm:mb-6 relative">
-                <Image
-                  src="/images/lsd-network-visualization.png"
-                  alt="Ethereum Liquid Staking Network Visualization"
-                  width={800}
-                  height={450}
-                  className="w-full object-cover"
-                  loading="lazy"
-                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, 800px"
-                />
-                <div className="text-xs text-gray-500 text-center mt-1">
-                  Visualization of the Ethereum liquid staking ecosystem
-                </div>
-              </div>
-
               <AnimatedDiagram />
             </section>
 
@@ -1129,108 +1031,19 @@ export default function LiquidStakingDerivativesArticle() {
                 What Are Liquid Staking Derivatives?
               </motion.h2>
 
-              <div className="flex flex-col md:flex-row gap-6 mb-8">
-                <div className="md:w-1/2 bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="aspect-video relative">
-                    <div className="w-full h-full bg-gradient-to-r from-gray-100 to-gray-50 flex items-center justify-center">
-                      <div className="flex space-x-4">
-                        <div className="bg-gray-200 rounded-lg p-4 flex items-center gap-2">
-                          <div className="w-6 h-6 overflow-hidden rounded-full">
-                            <Image
-                              src="https://s2.coinmarketcap.com/static/img/coins/200x200/8085.png"
-                              alt="Lido"
-                              width={24}
-                              height={24}
-                            />
-                          </div>
-                          <span className="text-gray-800">stETH</span>
-                        </div>
-                        <div className="bg-gray-200 rounded-lg p-4 flex items-center gap-2">
-                          <div className="w-6 h-6 overflow-hidden rounded-full">
-                            <Image
-                              src="https://raw.githubusercontent.com/rocket-pool/rocketpool/master/images/logo.png?raw=true"
-                              alt="Rocket Pool"
-                              width={24}
-                              height={24}
-                            />
-                          </div>
-                          <span className="text-gray-800">rETH</span>
-                        </div>
-                        <div className="bg-gray-200 rounded-lg p-4 flex items-center gap-2">
-                          <div className="w-6 h-6 overflow-hidden rounded-full">
-                            <Image
-                              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6hcTTU1A8Ymi2VldXqCsPkBu_ltAhIKiRg&s"
-                              alt="Coinbase"
-                              width={24}
-                              height={24}
-                            />
-                          </div>
-                          <span className="text-gray-800">cbETH</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="md:w-1/2">
-                  <p className="text-lg mb-4 text-gray-800">
-                    Liquid Staking Derivatives are tokenized representations of staked ETH that allow users to maintain
-                    liquidity while still earning staking rewards. When you use a liquid staking service, you receive a
-                    token that represents your staked ETH plus accrued rewards.
-                  </p>
-                  <p className="text-lg text-gray-800">
-                    These tokens can be freely transferred, traded, or used in DeFi applications while your original ETH
-                    remains staked on the Ethereum network, generating rewards that are reflected in the value of your
-                    LSD tokens.
-                  </p>
-                </div>
-              </div>
+              <p className="text-lg mb-6 text-gray-800">
+                Liquid Staking Derivatives are tokenized representations of staked ETH that allow users to maintain
+                liquidity while still earning staking rewards. When you use a liquid staking service, you receive a
+                token that represents your staked ETH plus accrued rewards.
+              </p>
 
-              <h3 className="text-xl font-bold mb-4 text-gray-800">Key Characteristics of LSDs</h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Representation</h4>
-                  <p className="text-gray-600">
-                    Each LSD token represents a claim on an underlying staked ETH position plus accumulated rewards
-                  </p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Rebasing or Value Accrual</h4>
-                  <p className="text-gray-600">
-                    LSDs capture staking rewards either through rebasing (increasing the number of tokens you hold) or
-                    value accrual (increasing the value of each token)
-                  </p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Transferability</h4>
-                  <p className="text-gray-600">
-                    Unlike directly staked ETH, LSD tokens can be freely transferred between wallets and used in various
-                    applications
-                  </p>
-                </div>
-                <div className="bg-white shadow-md border border-gray-200 p-5 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-2 text-gray-800">Market Price</h4>
-                  <p className="text-gray-600">
-                    LSD tokens trade on the open market, sometimes at a premium or discount to their underlying value
-                  </p>
-                </div>
-              </div>
+              <p className="text-lg mb-8 text-gray-800">
+                These tokens can be freely transferred, traded, or used in DeFi applications while your original ETH
+                remains staked on the Ethereum network, generating rewards that are reflected in the value of your LSD
+                tokens.
+              </p>
 
               <TokenTypeComparison />
-
-              {/* Add new image */}
-              <div className="w-full rounded-xl overflow-hidden mt-8 mb-6 relative">
-                <Image
-                  src="/images/staking-rewards-flow.png"
-                  alt="Staking Rewards Flow"
-                  width={1200}
-                  height={675}
-                  className="w-full object-cover"
-                />
-                <div className="text-xs text-gray-500 text-center mt-2">
-                  How staking rewards flow through liquid staking protocols to token holders
-                </div>
-              </div>
             </section>
 
             {/* How They Work */}
@@ -1247,45 +1060,6 @@ export default function LiquidStakingDerivativesArticle() {
               <p className="text-lg mb-6 text-gray-800">
                 To understand LSDs, it's helpful to walk through the typical process of using a liquid staking service:
               </p>
-
-              <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden mb-8">
-                <div className="p-4 sm:p-6">
-                  <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-2 text-2xl text-gray-800">
-                        1
-                      </div>
-                      <div className="text-gray-800">Deposit ETH</div>
-                    </div>
-                    <div className="hidden md:block text-2xl text-gray-400">→</div>
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-2 text-2xl text-gray-800">
-                        2
-                      </div>
-                      <div className="text-gray-800">Receive LSD Tokens</div>
-                    </div>
-                    <div className="hidden md:block text-2xl text-gray-400">→</div>
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-2 text-2xl text-gray-800">
-                        3
-                      </div>
-                      <div className="text-gray-800">Protocol Stakes ETH</div>
-                    </div>
-                    <div className="hidden md:block text-2xl text-gray-400">→</div>
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-2 text-2xl text-gray-800">
-                        4
-                      </div>
-                      <div className="text-gray-800">Use LSD in DeFi</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-4 text-gray-500 text-sm text-center">
-                  The liquid staking process flow: from ETH deposit to DeFi utilization
-                </div>
-              </div>
-
-              <h3 className="text-xl font-bold mb-4 text-gray-800">The Liquid Staking Process</h3>
 
               <ol className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
@@ -1342,33 +1116,7 @@ export default function LiquidStakingDerivativesArticle() {
                     </span>
                   </div>
                 </li>
-                <li className="flex items-start gap-3">
-                  <div className="bg-gray-100 font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1 text-gray-800">
-                    6
-                  </div>
-                  <div>
-                    <strong className="text-gray-800">Redemption (Optional):</strong>{" "}
-                    <span className="text-gray-600">
-                      When desired and available, users can redeem their LSD tokens for the underlying ETH plus accrued
-                      rewards
-                    </span>
-                  </div>
-                </li>
               </ol>
-
-              {/* Add new image */}
-              <div className="w-full rounded-xl overflow-hidden mb-8 relative">
-                <Image
-                  src="/images/ethereum-staking-ecosystem.png"
-                  alt="Ethereum Staking Ecosystem"
-                  width={1200}
-                  height={675}
-                  className="w-full object-cover"
-                />
-                <div className="text-xs text-gray-500 text-center mt-2">
-                  The interconnected Ethereum staking ecosystem
-                </div>
-              </div>
             </section>
 
             {/* Major Protocols */}
@@ -1387,194 +1135,7 @@ export default function LiquidStakingDerivativesArticle() {
                 characteristics:
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg flex flex-col">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://s2.coinmarketcap.com/static/img/coins/200x200/8085.png"
-                        alt="Lido"
-                        width={32}
-                        height={32}
-                      />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-800">Lido Finance</h3>
-                  </div>
-                  <div className="space-y-2 flex-grow text-gray-800">
-                    <p>
-                      <strong>Token:</strong> stETH (staked ETH)
-                    </p>
-                    <p>
-                      <strong>Mechanism:</strong> Rebasing token
-                    </p>
-                    <p>
-                      <strong>Market Position:</strong> Largest liquid staking protocol by total value locked (TVL)
-                    </p>
-                    <p>
-                      <strong>Governance:</strong> DAO-governed through the LDO token
-                    </p>
-                    <p>
-                      <strong>Validator Selection:</strong> Curated set of professional node operators
-                    </p>
-                    <p>
-                      <strong>Fee Structure:</strong> 10% fee on staking rewards
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Market Share</span>
-                      <span className="font-bold text-gray-800">~30%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                      <div className="bg-gray-500 h-2 rounded-full" style={{ width: "30%" }}></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg flex flex-col">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://raw.githubusercontent.com/rocket-pool/rocketpool/master/images/logo.png?raw=true"
-                        alt="Rocket Pool"
-                        width={32}
-                        height={32}
-                      />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-800">Rocket Pool</h3>
-                  </div>
-                  <div className="space-y-2 flex-grow text-gray-800">
-                    <p>
-                      <strong>Token:</strong> rETH (Rocket Pool ETH)
-                    </p>
-                    <p>
-                      <strong>Mechanism:</strong> Value-accruing token
-                    </p>
-                    <p>
-                      <strong>Market Position:</strong> Known for its decentralized approach
-                    </p>
-                    <p>
-                      <strong>Governance:</strong> DAO-governed through the RPL token
-                    </p>
-                    <p>
-                      <strong>Validator Selection:</strong> Permissionless node operators who must stake RPL as
-                      collateral
-                    </p>
-                    <p>
-                      <strong>Fee Structure:</strong> Variable commission rate set by node operators
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Market Share</span>
-                      <span className="font-bold text-gray-800">~8%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                      <div className="bg-gray-500 h-2 rounded-full" style={{ width: "8%" }}></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg flex flex-col">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6hcTTU1A8Ymi2VldXqCsPkBu_ltAhIKiRg&s"
-                        alt="Coinbase"
-                        width={32}
-                        height={32}
-                      />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-800">Coinbase</h3>
-                  </div>
-                  <div className="space-y-2 flex-grow text-gray-800">
-                    <p>
-                      <strong>Token:</strong> cbETH (Coinbase ETH)
-                    </p>
-                    <p>
-                      <strong>Mechanism:</strong> Value-accruing token
-                    </p>
-                    <p>
-                      <strong>Market Position:</strong> Backed by a major centralized exchange
-                    </p>
-                    <p>
-                      <strong>Governance:</strong> Centralized (controlled by Coinbase)
-                    </p>
-                    <p>
-                      <strong>Validator Selection:</strong> Operated by Coinbase
-                    </p>
-                    <p>
-                      <strong>Fee Structure:</strong> 25% fee on staking rewards
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Market Share</span>
-                      <span className="font-bold text-gray-800">~7%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 h-2 mt-2">
-                      <div className="bg-gray-500 h-2 rounded-full" style={{ width: "7%" }}></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg flex flex-col">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ75b9jMdiuMz-QCpDyQa2Q5jWEfN8jSYJtsQ&s"
-                        alt="Frax"
-                        width={32}
-                        height={32}
-                      />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-800">Frax Finance</h3>
-                  </div>
-                  <div className="space-y-2 flex-grow text-gray-800">
-                    <p>
-                      <strong>Tokens:</strong> frxETH (Frax ETH) and sfrxETH (Staked Frax ETH)
-                    </p>
-                    <p>
-                      <strong>Mechanism:</strong> Two-token system; frxETH is a 1:1 ETH wrapper, sfrxETH is a
-                      value-accruing staked version
-                    </p>
-                    <p>
-                      <strong>Market Position:</strong> Integrated with the broader Frax stablecoin ecosystem
-                    </p>
-                    <p>
-                      <strong>Governance:</strong> DAO-governed through the FXS token
-                    </p>
-                    <p>
-                      <strong>Fee Structure:</strong> Variable, determined by governance
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Market Share</span>
-                      <span className="font-bold text-gray-800">~5%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                      <div className="bg-gray-500 h-2 rounded-full" style={{ width: "5%" }}></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <ProtocolComparison />
-
-              {/* Add new image */}
-              <div className="w-full rounded-xl overflow-hidden mt-8 mb-6 relative">
-                <Image
-                  src="/images/lsd-market-growth.png"
-                  alt="LSD Market Growth Chart"
-                  width={1200}
-                  height={675}
-                  className="w-full object-cover"
-                />
-                <div className="text-xs text-gray-500 text-center mt-2">
-                  Growth of liquid staking derivatives market share over time
-                </div>
-              </div>
             </section>
 
             {/* Benefits */}
@@ -1589,75 +1150,6 @@ export default function LiquidStakingDerivativesArticle() {
               </motion.h2>
 
               <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 sm:p-6 mb-8">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
-                  <div className="bg-gray-50 p-4 rounded-lg text-center">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M12 8V16"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M8 12H16"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <div className="font-medium text-gray-800">Liquidity</div>
-                    <div className="text-sm text-gray-600">Trade anytime</div>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg text-center">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <div className="font-medium text-gray-800">Rewards</div>
-                    <div className="text-sm text-gray-600">Earn while liquid</div>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg text-center">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto mb-2 flex items-center justify-center">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M21 16V8A2 2 0 0 0 19 6H5A2 2 0 0 0 3 8V16A2 2 0 0 0 5 18H19A2 2 0 0 0 21 16Z"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M21 6L12 13L3 6"
-                          stroke="#6B7280"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <div className="font-medium text-gray-800">DeFi Access</div>
-                    <div className="text-sm text-gray-600">Use in protocols</div>
-                  </div>
-                </div>
-
                 <h3 className="text-xl font-bold mb-4 text-gray-800">Key Benefits</h3>
 
                 <div className="space-y-4">
@@ -1710,19 +1202,6 @@ export default function LiquidStakingDerivativesArticle() {
                       <p className="text-gray-600">
                         Liquid staking protocols handle all the technical aspects of running validators, including
                         hardware maintenance, software updates, and slashing protection.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <div className="bg-emerald-100 rounded-full p-1 flex-shrink-0 mt-1">
-                      <Check size={16} className="text-emerald-600" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-800">Diversified Risk</h4>
-                      <p className="text-gray-600">
-                        By pooling ETH from many users, liquid staking protocols can distribute risk across multiple
-                        validators, reducing the impact of any single validator's poor performance.
                       </p>
                     </div>
                   </div>
@@ -1867,90 +1346,6 @@ export default function LiquidStakingDerivativesArticle() {
                     decentralization if they become too dominant.
                   </p>
                 </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="bg-green-100 rounded-full p-2">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z"
-                          stroke="#059669"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M14 2V8H20"
-                          stroke="#059669"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M16 13H8"
-                          stroke="#059669"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M16 17H8"
-                          stroke="#059669"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M10 9H9H8"
-                          stroke="#059669"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-800">Regulatory Risk</h3>
-                  </div>
-                  <p className="text-gray-600">
-                    The regulatory landscape for liquid staking is still evolving. Future regulations could impact how
-                    these protocols operate or how tokens are treated for tax purposes.
-                  </p>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="bg-orange-100 rounded-full p-2">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M12 2L2 7L12 12L22 7L12 2Z"
-                          stroke="#EA580C"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M2 17L12 22L22 17"
-                          stroke="#EA580C"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M2 12L12 17L22 12"
-                          stroke="#EA580C"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-800">Protocol Fees</h3>
-                  </div>
-                  <p className="text-gray-600">
-                    Liquid staking protocols charge fees (typically 5-25% of staking rewards), which reduce your overall
-                    returns compared to solo staking.
-                  </p>
-                </div>
               </div>
 
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 sm:p-6">
@@ -2022,29 +1417,6 @@ export default function LiquidStakingDerivativesArticle() {
                     efficiency across the Ethereum ecosystem. Users can now earn staking rewards while simultaneously
                     participating in lending, trading, and other DeFi activities.
                   </p>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold mb-3 text-gray-800">Centralization Concerns</h3>
-                  <p className="text-gray-600">
-                    The dominance of certain liquid staking protocols has raised concerns about validator
-                    centralization. If a single protocol controls too large a share of staked ETH, it could potentially
-                    influence network governance or pose systemic risks.
-                  </p>
-                </div>
-              </div>
-
-              {/* Add new image */}
-              <div className="w-full rounded-xl overflow-hidden mb-6 relative">
-                <Image
-                  src="/images/validator-network.png"
-                  alt="Ethereum Validator Network"
-                  width={1200}
-                  height={675}
-                  className="w-full object-cover"
-                />
-                <div className="text-xs text-gray-500 text-center mt-2">
-                  The distributed Ethereum validator network powered by liquid staking protocols
                 </div>
               </div>
             </section>
@@ -2127,56 +1499,6 @@ export default function LiquidStakingDerivativesArticle() {
                     </div>
                   </div>
                 </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <h3 className="text-lg font-bold mb-4 text-gray-800">Liquidity</h3>
-                  <p className="text-gray-600 mb-4">
-                    Check the trading volume and liquidity of the LSD token to ensure you can easily buy and sell.
-                  </p>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">stETH</span>
-                      <span className="text-sm font-medium text-green-600">Excellent</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">rETH</span>
-                      <span className="text-sm font-medium text-green-600">Good</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">cbETH</span>
-                      <span className="text-sm font-medium text-yellow-600">Moderate</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">sfrxETH</span>
-                      <span className="text-sm font-medium text-yellow-600">Moderate</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <h3 className="text-lg font-bold mb-4 text-gray-800">DeFi Integration</h3>
-                  <p className="text-gray-600 mb-4">
-                    Consider which DeFi protocols support the LSD token you're interested in.
-                  </p>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">stETH</span>
-                      <span className="text-sm font-medium text-green-600">Widespread</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">rETH</span>
-                      <span className="text-sm font-medium text-green-600">Good</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">cbETH</span>
-                      <span className="text-sm font-medium text-yellow-600">Growing</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">sfrxETH</span>
-                      <span className="text-sm font-medium text-yellow-600">Limited</span>
-                    </div>
-                  </div>
-                </div>
               </div>
 
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 sm:p-6">
@@ -2238,38 +1560,6 @@ export default function LiquidStakingDerivativesArticle() {
                     developing multi-chain solutions that allow users to stake assets across different blockchains
                     through a single interface.
                   </p>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold mb-3 text-gray-800">Enhanced Yield Strategies</h3>
-                  <p className="text-gray-600">
-                    New financial products are being built on top of LSD tokens, including structured products, options,
-                    and more sophisticated yield farming strategies that can potentially increase returns while managing
-                    risk.
-                  </p>
-                </div>
-
-                <div className="bg-white shadow-md border border-gray-200 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold mb-3 text-gray-800">Regulatory Clarity</h3>
-                  <p className="text-gray-600">
-                    As the regulatory landscape evolves, clearer guidelines for liquid staking tokens may emerge,
-                    potentially leading to increased institutional adoption and more sophisticated financial products
-                    built on LSDs.
-                  </p>
-                </div>
-              </div>
-
-              {/* Add new image */}
-              <div className="w-full rounded-xl overflow-hidden mb-6 relative">
-                <Image
-                  src="/images/defi-integration-diagram.png"
-                  alt="DeFi Integration with Liquid Staking"
-                  width={1200}
-                  height={675}
-                  className="w-full object-cover"
-                />
-                <div className="text-xs text-gray-500 text-center mt-2">
-                  Future integration possibilities between liquid staking and DeFi protocols
                 </div>
               </div>
             </section>

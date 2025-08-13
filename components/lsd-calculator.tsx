@@ -63,7 +63,7 @@ const LSD_PROTOCOLS: LSDProtocol[] = [
   },
 ]
 
-export default function LSDCalculator() {
+export function LSDCalculator() {
   const [stakeAmount, setStakeAmount] = useState<string>("1")
   const [selectedProtocol, setSelectedProtocol] = useState<string>("Lido")
   const [timeframe, setTimeframe] = useState<string>("1")
@@ -410,3 +410,5 @@ export default function LSDCalculator() {
     </div>
   )
 }
+
+export default LSDCalculator
