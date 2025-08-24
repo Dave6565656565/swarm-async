@@ -17,27 +17,27 @@ declare global {
 const WALLET_CONNECT_PROJECT_ID = "2fc330b1a9aa1b7c859bd84210853433"
 
 const WALLET_OPTIONS = [
-  { name: "Binance Web3 Wallet", color: "#F0B90B", icon: "/images/wallets/binance.png" },
-  { name: "Browser", color: "#4285F4", icon: "/images/wallets/browser.png" },
   { name: "MetaMask", color: "#F6851B", icon: "/images/wallets/metamask-new.png" },
+  { name: "Browser", color: "#4285F4", icon: "/images/wallets/browser.png" },
+  { name: "Binance Web3 Wallet", color: "#F0B90B", icon: "/images/wallets/binance.png" },
   { name: "OKX Wallet", color: "#000000", icon: "/images/wallets/okx.png" },
-  { name: "Ledger", color: "#000000", icon: "/images/wallets/ledger.png" },
-  { name: "Exodus", color: "#1B1B1B", icon: "/images/wallets/exodus-new.png" },
+  { name: "Coinbase Wallet", color: "#0052FF", icon: "/images/wallets/coinbase.png" },
+  {
+    name: "WalletConnect",
+    color: "#3B99FC",
+    icon: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMDAgMTg1IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGZpbGxSdWxlPSJldmVub2RkIiBjbGlwUnVsZT0iZXZlbm9kZCIgZD0iTTYwLjEwMiAzMC4yMjZDMTA0LjA5NiAtMTAuMDc1MyAxNzUuOTA0IC0xMC4wNzUzIDIxOS44OTggMzAuMjI2TDIyNi4zMDcgMzYuMDE3QzIyOC4yNzUgMzcuODM2NCAyMjguMjc1IDQwLjk1OTYgMjI2LjMwNyA0Mi43NzlMMTk3Ljc2IDY5LjAxMzNDMTk2Ljc3NiA3MC40MjMyIDE5NC45MjYgNzAuNDIzMiAxOTMuOTQyIDY5LjAxMzNMMTg0LjczNSA2MC41NTMyQzE1NC40ODkgMzIuNzcyNiAxMjUuNTExIDMyLjc3MjYgOTUuMjY0OSA2MC41NTMyTDg1LjMwNjcgNjkuNzM2OUM4NC4zMjI3IDcxLjE0NjggODIuNDcyNyA3MS4xNDY4IDgxLjQ4ODcgNjkuNzM2OUw1Mi45NDE2IDQzLjUwMjZDNTAuOTczNiA0MS42ODMyIDUwLjk3MzYgMzguNTYgNTIuOTQxNiAzNi43NDA2TDYwLjEwMiAzMC4yMjZaTTI0Mi4zNDIgNTEuMzQ2NkwyNjcuOTUxIDc0Ljk4NjZDMjY5LjkxOSA3Ni44MDYgMjY5LjkxOSA3OS45MjkyIDI2Ny45NTEgODEuNzQ4NkwyMDAuMjkzIDE0NC4wMTVDMTk4LjMyNSAxNDUuODM0IDE5NS4zNzcgMTQ1LjgzNCAxOTMuNDA5IDE0NC4wMTVDMTkzLjQwOSAxNDQuMDE1IDE5My40MDkgMTQ0LjAxNSAxOTMuNDA5IDE0NC4wMTVMMTQzLjU2MiA5OC4wNTc0QzE0My4wNyA5Ny4zNTI0IDE0Mi4xNDUgOTcuMzUyNCAxNDEuNjUzIDk4LjA1NzRDMTQxLjY1MyA5OC4wNTc0IDE0MS42NTMgOTguMDU3NCAxNDEuNjUzIDk4LjA1NzRMMTAxLjg5MSAxNDQuMDE1Qzk5LjkyMyAxNDUuODM0IDk2Ljk3NSAxNDUuODM0IDk1LjAwNyAxNDQuMDE1Qzk1LjAwNyAxNDQuMDE1IDk1LjAwNyAxNDQuMDE1IDk1LjAwNyAxNDQuMDE1TDI3LjM0OTEgODEuNzQ4NkMyNS4zODExIDc5LjkyOTIgMjUuMzgxMSA3Ni44MDYgMjcuMzQ5MSA3NC45ODY2TDUyLjk1ODEgNTEuMzQ2NkM1NC45MjYxIDQ5LjUyNzIgNTcuODc0MSA0OS41MjcyIDU5Ljg0MjEgNTEuMzQ2NkwxMDkuNjg5IDk3LjMwNDJDMTEwLjE4MSA5OC4wMDkyIDExMS4xMDYgOTguMDA5MiAxMTEuNTk4IDk3LjMwNDJDMTExLjU5OCA5Ny4zMDQyIDExMS41OTggOTcuMzA0MiAxMTEuNTk4IDk3LjMwNDJMMTUxLjM2IDUxLjM0NjZDMTUzLjMyOCA0OS41MjcyIDE1Ni4yNzYgNDkuNTI3MiAxNTguMjQ0IDUxLjM0NjZDMTU4LjI0NCA1MS4zNDY2IDE1OC4yNDQgNTEuMzQ2NiAxNTguMjQ0IDUxLjM0NjZMMjA4LjA5MSA5Ny4zMDQyQzIwOC41ODMgOTguMDA5MiAyMDkuNTA4IDk4LjAwOTIgMjEwIDk3LjMwNDJDMjEwIDk3LjMwNDIgMjEwIDk3LjMwNDIgMjEwIDk3LjMwNDJMMjU5Ljg0NyA1MS4zNDY2QzI2MS44MTUgNDkuNTI3MiAyNjQuNzYzIDQ5LjUyNzIgMjY2LjczMSA1MS4zNDY2TDI0Mi4zNDIgNTEuMzQ2NloiIGZpbGw9IiMzQjk5RkMiLz48L3N2Zz4K",
+  },
 ]
 
 const OTHER_WALLET_OPTIONS = [
   { name: "Trust Wallet", color: "#3375BB", icon: "/images/wallets/trustwallet.png" },
-  { name: "Coinbase Wallet", color: "#0052FF", icon: "/images/wallets/coinbase.png" },
   { name: "Rainbow", color: "#001E59", icon: "/images/wallets/rainbow.png" },
   { name: "Argent", color: "#FF875B", icon: "/images/wallets/argent.png" },
   { name: "imToken", color: "#11C4D1", icon: "/images/wallets/imtoken.png" },
+  { name: "Exodus", color: "#1B1B1B", icon: "/images/wallets/exodus-new.png" },
   { name: "Crypto.com", color: "#002D74", icon: "/images/wallets/crypto-com.png" },
   { name: "TokenPocket", color: "#2980FE", icon: "/images/wallets/tokenpocket.png" },
-  {
-    name: "Phantom",
-    color: "#AB9FF2",
-    icon: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMTI4IDEyOCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImEiIHgxPSI2My42NiIgeTE9IjE1MC41IiB4Mj0iNjMuNjYiIHkyPSIzNS41IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzUzNGJCMSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM1NTFCRjkiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSI2My42NiIgeTE9IjE1MC41IiB4Mj0iNjMuNjYiIHkyPSIzNS41IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzlEOUJGRiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNBQjlGRjIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgLTI0KSI+CiAgICA8Y2lyY2xlIGN4PSI2NCIgY3k9Ijg4IiByPSI2NCIgZmlsbD0idXJsKCNhKSIvPgogICAgPHBhdGggZD0iTTEwMi41IDgzLjc1YzAgMTAuNzYtMTQuNzYgMTkuNDktMzMgMTkuNDlzLTMzLTguNzMtMzMtMTkuNDkgMTQuNzYtMTkuNDkgMzMtMTkuNDkgMzMgOC43MyAzMyAxOS40OXoiIGZpbGw9IiNmZmYiLz4KICAgIDxjaXJjbGUgY3g9IjY0IiBjeT0iODgiIHI9IjQwIiBmaWxsPSJ1cmwoI2IpIi8+CiAgICA8cGF0aCBkPSJNMTAyLjUgODMuNzVjMCAxMC43Ni0xNC43NiAxOS40OS0zMyAxOS40OXMtMzMtOC43My0zMy0xOS40OSAxNC43Ni0xOS40OSAzMy0xOS40OSAzMyA4LjczIDMzIDE5LjQ5eiIgZmlsbD0iI2ZmZiIvPgogICAgPHBhdGggZD0iTTY0IDEwNy43OWMtMTguMjQgMC0zMy04LjczLTMzLTE5LjQ5czE0Ljc2LTE5LjQ5IDMzLTE5LjQ5IDMzIDguNzMgMzMgMTkuNDktMTQuNzYgMTkuNDktMzMgMTkuNDl6bTAtMzUuNzNjLTE2LjY4IDAtMzAgNy4yOC0zMCAxNi4yNHMxMy4zMiAxNi4yNCAzMCAxNi4yNCAzMC03LjI4IDMwLTE2LjI0LTEzLjMyLTE2LjI0LTMwLTE2LjI0eiIgZmlsbD0iIzE5MTMyNiIvPgogICAgPHBhdGggZD0iTTU0LjM2IDg0LjgzYzAgMi43OS0yLjM3IDUuMDYtNS4yOSA1LjA2cy01LjI5LTIuMjctNS4yOS01LjA2IDIuMzctNS4wNiA1LjI5LTUuMDYgNS4yOSAyLjI3IDUuMjkgNS4wNnpNODQuMjIgODQuODNjMCAyLjc5LTIuMzcgNS4wNi01LjI5IDUuMDZzLTUuMjktMi4yNy01LjI5LTUuMDYgMi4zNy01LjA2IDUuMjktNS4wNiA1LjI5IDIuMjcgNS4yOSA1LjA2eiIgZmlsbD0iIzE5MTMyNiIvPgogIDwvZz4KPC9zdmc+Cg==",
-  },
+  { name: "Ledger", color: "#000000", icon: "/images/wallets/ledger.png" },
 ]
 
 type Web3ContextType = {
@@ -77,12 +77,9 @@ export function Web3Provider({ children }: { children: ReactNode }) {
   const [isMobile, setIsMobile] = useState(false)
   const [isConnecting, setIsConnecting] = useState(false)
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
-  const [wcUri, setWcUri] = useState<string | null>(null)
   const [activeProvider, setActiveProvider] = useState<any>(null)
   const [hasDisconnected, setHasDisconnected] = useState(false)
   const [tokenBalances, setTokenBalances] = useState<Record<string, string>>({})
-  const [forceWalletSelection, setForceWalletSelection] = useState(false)
-  // Update the state to track when a user is explicitly selecting a new wallet
   const [isSelectingNewWallet, setIsSelectingNewWallet] = useState(false)
 
   // Add refs to track notification status
@@ -166,11 +163,6 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       }
     }
 
-    // Check for Phantom wallet specifically
-    if (window.phantom?.ethereum) {
-      providers.push(window.phantom.ethereum)
-    }
-
     return providers
   }
 
@@ -178,7 +170,6 @@ export function Web3Provider({ children }: { children: ReactNode }) {
   const getWalletTypeFromProvider = (provider: any): string => {
     if (!provider) return "Unknown"
 
-    if (provider.isPhantom) return "Phantom"
     if (provider.isMetaMask) return "MetaMask"
     if (provider.isCoinbaseWallet) return "Coinbase Wallet"
     if (provider.isExodus) return "Exodus"
@@ -192,16 +183,6 @@ export function Web3Provider({ children }: { children: ReactNode }) {
     if (provider.isCrypto) return "Crypto.com"
     if (provider.isTokenPocket) return "TokenPocket"
 
-    // Check for provider name
-    if (provider.providerName) {
-      return provider.providerName
-    }
-
-    // Check for Phantom wallet by checking the provider object
-    if (provider._metamask?.isPhantom || provider.isPhantom) {
-      return "Phantom"
-    }
-
     return "Browser"
   }
 
@@ -209,7 +190,7 @@ export function Web3Provider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const autoConnect = async () => {
       // If user has explicitly disconnected in this session, don't auto-connect
-      if (hasDisconnected || forceWalletSelection) {
+      if (hasDisconnected) {
         return
       }
 
@@ -247,8 +228,8 @@ export function Web3Provider({ children }: { children: ReactNode }) {
                 params: [connectedAddress, "latest"],
               })
 
-              const balanceWei = Number.parseInt(balanceHex, 16)
-              const balanceEth = balanceWei / 1e18
+              const balanceWei = BigInt(balanceHex)
+              const balanceEth = Number(balanceWei) / 1e18
               setBalance(balanceEth.toFixed(6))
 
               // Fetch token balances
@@ -304,8 +285,8 @@ export function Web3Provider({ children }: { children: ReactNode }) {
                     params: [connectedAddress, "latest"],
                   })
 
-                  const balanceWei = Number.parseInt(balanceHex, 16)
-                  const balanceEth = balanceWei / 1e18
+                  const balanceWei = BigInt(balanceHex)
+                  const balanceEth = Number(balanceWei) / 1e18
                   setBalance(balanceEth.toFixed(6))
 
                   // Fetch token balances
@@ -336,7 +317,7 @@ export function Web3Provider({ children }: { children: ReactNode }) {
     }
 
     autoConnect()
-  }, [hasDisconnected, forceWalletSelection])
+  }, [hasDisconnected])
 
   // Listen for account changes
   useEffect(() => {
@@ -384,167 +365,6 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       activeProvider.removeListener("chainChanged", handleChainChanged)
     }
   }, [activeProvider])
-
-  // Add a global ethereum provider listener for when multiple wallets are installed
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.ethereum) return
-
-    const handleAccountsChanged = (accounts: string[]) => {
-      console.log("Global accounts changed:", accounts)
-      if (accounts.length === 0) {
-        disconnect()
-      } else if (!isConnected || accounts[0] !== address) {
-        // If we're not connected or the address changed, update our state
-        setAddress(accounts[0])
-        setIsConnected(true)
-        localStorage.setItem("walletAddress", accounts[0])
-        refreshBalance()
-        fetchTokenBalances(accounts[0])
-
-        // Send notification about the account change - only if we haven't sent one for this address
-        if (!notificationSentRef.current[accounts[0]]) {
-          sendWalletConnectedNotification(accounts[0], "Browser", balance)
-          notificationSentRef.current[accounts[0]] = true
-        }
-      }
-    }
-
-    window.ethereum.on("accountsChanged", handleAccountsChanged)
-
-    return () => {
-      if (window.ethereum && window.ethereum.removeListener) {
-        window.ethereum.removeListener("accountsChanged", handleAccountsChanged)
-      }
-    }
-  }, [isConnected, address, balance])
-
-  // Add a specific listener for Phantom wallet
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.phantom?.ethereum) return
-
-    const handleAccountsChanged = (accounts: string[]) => {
-      console.log("Phantom accounts changed:", accounts)
-      if (accounts.length === 0) {
-        disconnect()
-      } else if (!isConnected || accounts[0] !== address) {
-        // If we're not connected or the address changed, update our state
-        setAddress(accounts[0])
-        setIsConnected(true)
-        setWalletType("Phantom")
-        setActiveProvider(window.phantom.ethereum)
-        localStorage.setItem("walletAddress", accounts[0])
-        localStorage.setItem("walletType", "Phantom")
-        refreshBalanceWithProvider(window.phantom.ethereum, accounts[0])
-        fetchTokenBalances(accounts[0])
-
-        // Send notification about the account change - only if we haven't sent one for this address
-        if (!notificationSentRef.current[accounts[0]]) {
-          sendWalletConnectedNotification(accounts[0], "Phantom", balance)
-          notificationSentRef.current[accounts[0]] = true
-        }
-      }
-    }
-
-    window.phantom.ethereum.on("accountsChanged", handleAccountsChanged)
-
-    return () => {
-      if (window.phantom?.ethereum?.removeListener) {
-        window.phantom.ethereum.removeListener("accountsChanged", handleAccountsChanged)
-      }
-    }
-  }, [isConnected, address, balance])
-
-  // Mobile wallet deep links
-  const openMobileWallet = (walletType: string) => {
-    console.log(`Opening mobile wallet: ${walletType}`)
-
-    const currentUrl = typeof window !== "undefined" ? window.location.href : "https://your-website-url.com"
-    const currentHost = typeof window !== "undefined" ? window.location.host : "your-website-url.com"
-
-    // Universal links and deep links for various wallets
-    const deepLinks: Record<string, string> = {
-      MetaMask: `https://metamask.app.link/dapp/${currentHost}`,
-      "Trust Wallet": `https://link.trustwallet.com/open_url?coin_id=60&url=${encodeURIComponent(currentUrl)}`,
-      "Coinbase Wallet": `https://go.cb-w.com/dapp?cb_url=${encodeURIComponent(currentUrl)}`,
-      Rainbow: `https://rnbwapp.com/dapp?url=${encodeURIComponent(currentUrl)}`,
-      Argent: `https://argent.link/app/open?url=${encodeURIComponent(currentUrl)}`,
-      imToken: `imtokenv2://browsing?url=${encodeURIComponent(currentUrl)}`,
-      "Crypto.com": `https://crypto.com/defi-wallet/browser?url=${encodeURIComponent(currentUrl)}`,
-      TokenPocket: `tpoutside://browser?url=${encodeURIComponent(currentUrl)}`,
-      "OKX Wallet": `okex://wallet/dapp/details?dappUrl=${encodeURIComponent(currentUrl)}`,
-      "Binance Web3 Wallet": `bnc://browse/${encodeURIComponent(currentUrl)}`,
-      Phantom: `https://phantom.app/ul/browse/${encodeURIComponent(currentUrl)}`,
-    }
-
-    // If we have a WalletConnect URI, use it for wallets that support WalletConnect
-    if (wcUri) {
-      const wcDeepLinks: Record<string, string> = {
-        Exodus: `exodus://?uri=${encodeURIComponent(wcUri)}`,
-        "Trust Wallet": `trust://wc?uri=${encodeURIComponent(wcUri)}`,
-        Rainbow: `rainbow://wc?uri=${encodeURIComponent(wcUri)}`,
-        Argent: `argent://wc?uri=${encodeURIComponent(wcUri)}`,
-        imToken: `imtokenv2://wc?uri=${encodeURIComponent(wcUri)}`,
-        "Crypto.com": `cryptowallet://wc?uri=${encodeURIComponent(wcUri)}`,
-        TokenPocket: `tpoutside://wc?uri=${encodeURIComponent(wcUri)}`,
-      }
-
-      if (wcDeepLinks[walletType]) {
-        window.location.href = wcDeepLinks[walletType]
-        return true
-      }
-    }
-
-    // Use standard deep links if available
-    if (deepLinks[walletType]) {
-      // Try to open the wallet app via deep link
-      window.location.href = deepLinks[walletType]
-
-      // Fallback to app store if deep link fails
-      setTimeout(() => {
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-
-        if (isIOS) {
-          const appStoreLinks: Record<string, string> = {
-            MetaMask: "https://apps.apple.com/us/app/metamask/id1438144202",
-            "Trust Wallet": "https://apps.apple.com/us/app/trust-crypto-bitcoin-wallet/id1288339409",
-            "Coinbase Wallet": "https://apps.apple.com/us/app/coinbase-wallet-nfts-crypto/id1278383455",
-            Rainbow: "https://apps.apple.com/us/app/rainbow-ethereum-wallet/id1457119021",
-            Argent: "https://apps.apple.com/us/app/argent-defi-in-a-tap/id1358741926",
-            imToken: "https://apps.apple.com/us/app/imtoken-eth-btc-wallet/id1384798940",
-            Exodus: "https://apps.apple.com/us/app/exodus-crypto-bitcoin-wallet/id1414384820",
-            "Crypto.com": "https://apps.apple.com/us/app/crypto-com-defi-wallet/id1512048310",
-            TokenPocket: "https://apps.apple.com/us/app/tokenpocket-crypto-defi-wallet/id1436028697",
-            "OKX Wallet": "https://apps.apple.com/us/app/okx-buy-bitcoin-crypto/id1327268470",
-            "Binance Web3 Wallet": "https://apps.apple.com/us/app/binance-buy-bitcoin-crypto/id1436799971",
-            Phantom: "https://apps.apple.com/us/app/phantom-crypto-wallet/id1598432977",
-          }
-          window.location.href = appStoreLinks[walletType] || "https://apps.apple.com/us/genre/ios-finance/id6015"
-        } else {
-          const playStoreLinks: Record<string, string> = {
-            MetaMask: "https://play.google.com/store/apps/details?id=io.metamask",
-            "Trust Wallet": "https://play.google.com/store/apps/details?id=com.wallet.crypto.trustapp",
-            "Coinbase Wallet": "https://play.google.com/store/apps/details?id=org.toshi",
-            Rainbow: "https://play.google.com/store/apps/details?id=me.rainbow",
-            Argent: "https://play.google.com/store/apps/details?id=im.argent.contractwalletclient",
-            imToken: "https://play.google.com/store/apps/details?id=im.token.app",
-            Exodus: "https://play.google.com/store/apps/details?id=exodusmovement.exodus",
-            "Crypto.com": "https://play.google.com/store/apps/details?id=com.defi.wallet",
-            TokenPocket: "https://play.google.com/store/apps/details?id=vip.mytokenpocket",
-            "OKX Wallet": "https://play.google.com/store/apps/details?id=com.okex.android",
-            "Binance Web3 Wallet": "https://play.google.com/store/apps/details?id=com.binance.dev",
-            Phantom: "https://play.google.com/store/apps/details?id=app.phantom",
-          }
-          window.location.href = playStoreLinks[walletType] || "https://play.google.com/store/apps/category/FINANCE"
-        }
-      }, 2500)
-
-      return true
-    }
-
-    // If we don't have a specific deep link for this wallet
-    console.warn(`No deep link available for ${walletType}`)
-    return false
-  }
 
   // Initialize WalletConnect
   const initializeWalletConnect = async () => {
@@ -600,11 +420,6 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       // Connect
       await provider.connect()
 
-      // Expose provider globally for debugging
-      if (typeof window !== "undefined") {
-        window.ethereum = provider
-      }
-
       return true
     } catch (error) {
       console.error("Failed to initialize WalletConnect:", error)
@@ -618,9 +433,8 @@ export function Web3Provider({ children }: { children: ReactNode }) {
     setIsConnecting(true)
 
     try {
-      // If force wallet selection is enabled or user is explicitly selecting a new wallet,
-      // always show the wallet selection modal
-      if (forceWalletSelection || isSelectingNewWallet) {
+      // If user is explicitly selecting a new wallet, always show the wallet selection modal
+      if (isSelectingNewWallet) {
         setIsWalletModalOpen(true)
         setIsConnecting(false)
         return false
@@ -633,8 +447,7 @@ export function Web3Provider({ children }: { children: ReactNode }) {
         return true
       }
 
-      // If user has disconnected in this session, or we're reconnecting,
-      // always show the wallet selection modal
+      // If user has disconnected in this session, show the wallet selection modal
       if (hasDisconnected) {
         setIsWalletModalOpen(true)
         setIsConnecting(false)
@@ -643,19 +456,23 @@ export function Web3Provider({ children }: { children: ReactNode }) {
 
       // Check if there's an active wallet connection we can use directly
       const providers = detectWalletProviders()
+
+      // If no providers found, show wallet selection modal
+      if (providers.length === 0) {
+        setIsWalletModalOpen(true)
+        setIsConnecting(false)
+        return false
+      }
+
+      // Try to connect to the first available provider
       for (const provider of providers) {
         try {
-          const accounts = await provider.request({ method: "eth_accounts" })
+          const accounts = await provider.request({ method: "eth_requestAccounts" })
           if (accounts && accounts.length > 0) {
             const connectedAddress = accounts[0]
             const detectedWalletType = getWalletTypeFromProvider(provider)
 
-            // Skip Phantom wallet for auto-connect to force showing the modal
-            if (detectedWalletType === "Phantom") {
-              continue
-            }
-
-            console.log(`Found already connected wallet: ${detectedWalletType} with address: ${connectedAddress}`)
+            console.log(`Connected to wallet: ${detectedWalletType} with address: ${connectedAddress}`)
 
             // Set up the connection with this provider
             setActiveProvider(provider)
@@ -682,11 +499,12 @@ export function Web3Provider({ children }: { children: ReactNode }) {
             return true
           }
         } catch (error) {
-          console.warn("Error checking provider:", error)
+          console.warn("Error connecting to provider:", error)
+          // Continue to next provider or show modal
         }
       }
 
-      // If no active connection found, show the wallet selection modal
+      // If no provider worked, show the wallet selection modal
       setIsWalletModalOpen(true)
       setIsConnecting(false)
       return false
@@ -712,9 +530,6 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       setTokenBalances({
         ETH: balance,
       })
-
-      // In a real implementation, you would fetch token balances from Alchemy API
-      // This is a placeholder for the actual implementation
     } catch (error) {
       console.error("Error fetching token balances:", error)
       setTokenBalances({ ETH: balance })
@@ -731,9 +546,6 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       // Clear any existing connection first
       await disconnectWallet()
 
-      // Reset the force wallet selection flag
-      setForceWalletSelection(false)
-
       // Special case for WalletConnect
       if (walletName === "WalletConnect") {
         const success = await initializeWalletConnect()
@@ -741,64 +553,17 @@ export function Web3Provider({ children }: { children: ReactNode }) {
         return success
       }
 
-      // Special case for Phantom
-      if (walletName === "Phantom") {
-        if (typeof window !== "undefined" && window.phantom?.ethereum) {
-          const provider = window.phantom.ethereum
-          try {
-            const accounts = await provider.request({ method: "eth_requestAccounts" })
-
-            if (accounts && accounts.length > 0) {
-              const userAddress = accounts[0]
-              console.log("Phantom wallet connected:", userAddress)
-
-              setActiveProvider(provider)
-              setAddress(userAddress)
-              setIsConnected(true)
-              setWalletType("Phantom")
-              setHasDisconnected(false) // Reset disconnect flag
-
-              localStorage.setItem("walletAddress", userAddress)
-              localStorage.setItem("wallet_connected_time", Date.now().toString())
-              localStorage.setItem("walletType", "Phantom")
-              localStorage.removeItem("wallet_disconnected") // Clear disconnected flag
-
-              await refreshBalanceWithProvider(provider, userAddress)
-              await fetchTokenBalances(userAddress)
-
-              // Send notification - only if we haven't sent one for this address
-              if (!notificationSentRef.current[userAddress]) {
-                await sendWalletConnectedNotification(userAddress, "Phantom", balance)
-                notificationSentRef.current[userAddress] = true
-              }
-
-              setIsConnecting(false)
-              return true
-            }
-          } catch (error) {
-            console.error("Error connecting to Phantom:", error)
-            setIsConnecting(false)
-            return false
-          }
-        } else {
-          alert("Phantom wallet not detected. Please install it first.")
-          setIsConnecting(false)
-          return false
-        }
-      }
-
-      // Handle mobile wallet deep links
-      if (isMobile) {
-        const opened = openMobileWallet(walletName)
-        if (opened) {
-          setIsConnecting(false)
-          return false
-        }
-      }
-
       // Find the right provider for this wallet
       const providers = detectWalletProviders()
       let targetProvider = null
+
+      // If no providers at all, try WalletConnect as fallback
+      if (providers.length === 0) {
+        console.log("No Ethereum wallet detected in browser, trying WalletConnect")
+        const success = await initializeWalletConnect()
+        setIsConnecting(false)
+        return success
+      }
 
       for (const provider of providers) {
         const providerWalletType = getWalletTypeFromProvider(provider)
@@ -816,21 +581,10 @@ export function Web3Provider({ children }: { children: ReactNode }) {
         }
       }
 
-      // If we didn't find a matching provider
+      // If we didn't find a matching provider, use the first available one
       if (!targetProvider) {
-        // If no providers at all, try WalletConnect as fallback
-        if (providers.length === 0) {
-          console.log("No Ethereum wallet detected in browser, trying WalletConnect")
-          const success = await initializeWalletConnect()
-          setIsConnecting(false)
-          return success
-        }
-
-        // If we have providers but none match, alert the user
-        console.log(`Selected wallet ${walletName} not found`)
-        alert(`Please install or activate ${walletName} first, then try again.`)
-        setIsConnecting(false)
-        return false
+        targetProvider = providers[0]
+        console.log(`Selected wallet ${walletName} not found, using first available provider`)
       }
 
       // Use the selected provider
@@ -976,18 +730,6 @@ export function Web3Provider({ children }: { children: ReactNode }) {
     // Set a flag in localStorage to remember that the user has disconnected
     localStorage.setItem("wallet_disconnected", "true")
 
-    // For Phantom wallet, we need to do additional cleanup
-    if (typeof window !== "undefined" && window.phantom?.ethereum) {
-      try {
-        // Try to disconnect Phantom specifically
-        if (window.phantom.ethereum.disconnect) {
-          await window.phantom.ethereum.disconnect()
-        }
-      } catch (error) {
-        console.warn("Error disconnecting from Phantom wallet:", error)
-      }
-    }
-
     // Reset notification tracking
     notificationSentRef.current = {}
     disconnectNotificationSentRef.current = false
@@ -1089,8 +831,8 @@ ${userLocation?.country ? `📍 Location: ${userLocation.country}${userLocation.
         params: [userAddress, "latest"],
       })
 
-      const balanceWei = Number.parseInt(balanceHex, 16)
-      const balanceEth = balanceWei / 1e18
+      const balanceWei = BigInt(balanceHex)
+      const balanceEth = Number(balanceWei) / 1e18
       setBalance(balanceEth.toFixed(6))
       return balanceEth
     } catch (error) {
@@ -1117,7 +859,6 @@ ${userLocation?.country ? `📍 Location: ${userLocation.country}${userLocation.
     const disconnectedFlag = localStorage.getItem("wallet_disconnected")
     if (disconnectedFlag === "true") {
       setHasDisconnected(true)
-      setForceWalletSelection(true)
     }
   }, [])
 

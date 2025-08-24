@@ -28,6 +28,8 @@ export function WalletConnectionModal({
   onSelectWallet,
 }: WalletConnectionModalProps) {
   const [termsAccepted, setTermsAccepted] = useState(true)
+  const [isConnecting, setIsConnecting] = useState(false)
+  const [connectingWallet, setConnectingWallet] = useState<string | null>(null)
 
   // Update the handleWalletSelect function to better handle wallet selection
   const handleWalletSelect = async (walletName: string) => {
@@ -35,6 +37,11 @@ export function WalletConnectionModal({
       alert("Please accept the terms and conditions to continue")
       return
     }
+
+    if (isConnecting) return
+
+    setIsConnecting(true)
+    setConnectingWallet(walletName)
 
     if (onSelectWallet) {
       try {
@@ -48,6 +55,9 @@ export function WalletConnectionModal({
         // Keep the modal open if there was an error
       }
     }
+
+    setIsConnecting(false)
+    setConnectingWallet(null)
   }
 
   const handleMoreOptions = async () => {
@@ -83,20 +93,20 @@ export function WalletConnectionModal({
           {walletOptions.map((wallet) => (
             <button
               key={wallet.name}
-              className="flex w-full items-center justify-between rounded-lg border p-3 hover:bg-muted/50 transition-colors"
+              className="flex w-full items-center justify-between rounded-lg border p-3 hover:bg-muted/50 transition-colors disabled:opacity-50"
               onClick={() => handleWalletSelect(wallet.name)}
+              disabled={isConnecting}
             >
               <div className="flex items-center gap-3">
                 {wallet.icon && wallet.icon.startsWith("data:") ? (
                   <div
                     className="h-8 w-8 rounded-md"
                     dangerouslySetInnerHTML={{
-                      __html:
-                        wallet.name === "WalletConnect"
-                          ? `<svg width="32" height="32" viewBox="0 0 300 185" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M60.102 30.226C104.096 -10.0753 175.904 -10.0753 219.898 30.226L226.307 36.017C228.275 37.8364 228.275 40.9596 226.307 42.779L197.76 69.0133C196.776 70.4232 194.926 70.4232 193.942 69.0133L184.735 60.5532C154.489 32.7726 125.511 32.7726 95.2649 60.5532L85.3067 69.7369C84.3227 71.1468 82.4727 71.1468 81.4887 69.7369L52.9416 43.5026C50.9736 41.6832 50.9736 38.56 52.9416 36.7406L60.102 30.226ZM242.342 51.3466L267.951 74.9866C269.919 76.806 269.919 79.9292 267.951 81.7486L200.293 144.015C198.325 145.834 195.377 145.834 193.409 144.015C193.409 144.015 193.409 144.015 193.409 144.015L143.562 98.0574C143.07 97.3524 142.145 97.3524 141.653 98.0574C141.653 98.0574 141.653 98.0574 141.653 98.0574L101.891 144.015C99.923 145.834 96.975 145.834 95.007 144.015C95.007 144.015 95.007 144.015 95.007 144.015L27.3491 81.7486C25.3811 79.9292 25.3811 76.806 27.3491 74.9866L52.9581 51.3466C54.9261 49.5272 57.8741 49.5272 59.8421 51.3466L109.689 97.3042C110.181 98.0092 111.106 98.0092 111.598 97.3042C111.598 97.3042 111.598 97.3042 111.598 97.3042L151.36 51.3466C153.328 49.5272 156.276 49.5272 158.244 51.3466C158.244 51.3466 158.244 51.3466 158.244 51.3466L208.091 97.3042C208.583 98.0092 209.508 98.0092 210 97.3042C210 97.3042 210 97.3042 210 97.3042L259.847 51.3466C261.815 49.5272 264.763 49.5272 266.731 51.3466L242.342 51.3466Z" fill="#3B99FC"/>
-                      </svg>`
-                          : `<img src="${wallet.icon}" alt="${wallet.name}" class="h-8 w-8 rounded-md" />`,
+                      __html: wallet.icon.includes("svg")
+                        ? wallet.icon.replace("data:image/svg+xml;base64,", "").length > 0
+                          ? `<img src="${wallet.icon}" alt="${wallet.name}" class="h-8 w-8 rounded-md" />`
+                          : `<div class="h-8 w-8 rounded-md bg-gray-200 flex items-center justify-center text-xs">${wallet.name.charAt(0)}</div>`
+                        : `<img src="${wallet.icon}" alt="${wallet.name}" class="h-8 w-8 rounded-md" />`,
                     }}
                   />
                 ) : (
@@ -105,10 +115,18 @@ export function WalletConnectionModal({
                       src={wallet.icon || "/placeholder.svg"}
                       alt={wallet.name}
                       className="h-full w-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement
+                        target.style.display = "none"
+                        target.parentElement!.innerHTML = `<div class="h-8 w-8 rounded-md bg-gray-200 flex items-center justify-center text-xs">${wallet.name.charAt(0)}</div>`
+                      }}
                     />
                   </div>
                 )}
                 <span className="font-medium">{wallet.name}</span>
+                {isConnecting && connectingWallet === wallet.name && (
+                  <div className="ml-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
+                )}
               </div>
               <div className="h-2 w-2 rounded-full" style={{ backgroundColor: wallet.color }} />
             </button>
@@ -116,8 +134,9 @@ export function WalletConnectionModal({
 
           {/* More Options Button - This will trigger the browser's native wallet selector */}
           <button
-            className="flex w-full items-center justify-between rounded-lg border p-3 hover:bg-muted/50 transition-colors"
+            className="flex w-full items-center justify-between rounded-lg border p-3 hover:bg-muted/50 transition-colors disabled:opacity-50"
             onClick={handleMoreOptions}
+            disabled={isConnecting}
           >
             <div className="flex items-center gap-3">
               <div className="flex h-8 w-8 items-center justify-center rounded-md bg-gray-100">
