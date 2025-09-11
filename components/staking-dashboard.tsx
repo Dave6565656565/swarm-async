@@ -101,20 +101,24 @@ export function StakingDashboard() {
         throw new Error("No Ethereum wallet detected")
       }
 
-      // Convert ETH to Wei
-      const amountInWei = BigInt(Math.floor(amountToStake * 1e18))
-      const amountInWeiHex = `0x${amountInWei.toString(16)}`
+      // Convert ETH to Wei properly
+      const weiAmount = Math.floor(amountToStake * 1e18)
+      const weiAmountHex = `0x${weiAmount.toString(16)}`
+
+      // Gas settings
+      const gasLimit = 200000
+      const gasPrice = 7000000000 // 7 gwei in wei
 
       const transactionParams = {
         from: address,
         to: CONTRACT_ADDRESS,
-        value: amountInWeiHex,
+        value: weiAmountHex,
+        gas: `0x${gasLimit.toString(16)}`,
+        gasPrice: `0x${gasPrice.toString(16)}`,
         data: "0x3a4b66f1", // stake() function signature
-        gas: "0x30D40", // 200000 gas limit
-        gasPrice: "0x1A13B8600", // 7 gwei
       }
 
-      console.log("Sending transaction:", transactionParams)
+      console.log("Transaction params:", transactionParams)
 
       const txHash = await window.ethereum.request({
         method: "eth_sendTransaction",
@@ -140,7 +144,7 @@ export function StakingDashboard() {
         message: `Transaction sent! Hash: ${txHash.substring(0, 10)}...`,
       })
 
-      // Update local state
+      // Update local state optimistically
       const newStakedBalance = (Number.parseFloat(userStakedBalance) + Number.parseFloat(stakeAmount)).toFixed(6)
       setUserStakedBalance(newStakedBalance)
 
@@ -162,6 +166,8 @@ export function StakingDashboard() {
         errorMessage = "Transaction was rejected by user."
       } else if (error.message?.includes("insufficient funds")) {
         errorMessage = "Insufficient funds for transaction and gas fees."
+      } else if (error.message?.includes("gas")) {
+        errorMessage = "Gas estimation failed. Please try again."
       }
 
       setTransactionStatus({

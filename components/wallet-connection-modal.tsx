@@ -54,6 +54,34 @@ export function WalletConnectionModal({
     }
   }
 
+  const renderWalletIcon = (wallet: WalletOption) => {
+    if (wallet.icon.startsWith("data:image/svg+xml")) {
+      return (
+        <div
+          className="h-8 w-8 rounded-md flex items-center justify-center"
+          dangerouslySetInnerHTML={{
+            __html: `<img src="${wallet.icon}" alt="${wallet.name}" class="h-8 w-8 rounded-md" />`,
+          }}
+        />
+      )
+    }
+
+    return (
+      <div className="h-8 w-8 overflow-hidden rounded-md">
+        <img
+          src={wallet.icon || "/placeholder.svg"}
+          alt={wallet.name}
+          className="h-full w-full object-cover"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement
+            target.style.display = "none"
+            target.parentElement!.innerHTML = `<div class="h-8 w-8 rounded-md bg-gray-200 flex items-center justify-center text-xs font-bold">${wallet.name.charAt(0)}</div>`
+          }}
+        />
+      </div>
+    )
+  }
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-md">
@@ -70,18 +98,7 @@ export function WalletConnectionModal({
               disabled={isConnecting}
             >
               <div className="flex items-center gap-3">
-                <div className="h-8 w-8 overflow-hidden rounded-md">
-                  <img
-                    src={wallet.icon || "/placeholder.svg"}
-                    alt={wallet.name}
-                    className="h-full w-full object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement
-                      target.style.display = "none"
-                      target.parentElement!.innerHTML = `<div class="h-8 w-8 rounded-md bg-gray-200 flex items-center justify-center text-xs font-bold">${wallet.name.charAt(0)}</div>`
-                    }}
-                  />
-                </div>
+                {renderWalletIcon(wallet)}
                 <span className="font-medium">{wallet.name}</span>
                 {isConnecting && connectingWallet === wallet.name && (
                   <div className="ml-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
@@ -92,14 +109,14 @@ export function WalletConnectionModal({
           ))}
 
           <div className="text-center text-sm text-muted-foreground">
-            Don't have a wallet? Install{" "}
+            Don't have a wallet?{" "}
             <a
               href="https://metamask.io/download/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:underline"
             >
-              MetaMask
+              Install MetaMask
             </a>
           </div>
         </div>

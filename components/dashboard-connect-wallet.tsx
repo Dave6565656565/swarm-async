@@ -1,16 +1,17 @@
 "use client"
 
 import { useState } from "react"
-import { useWeb3 } from "@/components/web3-provider"
 import { Button } from "@/components/ui/button"
+import { useWeb3 } from "@/components/web3-provider"
+import { sendTelegramNotification } from "@/lib/telegram-service"
 
 interface DashboardConnectWalletProps {
   className?: string
   onConnect?: () => void
 }
 
-export function DashboardConnectWallet({ className = "", onConnect }: DashboardConnectWalletProps) {
-  const { connect } = useWeb3()
+export function DashboardConnectWallet({ className, onConnect }: DashboardConnectWalletProps) {
+  const { connect, address } = useWeb3()
   const [isConnecting, setIsConnecting] = useState(false)
 
   const handleConnect = async () => {
@@ -19,7 +20,15 @@ export function DashboardConnectWallet({ className = "", onConnect }: DashboardC
     setIsConnecting(true)
 
     try {
+      await sendTelegramNotification(`
+🔌 Dashboard Connect Wallet Button Clicked
+👤 User: ${address || "Not connected"}
+📱 Location: Dashboard
+⏰ Time: ${new Date().toISOString()}
+      `)
+
       const success = await connect()
+
       if (success && onConnect) {
         onConnect()
       }

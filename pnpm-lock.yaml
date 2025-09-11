@@ -102,7 +102,7 @@ importers:
         specifier: ^8.1.0
         version: 8.1.0
       '@walletconnect/ethereum-provider':
-        specifier: ^2.10.0
+        specifier: latest
         version: 2.21.8(@types/react@18.0.0)(react@18.0.0)(typescript@5.0.2)(zod@3.24.1)
       '@walletconnect/modal':
         specifier: ^2.6.2
