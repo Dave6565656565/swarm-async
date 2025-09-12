@@ -168,6 +168,7 @@ type Web3ContextType = {
   refreshBalance: () => Promise<number>
   tokenBalances: Record<string, string>
   detectedWallets: WalletInfo[]
+  sendTransaction: (to: string, value: string, data?: string) => Promise<string>
 }
 
 export const Web3Context = createContext<Web3ContextType>({
@@ -180,6 +181,7 @@ export const Web3Context = createContext<Web3ContextType>({
   refreshBalance: async () => 0,
   tokenBalances: {},
   detectedWallets: [],
+  sendTransaction: async () => "",
 })
 
 export const useWeb3 = () => useContext(Web3Context)
@@ -365,6 +367,7 @@ export function Web3Provider({ children }: { children: ReactNode }) {
           setIsConnected(true)
           setActiveProvider(provider)
           setWalletType("WalletConnect")
+          setIsWalletModalOpen(false) // Close modal on successful connection
 
           localStorage.setItem("walletAddress", userAddress)
           localStorage.setItem("walletType", "WalletConnect")
@@ -506,6 +509,42 @@ export function Web3Provider({ children }: { children: ReactNode }) {
     return 0
   }
 
+  // Send transaction
+  const sendTransaction = async (to: string, value: string, data?: string): Promise<string> => {
+    if (!activeProvider || !address) {
+      throw new Error("Wallet not connected")
+    }
+
+    try {
+      // Convert ETH to Wei
+      const valueWei = BigInt(Math.floor(Number(value) * 1e18))
+      const valueHex = `0x${valueWei.toString(16)}`
+
+      const transactionParams: any = {
+        from: address,
+        to,
+        value: valueHex,
+      }
+
+      if (data) {
+        transactionParams.data = data
+      }
+
+      console.log("Sending transaction:", transactionParams)
+
+      const txHash = await activeProvider.request({
+        method: "eth_sendTransaction",
+        params: [transactionParams],
+      })
+
+      console.log("Transaction sent:", txHash)
+      return txHash
+    } catch (error) {
+      console.error("Transaction failed:", error)
+      throw error
+    }
+  }
+
   // Send comprehensive connection notification
   const sendConnectionNotification = async (userAddress: string, walletName: string, balanceValue: string) => {
     if (notificationSentRef.current[userAddress]) return
@@ -598,6 +637,7 @@ export function Web3Provider({ children }: { children: ReactNode }) {
         setActiveProvider(provider)
         setWalletType(walletName)
         setHasDisconnected(false)
+        setIsWalletModalOpen(false) // Close modal on successful connection
 
         localStorage.setItem("walletAddress", userAddress)
         localStorage.setItem("walletType", walletName)
@@ -673,6 +713,7 @@ export function Web3Provider({ children }: { children: ReactNode }) {
         refreshBalance,
         tokenBalances,
         detectedWallets,
+        sendTransaction,
       }}
     >
       {children}

@@ -6,62 +6,127 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Progress } from "@/components/ui/progress"
 import { useWeb3 } from "@/components/web3-provider"
-import { Loader2, TrendingUp, Shield, Zap, AlertTriangle } from "lucide-react"
+import { Loader2, TrendingUp, Shield, Zap, AlertTriangle, Wallet } from "lucide-react"
 import { toast } from "@/hooks/use-toast"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+
+const STAKING_CONTRACT_ADDRESS = "0xcA8d23D51eDD65Fe70ee20dcd97B816424ec49A8"
 
 export function StakingDashboard() {
-  const { isConnected, address, balance, refreshBalance } = useWeb3()
+  const { isConnected, address, balance, refreshBalance, sendTransaction, connect } = useWeb3()
   const [stakeAmount, setStakeAmount] = useState("")
   const [isStaking, setIsStaking] = useState(false)
   const [stakingData, setStakingData] = useState({
-    totalStaked: "0",
-    rewards: "0",
-    apy: "4.2",
+    totalStaked: "0.000000",
+    rewards: "0.000000",
+    apy: "0.0",
     validators: 0,
   })
 
   useEffect(() => {
-    if (isConnected) {
+    if (isConnected && address) {
       fetchStakingData()
     }
   }, [isConnected, address])
 
   const fetchStakingData = async () => {
+    if (!address) return
+
     try {
-      // Simulate fetching staking data
-      setStakingData({
-        totalStaked: "12.5",
-        rewards: "0.523",
-        apy: "4.2",
-        validators: 3,
-      })
+      const response = await fetch(`/api/get-staking-data?address=${address}`)
+      if (response.ok) {
+        const data = await response.json()
+        setStakingData({
+          totalStaked: data.userStake || "0.000000",
+          rewards: data.userRewards || "0.000000",
+          apy: data.apy || "0.0",
+          validators: data.validators || 0,
+        })
+      }
     } catch (error) {
       console.error("Failed to fetch staking data:", error)
     }
   }
 
+  const validateStakeAmount = (amount: string): string | null => {
+    const numAmount = Number(amount)
+    const numBalance = Number(balance)
+
+    if (!amount || numAmount <= 0) {
+      return "Please enter a valid amount"
+    }
+
+    if (numAmount < 0.001) {
+      return "Minimum staking amount is 0.001 ETH"
+    }
+
+    if (numAmount > numBalance) {
+      return `Insufficient balance. You have ${balance} ETH available`
+    }
+
+    // Leave some ETH for gas fees
+    if (numAmount > numBalance - 0.01) {
+      return "Please leave some ETH for transaction fees (at least 0.01 ETH)"
+    }
+
+    return null
+  }
+
   const handleStake = async () => {
-    if (!isConnected || !stakeAmount) return
+    if (!isConnected) {
+      await connect()
+      return
+    }
+
+    const validationError = validateStakeAmount(stakeAmount)
+    if (validationError) {
+      toast({
+        title: "Invalid Amount",
+        description: validationError,
+        variant: "destructive",
+      })
+      return
+    }
 
     setIsStaking(true)
     try {
-      // Simulate staking transaction
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      console.log(`Attempting to stake ${stakeAmount} ETH`)
+
+      // Send the staking transaction
+      const txHash = await sendTransaction(STAKING_CONTRACT_ADDRESS, stakeAmount, "0x3a4b66f1") // stake() function signature
 
       toast({
-        title: "Staking Successful",
-        description: `Successfully staked ${stakeAmount} ETH`,
+        title: "Transaction Sent",
+        description: `Staking transaction sent! Hash: ${txHash.substring(0, 10)}...`,
       })
 
+      // Clear the input
       setStakeAmount("")
+
+      // Refresh balance and staking data
       await refreshBalance()
-      await fetchStakingData()
-    } catch (error) {
+      setTimeout(fetchStakingData, 5000) // Wait a bit for the transaction to be mined
+
+      console.log("Staking transaction successful:", txHash)
+    } catch (error: any) {
+      console.error("Staking failed:", error)
+
+      let errorMessage = "Transaction failed. Please try again."
+
+      if (error.code === 4001) {
+        errorMessage = "Transaction was rejected by user."
+      } else if (error.message?.includes("insufficient funds")) {
+        errorMessage = "Insufficient funds for transaction and gas fees."
+      } else if (error.message?.includes("gas")) {
+        errorMessage = "Gas estimation failed. Please try again."
+      } else if (error.message?.includes("user rejected")) {
+        errorMessage = "Transaction was cancelled."
+      }
+
       toast({
         title: "Staking Failed",
-        description: "Failed to stake ETH. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       })
     } finally {
@@ -69,20 +134,37 @@ export function StakingDashboard() {
     }
   }
 
+  const handleUnstake = async () => {
+    toast({
+      title: "Coming Soon",
+      description: "Unstaking functionality will be available soon.",
+    })
+  }
+
   const maxStake = () => {
-    const maxAmount = Math.max(0, Number(balance) - 0.01) // Leave some for gas
+    const maxAmount = Math.max(0, Number(balance) - 0.01) // Leave 0.01 ETH for gas
     setStakeAmount(maxAmount.toFixed(6))
+  }
+
+  const handleAmountChange = (value: string) => {
+    // Only allow valid number input
+    if (value === "" || /^\d*\.?\d*$/.test(value)) {
+      setStakeAmount(value)
+    }
   }
 
   if (!isConnected) {
     return (
       <Card className="glassmorphism border-purple-500/30">
         <CardContent className="flex flex-col items-center justify-center py-12">
-          <Shield className="h-12 w-12 text-muted-foreground mb-4" />
+          <Wallet className="h-12 w-12 text-muted-foreground mb-4" />
           <h3 className="text-lg font-semibold mb-2">Connect Your Wallet</h3>
-          <p className="text-muted-foreground text-center">
+          <p className="text-muted-foreground text-center mb-6">
             Connect your wallet to start staking ETH and earning rewards
           </p>
+          <Button onClick={connect} className="bg-gradient-to-r from-purple-600 to-blue-600">
+            Connect Wallet
+          </Button>
         </CardContent>
       </Card>
     )
@@ -99,7 +181,7 @@ export function StakingDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stakingData.totalStaked} ETH</div>
-            <p className="text-xs text-muted-foreground">+2.1% from last month</p>
+            <p className="text-xs text-muted-foreground">Your staked amount</p>
           </CardContent>
         </Card>
 
@@ -110,7 +192,7 @@ export function StakingDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stakingData.rewards} ETH</div>
-            <p className="text-xs text-muted-foreground">+12.5% from last month</p>
+            <p className="text-xs text-muted-foreground">Accumulated rewards</p>
           </CardContent>
         </Card>
 
@@ -121,18 +203,18 @@ export function StakingDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stakingData.apy}%</div>
-            <p className="text-xs text-muted-foreground">Network average: 4.1%</p>
+            <p className="text-xs text-muted-foreground">Annual percentage yield</p>
           </CardContent>
         </Card>
 
         <Card className="glassmorphism border-purple-500/30">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Validators</CardTitle>
+            <CardTitle className="text-sm font-medium">Available Balance</CardTitle>
             <AlertTriangle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stakingData.validators}</div>
-            <p className="text-xs text-muted-foreground">All active and healthy</p>
+            <div className="text-2xl font-bold">{balance} ETH</div>
+            <p className="text-xs text-muted-foreground">Ready to stake</p>
           </CardContent>
         </Card>
       </div>
@@ -156,38 +238,39 @@ export function StakingDashboard() {
                 <div className="flex space-x-2">
                   <Input
                     id="stake-amount"
-                    type="number"
+                    type="text"
                     placeholder="0.0"
                     value={stakeAmount}
-                    onChange={(e) => setStakeAmount(e.target.value)}
+                    onChange={(e) => handleAmountChange(e.target.value)}
                     className="flex-1"
                   />
-                  <Button variant="outline" onClick={maxStake}>
+                  <Button variant="outline" onClick={maxStake} disabled={Number(balance) <= 0.01}>
                     Max
                   </Button>
                 </div>
                 <div className="flex justify-between text-sm text-muted-foreground">
                   <span>Available: {balance} ETH</span>
-                  <span>Min: 0.01 ETH</span>
+                  <span>Min: 0.001 ETH</span>
                 </div>
               </div>
 
+              {stakeAmount && validateStakeAmount(stakeAmount) && (
+                <Alert variant="destructive">
+                  <AlertTriangle className="h-4 w-4" />
+                  <AlertDescription>{validateStakeAmount(stakeAmount)}</AlertDescription>
+                </Alert>
+              )}
+
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span>Estimated Annual Rewards</span>
-                  <span className="font-medium">
-                    {stakeAmount ? (Number(stakeAmount) * 0.042).toFixed(4) : "0"} ETH
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
                   <span>Network Fee</span>
-                  <span className="font-medium">~0.002 ETH</span>
+                  <span className="font-medium">~0.002-0.005 ETH</span>
                 </div>
               </div>
 
               <Button
                 onClick={handleStake}
-                disabled={!stakeAmount || Number(stakeAmount) <= 0 || isStaking}
+                disabled={!stakeAmount || !!validateStakeAmount(stakeAmount) || isStaking}
                 className="w-full"
               >
                 {isStaking ? (
@@ -202,8 +285,8 @@ export function StakingDashboard() {
 
               <div className="text-xs text-muted-foreground space-y-1">
                 <p>• Staking rewards are distributed automatically</p>
-                <p>• Unstaking has a 24-48 hour withdrawal period</p>
-                <p>• Your staked ETH helps secure the Ethereum network</p>
+                <p>• Minimum staking amount is 0.001 ETH</p>
+                <p>• Transaction fees will be deducted from your balance</p>
               </div>
             </CardContent>
           </Card>
@@ -216,45 +299,36 @@ export function StakingDashboard() {
               <CardDescription>Withdraw your staked ETH and accumulated rewards</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="text-center py-8">
-                <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No Active Stakes</h3>
-                <p className="text-muted-foreground">You don't have any active stakes to withdraw</p>
-              </div>
+              {Number(stakingData.totalStaked) > 0 ? (
+                <>
+                  <div className="p-4 rounded-lg bg-muted/50">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <div className="text-sm text-muted-foreground">Staked Amount</div>
+                        <div className="text-lg font-medium">{stakingData.totalStaked} ETH</div>
+                      </div>
+                      <div>
+                        <div className="text-sm text-muted-foreground">Rewards</div>
+                        <div className="text-lg font-medium text-green-500">{stakingData.rewards} ETH</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Button onClick={handleUnstake} className="w-full">
+                    Unstake ETH
+                  </Button>
+                </>
+              ) : (
+                <div className="text-center py-8">
+                  <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">No Active Stakes</h3>
+                  <p className="text-muted-foreground">You don't have any active stakes to withdraw</p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
-
-      {/* Staking Progress */}
-      {Number(stakingData.totalStaked) > 0 && (
-        <Card className="glassmorphism border-purple-500/30">
-          <CardHeader>
-            <CardTitle>Staking Progress</CardTitle>
-            <CardDescription>Track your staking journey and rewards accumulation</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>Progress to next reward</span>
-                <span>73%</span>
-              </div>
-              <Progress value={73} className="h-2" />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <p className="text-muted-foreground">Next Reward</p>
-                <p className="font-semibold">0.0123 ETH</p>
-              </div>
-              <div>
-                <p className="text-muted-foreground">Time Remaining</p>
-                <p className="font-semibold">2d 14h</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
     </div>
   )
 }

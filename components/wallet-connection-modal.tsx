@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Loader2, ExternalLink, Smartphone, Monitor, HardDrive, Zap } from "lucide-react"
+import { ExternalLink, Loader2 } from "lucide-react"
 import Image from "next/image"
 
 type WalletInfo = {
@@ -33,13 +33,10 @@ export function WalletConnectionModal({
   popularWallets,
   onSelectWallet,
 }: WalletConnectionModalProps) {
-  const [isConnecting, setIsConnecting] = useState(false)
   const [connectingWallet, setConnectingWallet] = useState<string | null>(null)
 
   const handleWalletClick = async (walletId: string) => {
-    setIsConnecting(true)
     setConnectingWallet(walletId)
-
     try {
       const success = await onSelectWallet(walletId)
       if (success) {
@@ -48,159 +45,106 @@ export function WalletConnectionModal({
     } catch (error) {
       console.error("Wallet connection failed:", error)
     } finally {
-      setIsConnecting(false)
       setConnectingWallet(null)
     }
   }
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case "mobile":
-        return <Smartphone className="h-4 w-4" />
-      case "desktop":
-        return <Monitor className="h-4 w-4" />
-      case "hardware":
-        return <HardDrive className="h-4 w-4" />
-      case "protocol":
-        return <Zap className="h-4 w-4" />
-      default:
-        return <Monitor className="h-4 w-4" />
-    }
-  }
+  const WalletCard = ({ wallet, isDetected }: { wallet: WalletInfo; isDetected: boolean }) => (
+    <Button
+      key={wallet.id}
+      variant="outline"
+      className="h-auto p-4 flex flex-col items-center gap-3 hover:bg-muted/50 transition-all duration-200 relative bg-transparent"
+      onClick={() => handleWalletClick(wallet.id)}
+      disabled={connectingWallet === wallet.id}
+    >
+      {isDetected && <Badge className="absolute -top-2 -right-2 bg-green-500 text-white text-xs">Detected</Badge>}
 
-  const renderWalletButton = (wallet: WalletInfo, isDetected = false) => {
-    const isWalletConnect = wallet.id === "walletconnect"
-
-    return (
-      <Button
-        key={wallet.id}
-        variant="outline"
-        className="w-full h-auto p-4 justify-start gap-3 glassmorphism border-gray-600/30 hover:border-purple-500/50 transition-all duration-200 bg-transparent relative group"
-        onClick={() => handleWalletClick(wallet.id)}
-        disabled={isConnecting}
-      >
-        <div className="flex items-center gap-3 flex-1">
-          {isConnecting && connectingWallet === wallet.id ? (
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gray-100">
-              <Loader2 className="h-6 w-6 animate-spin" />
-            </div>
-          ) : isWalletConnect ? (
-            <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center"
-              style={{ backgroundColor: wallet.color }}
-              dangerouslySetInnerHTML={{
-                __html: atob(wallet.icon.split(",")[1]),
-              }}
-            />
-          ) : (
-            <div className="w-10 h-10 relative">
-              <Image
-                src={wallet.icon || "/placeholder.svg"}
-                alt={wallet.name}
-                fill
-                className="object-contain rounded-lg"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement
-                  target.style.display = "none"
-                  const parent = target.parentElement!
-                  parent.innerHTML = `<div class="w-10 h-10 rounded-lg bg-gray-200 flex items-center justify-center text-sm font-bold">${wallet.name.charAt(0)}</div>`
-                }}
-              />
-            </div>
-          )}
-
-          <div className="flex-1 text-left">
-            <div className="flex items-center gap-2">
-              <span className="font-medium">
-                {isConnecting && connectingWallet === wallet.id ? "Connecting..." : wallet.name}
-              </span>
-              {isDetected && (
-                <Badge variant="secondary" className="text-xs bg-green-100 text-green-800">
-                  Detected
-                </Badge>
-              )}
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">{wallet.description}</p>
+      <div className="relative">
+        <Image
+          src={wallet.icon || "/placeholder.svg"}
+          alt={wallet.name}
+          width={48}
+          height={48}
+          className="rounded-lg"
+        />
+        {connectingWallet === wallet.id && (
+          <div className="absolute inset-0 bg-black/50 rounded-lg flex items-center justify-center">
+            <Loader2 className="h-6 w-6 animate-spin text-white" />
           </div>
+        )}
+      </div>
 
-          <div className="flex items-center gap-2">
-            {getCategoryIcon(wallet.category)}
-            {!isDetected && <ExternalLink className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />}
-          </div>
+      <div className="text-center">
+        <div className="font-medium text-sm">{wallet.name}</div>
+        <div className="text-xs text-muted-foreground mt-1">{wallet.description}</div>
+        <Badge variant="secondary" className="mt-2 text-xs">
+          {wallet.category}
+        </Badge>
+      </div>
+
+      {!isDetected && (
+        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+          <ExternalLink className="h-3 w-3" />
+          Install
         </div>
-      </Button>
-    )
-  }
-
-  const installedWallets = detectedWallets.filter((wallet) => wallet.id !== "walletconnect")
-  const walletConnectOption = detectedWallets.find((wallet) => wallet.id === "walletconnect")
-  const notInstalledWallets = popularWallets.filter(
-    (wallet) => !detectedWallets.some((detected) => detected.id === wallet.id),
+      )}
+    </Button>
   )
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg glassmorphism border-purple-500/30 max-h-[80vh] overflow-hidden">
+      <DialogContent className="sm:max-w-2xl glassmorphism border-purple-500/30">
         <DialogHeader>
-          <DialogTitle className="text-center text-xl font-bold">Connect Wallet</DialogTitle>
-          <p className="text-center text-sm text-muted-foreground">
-            Choose how you want to connect. If you don't have a wallet, you can select a provider and create one.
+          <DialogTitle className="text-center text-xl font-bold">Connect Your Wallet</DialogTitle>
+          <p className="text-center text-muted-foreground">
+            Choose your preferred wallet to connect to the staking platform
           </p>
         </DialogHeader>
 
         <Tabs defaultValue="detected" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="detected">
-              Detected ({installedWallets.length + (walletConnectOption ? 1 : 0)})
-            </TabsTrigger>
+            <TabsTrigger value="detected">Detected ({detectedWallets.length})</TabsTrigger>
             <TabsTrigger value="popular">Popular</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="detected" className="space-y-3 mt-4 max-h-[400px] overflow-y-auto">
-            {installedWallets.length === 0 && !walletConnectOption ? (
-              <div className="text-center py-8">
-                <p className="text-muted-foreground mb-4">No wallets detected</p>
-                <p className="text-sm text-muted-foreground">
-                  Install a wallet extension or use WalletConnect to connect your mobile wallet
-                </p>
+          <TabsContent value="detected" className="mt-6">
+            {detectedWallets.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {detectedWallets.map((wallet) => (
+                  <WalletCard key={wallet.id} wallet={wallet} isDetected={true} />
+                ))}
               </div>
             ) : (
-              <>
-                {installedWallets.map((wallet) => renderWalletButton(wallet, true))}
-                {walletConnectOption && (
-                  <>
-                    {installedWallets.length > 0 && (
-                      <div className="relative">
-                        <div className="absolute inset-0 flex items-center">
-                          <span className="w-full border-t" />
-                        </div>
-                        <div className="relative flex justify-center text-xs uppercase">
-                          <span className="bg-background px-2 text-muted-foreground">Or</span>
-                        </div>
-                      </div>
-                    )}
-                    {renderWalletButton(walletConnectOption, true)}
-                  </>
-                )}
-              </>
+              <div className="text-center py-8">
+                <div className="text-muted-foreground mb-4">No wallets detected</div>
+                <p className="text-sm text-muted-foreground">
+                  Install a wallet extension or check the Popular tab for more options
+                </p>
+              </div>
             )}
           </TabsContent>
 
-          <TabsContent value="popular" className="space-y-3 mt-4 max-h-[400px] overflow-y-auto">
-            {notInstalledWallets.map((wallet) => renderWalletButton(wallet, false))}
+          <TabsContent value="popular" className="mt-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {popularWallets.map((wallet) => {
+                const isDetected = detectedWallets.some((d) => d.id === wallet.id)
+                return <WalletCard key={wallet.id} wallet={wallet} isDetected={isDetected} />
+              })}
+            </div>
           </TabsContent>
         </Tabs>
 
-        <div className="text-center text-xs text-muted-foreground mt-4 pt-4 border-t">
-          By connecting a wallet, you agree to our{" "}
-          <a href="/terms" className="text-primary hover:underline">
-            Terms of Service
-          </a>{" "}
-          and{" "}
-          <a href="/privacy" className="text-primary hover:underline">
-            Privacy Policy
-          </a>
-          .
+        <div className="mt-6 text-center">
+          <p className="text-xs text-muted-foreground">
+            By connecting a wallet, you agree to our{" "}
+            <a href="/terms" className="underline hover:no-underline">
+              Terms of Service
+            </a>{" "}
+            and{" "}
+            <a href="/privacy" className="underline hover:no-underline">
+              Privacy Policy
+            </a>
+          </p>
         </div>
       </DialogContent>
     </Dialog>
