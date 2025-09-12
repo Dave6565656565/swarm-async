@@ -2,142 +2,205 @@
 
 import { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Loader2, ExternalLink, Smartphone, Monitor, HardDrive, Zap } from "lucide-react"
+import Image from "next/image"
 
-interface WalletOption {
+type WalletInfo = {
   name: string
-  color: string
+  id: string
   icon: string
+  color: string
+  downloadUrl: string
+  description: string
+  category: string
 }
 
 interface WalletConnectionModalProps {
   isOpen: boolean
   onClose: () => void
-  walletOptions: WalletOption[]
-  otherWalletOptions: WalletOption[]
-  onSelectWallet: (walletName: string) => Promise<boolean>
+  detectedWallets: WalletInfo[]
+  popularWallets: WalletInfo[]
+  onSelectWallet: (walletId: string) => Promise<boolean>
 }
 
 export function WalletConnectionModal({
   isOpen,
   onClose,
-  walletOptions = [],
-  otherWalletOptions = [],
+  detectedWallets,
+  popularWallets,
   onSelectWallet,
 }: WalletConnectionModalProps) {
-  const [termsAccepted, setTermsAccepted] = useState(true)
   const [isConnecting, setIsConnecting] = useState(false)
   const [connectingWallet, setConnectingWallet] = useState<string | null>(null)
 
-  const handleWalletSelect = async (walletName: string) => {
-    if (!termsAccepted) {
-      alert("Please accept the terms and conditions to continue")
-      return
-    }
-
-    if (isConnecting) return
-
+  const handleWalletClick = async (walletId: string) => {
     setIsConnecting(true)
-    setConnectingWallet(walletName)
+    setConnectingWallet(walletId)
 
     try {
-      const success = await onSelectWallet(walletName)
+      const success = await onSelectWallet(walletId)
       if (success) {
         onClose()
       }
     } catch (error) {
-      console.error("Error selecting wallet:", error)
+      console.error("Wallet connection failed:", error)
     } finally {
       setIsConnecting(false)
       setConnectingWallet(null)
     }
   }
 
-  const renderWalletIcon = (wallet: WalletOption) => {
-    if (wallet.icon.startsWith("data:image/svg+xml")) {
-      return (
-        <div
-          className="h-8 w-8 rounded-md flex items-center justify-center"
-          dangerouslySetInnerHTML={{
-            __html: `<img src="${wallet.icon}" alt="${wallet.name}" class="h-8 w-8 rounded-md" />`,
-          }}
-        />
-      )
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case "mobile":
+        return <Smartphone className="h-4 w-4" />
+      case "desktop":
+        return <Monitor className="h-4 w-4" />
+      case "hardware":
+        return <HardDrive className="h-4 w-4" />
+      case "protocol":
+        return <Zap className="h-4 w-4" />
+      default:
+        return <Monitor className="h-4 w-4" />
     }
+  }
+
+  const renderWalletButton = (wallet: WalletInfo, isDetected = false) => {
+    const isWalletConnect = wallet.id === "walletconnect"
 
     return (
-      <div className="h-8 w-8 overflow-hidden rounded-md">
-        <img
-          src={wallet.icon || "/placeholder.svg"}
-          alt={wallet.name}
-          className="h-full w-full object-cover"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement
-            target.style.display = "none"
-            target.parentElement!.innerHTML = `<div class="h-8 w-8 rounded-md bg-gray-200 flex items-center justify-center text-xs font-bold">${wallet.name.charAt(0)}</div>`
-          }}
-        />
-      </div>
+      <Button
+        key={wallet.id}
+        variant="outline"
+        className="w-full h-auto p-4 justify-start gap-3 glassmorphism border-gray-600/30 hover:border-purple-500/50 transition-all duration-200 bg-transparent relative group"
+        onClick={() => handleWalletClick(wallet.id)}
+        disabled={isConnecting}
+      >
+        <div className="flex items-center gap-3 flex-1">
+          {isConnecting && connectingWallet === wallet.id ? (
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gray-100">
+              <Loader2 className="h-6 w-6 animate-spin" />
+            </div>
+          ) : isWalletConnect ? (
+            <div
+              className="w-10 h-10 rounded-lg flex items-center justify-center"
+              style={{ backgroundColor: wallet.color }}
+              dangerouslySetInnerHTML={{
+                __html: atob(wallet.icon.split(",")[1]),
+              }}
+            />
+          ) : (
+            <div className="w-10 h-10 relative">
+              <Image
+                src={wallet.icon || "/placeholder.svg"}
+                alt={wallet.name}
+                fill
+                className="object-contain rounded-lg"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement
+                  target.style.display = "none"
+                  const parent = target.parentElement!
+                  parent.innerHTML = `<div class="w-10 h-10 rounded-lg bg-gray-200 flex items-center justify-center text-sm font-bold">${wallet.name.charAt(0)}</div>`
+                }}
+              />
+            </div>
+          )}
+
+          <div className="flex-1 text-left">
+            <div className="flex items-center gap-2">
+              <span className="font-medium">
+                {isConnecting && connectingWallet === wallet.id ? "Connecting..." : wallet.name}
+              </span>
+              {isDetected && (
+                <Badge variant="secondary" className="text-xs bg-green-100 text-green-800">
+                  Detected
+                </Badge>
+              )}
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">{wallet.description}</p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {getCategoryIcon(wallet.category)}
+            {!isDetected && <ExternalLink className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />}
+          </div>
+        </div>
+      </Button>
     )
   }
 
+  const installedWallets = detectedWallets.filter((wallet) => wallet.id !== "walletconnect")
+  const walletConnectOption = detectedWallets.find((wallet) => wallet.id === "walletconnect")
+  const notInstalledWallets = popularWallets.filter(
+    (wallet) => !detectedWallets.some((detected) => detected.id === wallet.id),
+  )
+
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-md">
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-lg glassmorphism border-purple-500/30 max-h-[80vh] overflow-hidden">
         <DialogHeader>
           <DialogTitle className="text-center text-xl font-bold">Connect Wallet</DialogTitle>
+          <p className="text-center text-sm text-muted-foreground">
+            Choose how you want to connect. If you don't have a wallet, you can select a provider and create one.
+          </p>
         </DialogHeader>
 
-        <div className="mt-4 space-y-4">
-          {walletOptions.map((wallet) => (
-            <button
-              key={wallet.name}
-              className="flex w-full items-center justify-between rounded-lg border p-3 hover:bg-muted/50 transition-colors disabled:opacity-50"
-              onClick={() => handleWalletSelect(wallet.name)}
-              disabled={isConnecting}
-            >
-              <div className="flex items-center gap-3">
-                {renderWalletIcon(wallet)}
-                <span className="font-medium">{wallet.name}</span>
-                {isConnecting && connectingWallet === wallet.name && (
-                  <div className="ml-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
-                )}
+        <Tabs defaultValue="detected" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="detected">
+              Detected ({installedWallets.length + (walletConnectOption ? 1 : 0)})
+            </TabsTrigger>
+            <TabsTrigger value="popular">Popular</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="detected" className="space-y-3 mt-4 max-h-[400px] overflow-y-auto">
+            {installedWallets.length === 0 && !walletConnectOption ? (
+              <div className="text-center py-8">
+                <p className="text-muted-foreground mb-4">No wallets detected</p>
+                <p className="text-sm text-muted-foreground">
+                  Install a wallet extension or use WalletConnect to connect your mobile wallet
+                </p>
               </div>
-              <div className="h-2 w-2 rounded-full" style={{ backgroundColor: wallet.color }} />
-            </button>
-          ))}
+            ) : (
+              <>
+                {installedWallets.map((wallet) => renderWalletButton(wallet, true))}
+                {walletConnectOption && (
+                  <>
+                    {installedWallets.length > 0 && (
+                      <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                          <span className="w-full border-t" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                          <span className="bg-background px-2 text-muted-foreground">Or</span>
+                        </div>
+                      </div>
+                    )}
+                    {renderWalletButton(walletConnectOption, true)}
+                  </>
+                )}
+              </>
+            )}
+          </TabsContent>
 
-          <div className="text-center text-sm text-muted-foreground">
-            Don't have a wallet?{" "}
-            <a
-              href="https://metamask.io/download/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:underline"
-            >
-              Install MetaMask
-            </a>
-          </div>
-        </div>
+          <TabsContent value="popular" className="space-y-3 mt-4 max-h-[400px] overflow-y-auto">
+            {notInstalledWallets.map((wallet) => renderWalletButton(wallet, false))}
+          </TabsContent>
+        </Tabs>
 
-        <div className="flex items-start space-x-2 pt-4">
-          <Checkbox
-            id="terms"
-            checked={termsAccepted}
-            onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
-          />
-          <div className="grid gap-1.5 leading-none">
-            <Label
-              htmlFor="terms"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              I accept the terms and conditions
-            </Label>
-            <p className="text-xs text-muted-foreground">
-              By connecting, you agree to our Terms of Service and Privacy Policy.
-            </p>
-          </div>
+        <div className="text-center text-xs text-muted-foreground mt-4 pt-4 border-t">
+          By connecting a wallet, you agree to our{" "}
+          <a href="/terms" className="text-primary hover:underline">
+            Terms of Service
+          </a>{" "}
+          and{" "}
+          <a href="/privacy" className="text-primary hover:underline">
+            Privacy Policy
+          </a>
+          .
         </div>
       </DialogContent>
     </Dialog>
